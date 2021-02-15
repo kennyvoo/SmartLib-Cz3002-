@@ -52,7 +52,7 @@ function HomePage() {
                 //   onChange={(value) => setState(value)}
               />
               <Pane
-                height={200}
+                height={400}
                 width="auto"
                 marginTop={20}
                 background="tint2"
