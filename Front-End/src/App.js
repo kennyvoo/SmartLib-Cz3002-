@@ -5,6 +5,7 @@ import AccountMgmtPage from "./components/AccountMgmtPage";
 import LoginPage from "./components/LoginPage";
 import MyBookingsPage from "./components/MyBookingsPage";
 import HomePage from "./components/HomePage";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <LoginPage />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     </div>
   );

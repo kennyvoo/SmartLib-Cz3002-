@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import { Pane, Text, Button, Heading } from "evergreen-ui";
 
 function MyBookingsPage() {
-    return (
-        <div>
-            <h2>My Bookings Page</h2>
-        </div>
-    )
+  return (
+    <div>
+      <Pane height={1000} backgroundColor="beige" display="flex" justifyContent="center" padding={20}>
+        <Heading size={800}>My Bookings Page</Heading>
+      </Pane>
+    </div>
+  );
 }
 
-export default MyBookingsPage
+export default MyBookingsPage;
