@@ -6,6 +6,8 @@ import LoginPage from "./components/LoginPage";
 import MyBookingsPage from "./components/MyBookingsPage";
 import HomePage from "./components/HomePage";
 import Footer from "./components/Footer";
+import CreateAccountPage from "./components/CreateAccountPage"
+import ForgetPasswordPage from "./components/ForgetPasswordPage"
 
 function App() {
   return (
@@ -26,6 +28,12 @@ function App() {
           </Route>
           <Route path="/Login">
             <LoginPage />
+          </Route>
+          <Route path="/CreateAccount">
+            <CreateAccountPage />
+          </Route>
+          <Route path="/ForgetPassword">
+            <ForgetPasswordPage />
           </Route>
         </Switch>
         <Footer />
