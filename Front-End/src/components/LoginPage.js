@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField } from "evergreen-ui";
+import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField, TextInput} from "evergreen-ui";
 import { Link } from "react-router-dom";
 import background from "./Img/lib2.png";
 
@@ -26,6 +26,7 @@ function LoginPage() {
           id="Password Information"
           required
           label="Password"
+          secureTextEntry={true}
           inputHeight = {45}
           inputWidth = {450}
         />

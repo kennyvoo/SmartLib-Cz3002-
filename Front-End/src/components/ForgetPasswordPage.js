@@ -24,11 +24,8 @@ function ForgetPasswordPage() {
         />
         {/* This is the container/pane for the login section */}
         <Pane display="flex" borderRadius={3}>
-          <Pane flex={1} alignItems="center" display="flex">
-            <Link to="/MyBookings">Forget Password?</Link>
-          </Pane>
-          <Pane paddingBottom={20}>
-            <Link to="/SeatInformation" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
+          <Pane marginLeft={280} paddingBottom={20}>
+            <Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
                 <Button appearance="primary" height={48}>Send Reset Email</Button>
             </Link>
           </Pane>

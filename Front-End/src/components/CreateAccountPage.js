@@ -42,7 +42,7 @@ function CreateAccountPage() {
             <Link to="/ForgetPassword">Forget Password?</Link>
           </Pane>
           <Pane paddingBottom={20}>
-            <Link to="/HomePage" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
+            <Link to="/Login" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
                 <Button appearance="primary" height={48}>Create Account</Button>
             </Link>
           </Pane>

@@ -29,7 +29,7 @@ function SeatInformationPage() {
               <Heading size={800} >Description</Heading>
             </Pane>
             <Pane marginTop={16}>
-              <Text size={600}>- Some dscription about the chair<br></br> - This box should be dynamic depending on the id of the seat.
+              <Text size={600}>- Some description about the chair location(Powered/Aircon etc)<br></br> - This box should be dynamic depending on the id of the seat.
               </Text>
             </Pane>
 
