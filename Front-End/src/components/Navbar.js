@@ -34,8 +34,13 @@ function Navbar() {
           <Button margin={8}>My Account</Button>
         </Link>
         <Link to="/Login" style={{ textDecoration: "none" }}>
-          <Button margin={8} appearance="primary">
+          <Button margin={8} appearance="primary" intent="success">
             Login
+          </Button>
+        </Link>
+        <Link to="/CreateAccount" style={{ textDecoration: "none" }}>
+          <Button margin={8} appearance="primary">
+            Create Account
           </Button>
         </Link>
       </Pane>

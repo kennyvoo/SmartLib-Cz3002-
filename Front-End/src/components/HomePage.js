@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const [state, setState] = useState({
@@ -49,7 +50,7 @@ function HomePage() {
                 width={600}
                 options={state.options}
                 value={state.value}
-                //   onChange={(value) => setState(value)}
+              //   onChange={(value) => setState(value)}
               />
               <Pane
                 height={400}
@@ -66,8 +67,14 @@ function HomePage() {
               </Pane>
             </div>
           </Pane>
+          <Pane>
+            <Link to="/SeatInformation" style={{ textDecoration: "none" }}>
+              <Button marginRight={16} appearance="primary" intent="warning">Test</Button>
+            </Link>
+          </Pane>
         </div>
       </Pane>
+
     </div>
   );
 }
