@@ -35,7 +35,7 @@ function LoginPage() {
             <Link to="/ForgetPassword">Forget Password?</Link>
           </Pane>
           <Pane paddingBottom={20}>
-            <Link to="/MyBookings" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
+            <Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
                 <Button appearance="primary" intent="success" height={48}>Login</Button>
             </Link>
           </Pane>

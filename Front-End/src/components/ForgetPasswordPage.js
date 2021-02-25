@@ -1,7 +1,7 @@
 import React from "react";
 import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField } from "evergreen-ui";
 import { Link } from "react-router-dom";
-import background from "./Img/Stress.jpg";
+import background from "./Img/Stress.png";
 
 function ForgetPasswordPage() {
   return (
@@ -28,7 +28,7 @@ function ForgetPasswordPage() {
             <Link to="/MyBookings">Forget Password?</Link>
           </Pane>
           <Pane paddingBottom={20}>
-            <Link to="/HomePage" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
+            <Link to="/SeatInformation" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
                 <Button appearance="primary" height={48}>Send Reset Email</Button>
             </Link>
           </Pane>
