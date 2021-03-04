@@ -69,8 +69,9 @@ function HomePage() {
           </Pane>
           <Pane>
             <Link to="/SeatInformation" style={{ textDecoration: "none" }}>
-              <Button marginRight={16} appearance="primary" intent="warning">Test</Button>
+              <Button marginRight={16} appearance="primary" intent="success">Test</Button>
             </Link>
+            <Button marginRight={16} appearance="primary" intent="warning">Booked</Button>
           </Pane>
         </div>
       </Pane>

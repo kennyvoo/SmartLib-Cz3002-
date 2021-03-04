@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import CreateAccountPage from "./components/CreateAccountPage"
 import ForgetPasswordPage from "./components/ForgetPasswordPage"
 import SeatInformationPage from "./components/SeatInformationPage"
+import ResetPasswordPage from "./components/ResetPasswordPage"
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route path="/SeatInformation">
             <SeatInformationPage />
+          </Route>
+          <Route path="/ResetPassword">
+            <ResetPasswordPage />
           </Route>
         </Switch>
         <Footer />

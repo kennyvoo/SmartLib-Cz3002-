@@ -1,9 +1,9 @@
 import React from "react";
 import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField, TextInput} from "evergreen-ui";
 import { Link } from "react-router-dom";
-import background from "./Img/lib2.png";
+import background from "./Img/ResetPwd.jpg";
 
-function LoginPage() {
+function ResetPasswordPage() {
   return (
     <div>
       <Pane backgroundImage = {`url(${background})`} display="flex" alignItems="center" justifyContent="center" padding={100} flexDirection="column">
@@ -12,42 +12,38 @@ function LoginPage() {
       </Pane>
       <Pane height={1000} backgroundColor="beige" display="flex" justifyContent="center" padding={20}>
         <FormField>
-        <Heading size={800} >Login Page</Heading>
+        <Heading size={800} >Reset Account Password</Heading>
         <Text><br></br></Text>
         <TextInputField
-          id="Login Information"
+          id="Password Information"
           required
-          label="School Email"
-          placeholder="username@e.ntu.edu.sg"
+          label="New Password"
+          placeholder="New Password"
           inputHeight = {45}
           inputWidth = {450}
         />
         <TextInputField
-          id="Password Information"
+          id="Confirm Password Information"
           required
-          label="Password"
+          label="Confirm Password"
+          placeholder="New Password"
           secureTextEntry={true}
           inputHeight = {45}
           inputWidth = {450}
         />
         {/* This is the container/pane for the login section */}
-        <Pane display="flex" borderRadius={3}>
-          <Pane flex={1} alignItems="center" display="flex">
-            <Link to="/ForgetPassword">Forget Password?</Link>
-          </Pane>
+        <Pane display="flex">
+          <Pane flex={1} alignItems="center" display="flex"></Pane> {/* In Order to keep the button on right side */}
           <Pane paddingBottom={20}>
             <Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
-                <Button appearance="primary" intent="success" height={48}>Login</Button>
+                <Button appearance="primary" intent="success" height={48}>Change Password</Button>
             </Link>
           </Pane>
         </Pane>
-        <Link to="/CreateAccount" style={{ textDecoration: "none" }} > {/* textDecoration has to set to none or else the button will have a line below the Login text */}
-                <Button appearance="primary" height={48} width={450} textAlign="center" >Sign Up</Button>
-        </Link>
         </FormField>
       </Pane>
     </div>
   );
 }
 
-export default LoginPage;
+export default ResetPasswordPage;

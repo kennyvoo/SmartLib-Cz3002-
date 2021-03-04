@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField } from "evergreen-ui";
+import { Pane, Text, Button, Heading, Paragraph, TextInput, TextInputField, FormField } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import background from "./Img/c1.png";
 
@@ -26,9 +26,11 @@ function CreateAccountPage() {
           id="Password Information"
           required
           label="Password"
+          secureTextEntry={true}
           inputHeight = {45}
           inputWidth = {450}
         />
+        <input type="password" name="password"></input>
         <TextInputField
           id="Double confirm Password"
           required

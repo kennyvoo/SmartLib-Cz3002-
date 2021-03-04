@@ -6,13 +6,14 @@ import background from "./Img/Stress.png";
 function SeatInformationPage() {
   return (
     <div>
+      {/* Back Button */}
       <Pane paddingBottom={20}>
         <Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
           <BackButton marginLeft={16} marginTop={16} intent="success" height={48} />
         </Link>
       </Pane>
 
-      {/* Seat description */}
+      {/* Seat description including avatar*/}
       <Pane display="flex" padding={16} borderRadius={3} marginTop={20}> {/* Parent class, defiines the row*/}
         <Pane padding={16} alignItems="center" marginLeft={60} > {/* Children class, defiines the column*/}
           <Avatar isSolid name="S 1" size={300} />
