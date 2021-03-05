@@ -1,22 +1,14 @@
 import React, { useState } from "react";
 import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
 import { Link } from "react-router-dom";
+import MapSelectorPane from "./MapSelectorPane";
 
 function HomePage() {
-  const [state, setState] = useState({
-    options: [
-      { label: "Level 2", value: "lvl2" },
-      { label: "Level 3", value: "lvl3" },
-      { label: "Level 4", value: "lvl4" },
-      { label: "Level 5", value: "lvl5" },
-    ],
-    value: "lvl2",
-  });
 
   return (
     <div>
       <Pane
-        height={1000}
+        height='auto'
         backgroundColor="white"
         display="flex"
         justifyContent="center"
@@ -25,7 +17,7 @@ function HomePage() {
         <div>
           <Pane
             height="auto"
-            width="auto"
+            width="70vw"
             background="none"
             display="flex"
             justifyContent="center"
@@ -37,7 +29,7 @@ function HomePage() {
           </Pane>
           <Pane
             height="auto"
-            width="auto"
+            width="65vw"
             background="none"
             display="flex"
             justifyContent="center"
@@ -45,27 +37,7 @@ function HomePage() {
             border="default"
             borderRadius={5}
           >
-            <div>
-              <SegmentedControl
-                width={600}
-                options={state.options}
-                value={state.value}
-              //   onChange={(value) => setState(value)}
-              />
-              <Pane
-                height={400}
-                width="auto"
-                marginTop={20}
-                background="tint2"
-                border="default"
-                borderRadius={5}
-                justifyContent="center"
-                alignItems="center"
-                display="flex"
-              >
-                <Heading size={600}>Map</Heading>
-              </Pane>
-            </div>
+            <MapSelectorPane />
           </Pane>
           <Pane>
             <Link to="/SeatInformation" style={{ textDecoration: "none" }}>
