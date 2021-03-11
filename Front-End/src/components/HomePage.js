@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import MapSelectorPane from "./MapSelectorPane";
+import firebase from '../services/firebase';
 
 function HomePage() {
 
@@ -17,7 +18,7 @@ function HomePage() {
         <div>
           <Pane
             height="auto"
-            width="70vw"
+            width="95vw"
             background="none"
             display="flex"
             justifyContent="center"
@@ -29,7 +30,7 @@ function HomePage() {
           </Pane>
           <Pane
             height="auto"
-            width="65vw"
+            width="95vw"
             background="none"
             display="flex"
             justifyContent="center"

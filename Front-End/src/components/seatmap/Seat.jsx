@@ -1,66 +1,74 @@
-import React, { Component } from 'react'
+import React, { useContext } from "react";
+// import { SeatContext } from '../../contexts/SeatContext';
+import { SelectedSeatContext } from "../../contexts/SelectSeatContext";
 
-var boxRx = 10;
-var boxRy = 10;
-var boxHeight = 70;
-var boxWidth = 70;
-var boxStroke = "#909090";
-var boxStrokeWidth = "2px";
+const boxRx = 10;
+const boxRy = 10;
+const boxHeight = 70;
+const boxWidth = 70;
+const boxStroke = "#909090";
+const boxStrokeSelected = "#000000";
+const boxStrokeWidth = "2px";
+const boxStrokeWidthSelected = "3px";
 
-class Seat extends Component {
+const colorAvailable = "#5cd89f";
+const colorReserved = "#f4a261";
+const colorOccupied = "#fc5353";
+const colorHogged = "#AAAAAA";
+const colorUnavailable = "#28363d";
 
-    constructor(props)
-    {
-        super(props);
-        this.clickSeat = this.clickSeat.bind(this);
-    }
+function Seat(props) {
+  
+    //const [seats, setSeats] = useContext(SeatContext);
+    const [selected, setSelected] = useContext(SelectedSeatContext);
 
-    renderColor(param) {
-        switch(param) {
-            case 'Available':
-                return '#2ac73f';
-            case 'Reserved':
-                return '#eb8934'; 
-            case 'Occupied':
-                return '#eb3434';
-            case 'Hogged':
-                return '#9e9e9e';
-            default:
-                return 'none';
-        }
+    function renderColor(param) {
+    switch (param) {
+      case "Available":
+        return colorAvailable;
+      case "Reserved":
+        return colorReserved;
+      case "Occupied":
+        return colorOccupied;
+      case "Hogged":
+        return colorHogged;
+      default:
+        return colorUnavailable;
     }
-    
-    clickSeat()
-    {
-        console.log("Clicked " + this.props.seat.seatName);
-        alert("Clicked " + this.props.seat.seatName);
-    }
-    
-    render() {
-        return (
-            // <li>
-            //     {this.props.seat.xLoc} {this.props.seat.yLoc}
-            // </li>
-            <g onClick={this.clickSeat} cursor='pointer'>
-                <rect
-                    x={this.props.seat.xLoc} y={this.props.seat.yLoc}
-                    height={boxHeight} width={boxWidth}
-                    rx={boxRx} ry={boxRy}
-                    fill={this.renderColor(this.props.seat.status)}
-                    stroke={boxStroke} strokeWidth={boxStrokeWidth}
-                />
-                <text
-                    className="seatText"
-                    textAnchor="middle"
-                    x={this.props.seat.xLoc+(boxWidth/2)}
-                    y={this.props.seat.yLoc+(boxHeight/2)}
-                    //x='10' y='10'
-                >
-                    {this.props.seat.seatName}
-                </text>
-            </g>
-        )
-    }
+  }
+
+  function clickSeat() {
+    console.log("Clicked " + props.seat.seatName);
+    //   alert("Clicked " + props.seat.seatName);
+      setSelected({ seat: props.seat.id, level:selected.level });
+  }
+  return (
+    // <li>
+    //     {this.props.seat.xLoc} {this.props.seat.yLoc}
+    // </li>
+    <g onClick={clickSeat} cursor="pointer">
+      <rect
+        x={props.seat.xLoc}
+        y={props.seat.yLoc}
+        height={boxHeight}
+        width={boxWidth}
+        rx={boxRx}
+        ry={boxRy}
+        fill={renderColor(props.seat.status)}
+        stroke={(selected.seat==props.seat.id)? boxStrokeSelected:boxStroke}
+        strokeWidth={(selected.seat==props.seat.id)? boxStrokeWidthSelected:boxStrokeWidth}
+      />
+      <text
+        className="seatText"
+        textAnchor="middle"
+        x={props.seat.xLoc + boxWidth / 2}
+        y={props.seat.yLoc + boxHeight / 2}
+        //x='10' y='10'
+      >
+        {props.seat.seatName}
+      </text>
+    </g>
+  );
 }
 
-export default Seat
+export default Seat;
