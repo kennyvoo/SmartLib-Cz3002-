@@ -11,7 +11,7 @@ function ResetPasswordPage() {
         <Text size={600} color = {'white'}><br></br><br></br><br></br>Where student meet seats</Text>
       </Pane>
       <Pane height={1000} backgroundColor="beige" display="flex" justifyContent="center" padding={20}>
-        <FormField>
+        <form>
         <Heading size={800} >Reset Account Password</Heading>
         <Text><br></br></Text>
         <TextInputField
@@ -19,6 +19,7 @@ function ResetPasswordPage() {
           required
           label="New Password"
           placeholder="New Password"
+          type="password"
           inputHeight = {45}
           inputWidth = {450}
         />
@@ -27,6 +28,7 @@ function ResetPasswordPage() {
           required
           label="Confirm Password"
           placeholder="New Password"
+          type="password"
           secureTextEntry={true}
           inputHeight = {45}
           inputWidth = {450}
@@ -40,7 +42,7 @@ function ResetPasswordPage() {
             </Link>
           </Pane>
         </Pane>
-        </FormField>
+        </form>
       </Pane>
     </div>
   );

@@ -12,7 +12,7 @@ import ForgetPasswordPage from "./components/ForgetPasswordPage"
 import SeatInformationPage from "./components/SeatInformationPage"
 import ResetPasswordPage from "./components/ResetPasswordPage"
 
-function App() {
+function cpyApp() {
 
   const adminUSer = {
     email: "admin@smartLib.com",
@@ -97,4 +97,4 @@ function App() {
   );
 }
 
-export default App;
+export default cpyApp;

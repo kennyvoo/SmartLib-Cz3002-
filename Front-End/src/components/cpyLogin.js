@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import background from "./Img/lib2.png";
 
 //Pass in props/object into the LoginPage function
-function LoginPage({ Login, error }) {
+function cpyLogin({ Login, error }) {
 
   //Local details
   const [details, setDetails] = useState({ email: "", password: "" });
@@ -81,4 +81,4 @@ function LoginPage({ Login, error }) {
   );
 }
 
-export default LoginPage;
+export default cpyLogin;
