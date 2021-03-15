@@ -40,11 +40,11 @@ function HomePage() {
           >
             <MapSelectorPane />
           </Pane>
-          <Pane>
-            <Link to="/SeatInformation" style={{ textDecoration: "none" }}>
-              <Button marginRight={16} appearance="primary" intent="warning">Test</Button>
-            </Link>
-          </Pane>
+          {/*<Pane>*/}
+          {/*  <Link to="/SeatInformation" style={{ textDecoration: "none" }}>*/}
+          {/*    <Button marginRight={16} appearance="primary" intent="warning">Test</Button>*/}
+          {/*  </Link>*/}
+          {/*</Pane>*/}
         </div>
       </Pane>
 
