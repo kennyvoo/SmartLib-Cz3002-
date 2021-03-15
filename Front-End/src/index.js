@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { SeatProvider } from './contexts/SeatContext'
+import { SelectedSeatProvider } from './contexts/SelectSeatContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SelectedSeatProvider>
+    <SeatProvider>
+      <App />
+    </SeatProvider>
+    </SelectedSeatProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
