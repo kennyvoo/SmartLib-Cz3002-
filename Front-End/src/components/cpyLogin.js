@@ -4,39 +4,18 @@ import { Link } from "react-router-dom";
 import background from "./Img/lib2.png";
 
 //Pass in props/object into the LoginPage function
-function LoginPage({Login}) {
-
-  const studentUser = {
-    email: "1@1.com",
-    password: "asd"
-  }
+function cpyLogin({ Login, error }) {
 
   //Local details
   const [details, setDetails] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
 
   //Function to handle the submit of the details
   const submitHandler = e => {
-
     console.log('here');
     e.preventDefault(); //Prevent page from rerendering
 
-    if (details.email == studentUser.email && details.password == studentUser.password) {
-      console.log("Logged in");
-      setError("");
-      //Send back user data to App.js
-      Login(details);
-
-      // Function to redirect to home
-    }
-    else if (details.email != studentUser.email) {
-      console.log("Wrong Email");
-      setError("Wrong email entered");
-    }
-    else {
-      console.log("Wrong Password");
-      setError("Wrong Password entered");
-    }
+    //Pass in the login function we passed as a prop
+    Login(details);
   }
 
   return (
@@ -60,7 +39,7 @@ function LoginPage({Login}) {
               intent="danger"
               title={error}
             />
-          </Pane>) : (<Pane></Pane>)}
+          </Pane>) : (<Pane></Pane>)} 
           <TextInputField
             id="Login Information"
             required
@@ -102,4 +81,4 @@ function LoginPage({Login}) {
   );
 }
 
-export default LoginPage;
+export default cpyLogin;

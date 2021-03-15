@@ -1,4 +1,4 @@
-import { React } from "react";
+import React from "react";
 import {
   Pane,
   Text,
@@ -9,6 +9,7 @@ import {
   SideSheet,
   Paragraph,
   Avatar,
+  WarningSignIcon,
   Popover,
   Menu,
   Position,
@@ -84,4 +85,32 @@ function Navbar() {
   );
 }
 
+function MyBookingButton() {
+  return (
+    <Button margin={8}>My Bookings</Button>
+  );
+}
+
+function MyAccountButton() {
+  return (
+    <Button margin={8}>My Account</Button>
+  );
+}
+
+function CreateAccountButton() {
+  return (
+    <Button margin={8} appearance="primary">
+      Create Account
+    </Button>
+  );
+}
+
+function UserAvatar() {
+  return (
+    <Avatar name="Hou Jing" size={30} margin={8} />
+  );
+}
+
 export default Navbar;
+
+

@@ -11,7 +11,7 @@ function ForgetPasswordPage() {
         <Text size={600} color = {'white'}><br></br><br></br><br></br>Don't Worry, we'll get you back on track!</Text>
       </Pane>
       <Pane height={1000} backgroundColor="beige" display="flex" justifyContent="center" padding={20}>
-        <FormField>
+        <form>
         <Heading size={800} >Password Reset</Heading>
         <Text><br></br></Text>
         <TextInputField
@@ -21,16 +21,17 @@ function ForgetPasswordPage() {
           placeholder="username@e.ntu.edu.sg"
           inputHeight = {45}
           inputWidth = {450}
+          type="email"
         />
         {/* This is the container/pane for the login section */}
         <Pane display="flex" borderRadius={3}>
           <Pane marginLeft={280} paddingBottom={20}>
-            <Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
+            <Link to="/ResetPassword" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
                 <Button appearance="primary" height={48}>Send Reset Email</Button>
             </Link>
           </Pane>
         </Pane>
-        </FormField>
+        </form>
       </Pane>
     </div>
   );

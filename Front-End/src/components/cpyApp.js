@@ -12,8 +12,12 @@ import ForgetPasswordPage from "./components/ForgetPasswordPage"
 import SeatInformationPage from "./components/SeatInformationPage"
 import ResetPasswordPage from "./components/ResetPasswordPage"
 
-function App() {
+function cpyApp() {
 
+  const adminUSer = {
+    email: "admin@smartLib.com",
+    password: "test123"
+  }
   // Getting the user state based on the input
   const [user, setUser] = useState({ name: "", email: "" });
   const [error, setError] = useState("");
@@ -21,14 +25,28 @@ function App() {
   //function to be called when we want to login, passing in details
   const Login = details => {
     console.log(details);
-    if (details.email != "") {
+
+    if (details.email == adminUSer.email && details.password == adminUSer.password) {
+      console.log("Logged in");
       setUser({
-        name: "test",
         email: details.email
       });
-    } else {
-      setUser({ name: "", email: "" });
+      <Link to="/" style={{ textDecoration: "none" }}></Link>
     }
+    else if(details.email != adminUSer.email){
+      console.log("Details do not match");
+      setError("Wrong email entered");
+    }
+    else {
+      console.log("Details do not match");
+      setError("Wrong Password entered");
+    }
+
+  }
+
+  const Logout = () => {
+    console.log("Logout");
+    setUser({ name: "", email: "" });
   }
 
   return (
@@ -36,7 +54,7 @@ function App() {
       {/* <h1>Hello</h1> */}
 
       <Router>
-        <Navbar Login={Login}/>
+        <Navbar />
         <Switch>
           <Route exact path="/">
             <HomePage />
@@ -48,8 +66,17 @@ function App() {
             <AccountMgmtPage />
           </Route>
           <Route path="/Login">
-            {/* //Have to pass the login and error function as well */}
-            <LoginPage Login={Login} />
+
+            {(user.email != "") ? (
+              <div classname="welcome">
+                <h2>Welcome, <span>{user.email}</span></h2>
+                <button onClick={Logout}>Logout</button>
+              </div>
+            ) : (
+              //Have to pass the login and error function as well
+              <LoginPage Login={Login} error={error} />
+            )}
+
           </Route>
           <Route path="/CreateAccount">
             <CreateAccountPage />
@@ -70,4 +97,4 @@ function App() {
   );
 }
 
-export default App;
+export default cpyApp;
