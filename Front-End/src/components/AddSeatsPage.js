@@ -1,5 +1,17 @@
-import React, {useContext, useState} from "react";
-import {Pane, Text, Button, Heading, SegmentedControl, TextInput, TextInputField, AddIcon, ResetIcon, SearchIcon} from "evergreen-ui";
+import React, {useContext, useEffect, useState} from "react";
+import {
+    Pane,
+    Text,
+    Button,
+    Heading,
+    SegmentedControl,
+    TextInput,
+    TextInputField,
+    AddIcon,
+    ResetIcon,
+    SearchIcon,
+    Checkbox
+} from "evergreen-ui";
 import { Link } from "react-router-dom";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
@@ -19,21 +31,21 @@ function AddSeatsPage(){
     const [seats, setSeats] = useContext(SeatContext);
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
-    const [newSeat, setNewSeat]=useState(
-        {
-            id: seats[seats.length-1].id+1,
-            level: selected.level,
-            seatName: '',
-            cameraId: '',
-            x1Img: 0,
-            y1Img: 0,
-            x2Img: 0,
-            y2Img: 0,
-            xLoc: 0,
-            yLoc: 0,
-            status: 'Available',
-            unavailable: false
-        })
+    const defaultSeat = {
+        id: seats[seats.length-1].id+1,
+        level: selected.level,
+        seatName: '',
+        cameraId: '',
+        x1Img: 0,
+        y1Img: 0,
+        x2Img: 0,
+        y2Img: 0,
+        xLoc: 0,
+        yLoc: 0,
+        status: 'Available',
+        unavailable: false
+    }
+    const [newSeat, setNewSeat]=useState(defaultSeat)
 
     const handleChange = (e) => {
         const { id, value } = e.target
@@ -52,15 +64,14 @@ function AddSeatsPage(){
     function previewSeat()
     {
         setTempSeats(seats);
-        console.log(tempSeats);
         setTempSeats(prev=>[...prev, newSeat])
         setSelected(prevState=>({...prevState,seat:newSeat.id}))
-        console.log(tempSeats);
     }
 
     function resetSeat()
     {
         setTempSeats(seats);
+        setNewSeat(defaultSeat);
     }
 
     function cameraSelect(level)
@@ -76,6 +87,10 @@ function AddSeatsPage(){
                 return L5C1;
         }
     }
+
+    useEffect(() => {console.log('tempSeats:'); console.log(tempSeats)}, [tempSeats]);
+    useEffect(() => {console.log('seats:'); console.log(seats); setNewSeat(prevState => ({...prevState,id:seats[seats.length-1].id+1}))}, [seats]);
+    useEffect(() => {console.log('newSeat:'); console.log(newSeat)}, [newSeat]);
 
     return(
         <Pane className={'bgPane'}>
@@ -197,11 +212,22 @@ function AddSeatsPage(){
                                     id="status" label="Status :" placeholder="eg. Available"
                                     value={newSeat.status} onChange={handleChange} disabled
                                 />
-                                <TextInputField
-                                    className={'inputFieldBox'}
-                                    id="unavailable" label="Unavailable :" placeholder="0-800"
-                                    value={newSeat.unavailable} onChange={handleChange} disabled
-                                />
+                                {/*<TextInputField*/}
+                                {/*    className={'inputFieldBox'}*/}
+                                {/*    id="unavailable" label="Unavailable :" placeholder="0-800"*/}
+                                {/*    value={newSeat.unavailable} onChange={handleChange} disabled*/}
+                                {/*/>*/}
+                                <Component initialState={{ checked: false }}>
+                                    {({ state, setState }) => (
+                                        <Checkbox
+                                            label="Unavailable"
+                                            checked={state.checked}
+                                            onChange={e => {setState({ checked: e.target.checked }); setNewSeat(prevState => ({...prevState, unavailable: !state.checked})); }}
+                                            margin={10}
+                                            paddingTop={15}
+                                        />
+                                    )}
+                                </Component>
                             </Pane>
                         </Pane>
                 </Pane>

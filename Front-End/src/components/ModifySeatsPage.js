@@ -1,17 +1,5 @@
-import React, {useContext, useState} from "react";
-import {
-    Pane,
-    Text,
-    Button,
-    Heading,
-    SegmentedControl,
-    TextInput,
-    TextInputField,
-    AddIcon,
-    ResetIcon,
-    SearchIcon,
-    EditIcon, DeleteIcon
-} from "evergreen-ui";
+import React, {useContext, useEffect, useState} from "react";
+import {Pane, Text, Button, Heading, SegmentedControl, TextInput, TextInputField, AddIcon, ResetIcon, SearchIcon, Checkbox, TrashIcon, EditIcon} from "evergreen-ui";
 import { Link } from "react-router-dom";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
@@ -29,21 +17,21 @@ function ModifySeatsPage(){
     const [seats, setSeats] = useContext(SeatContext);
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
-    const [newSeat, setNewSeat]=useState(
-        {
-            id: seats[seats.length-1].id+1,
-            level: selected.level,
-            seatName: '',
-            cameraId: '',
-            x1Img: 0,
-            y1Img: 0,
-            x2Img: 0,
-            y2Img: 0,
-            xLoc: 0,
-            yLoc: 0,
-            status: 'Available',
-            unavailable: false
-        })
+    const defaultSeat = {
+        id: seats[seats.length-1].id+1,
+        level: selected.level,
+        seatName: '',
+        cameraId: '',
+        x1Img: 0,
+        y1Img: 0,
+        x2Img: 0,
+        y2Img: 0,
+        xLoc: 0,
+        yLoc: 0,
+        status: 'Available',
+        unavailable: false
+    }
+    const [newSeat, setNewSeat]=useState(defaultSeat)
 
     const handleChange = (e) => {
         const { id, value } = e.target
@@ -53,28 +41,30 @@ function ModifySeatsPage(){
         }))
     }
 
+    const handleCheckbox = (state)=>{
+        setNewSeat(prevState => ({
+            ...prevState,
+            unavailable: state
+        }))
+    }
+
     function modifySeat()
     {
         setSeats(prev=>[...prev, newSeat])
         alert("Successfully Added");
     }
 
-    function deleteSeat(){
-        alert("Delete Seat")
-    }
-
     function previewSeat()
     {
         setTempSeats(seats);
-        console.log(tempSeats);
         setTempSeats(prev=>[...prev, newSeat])
         setSelected(prevState=>({...prevState,seat:newSeat.id}))
-        console.log(tempSeats);
     }
 
     function resetSeat()
     {
         setTempSeats(seats);
+        setNewSeat(defaultSeat);
     }
 
     function cameraSelect(level)
@@ -90,6 +80,11 @@ function ModifySeatsPage(){
                 return L5C1;
         }
     }
+
+    useEffect(() => {console.log('tempSeats:'); console.log(tempSeats)}, [tempSeats]);
+    useEffect(() => {console.log('seats:'); console.log(seats); setNewSeat(prevState => ({...prevState,id:seats[seats.length-1].id+1}))}, [seats]);
+    useEffect(() => {console.log('newSeat:'); console.log(newSeat)}, [newSeat]);
+    useEffect(()=>{console.log('selected: id: '+selected.id+' lvl: '+selected.level); },[selected])
 
     return(
         <Pane className={'bgPane'}>
@@ -113,10 +108,15 @@ function ModifySeatsPage(){
                                 className={'segmentedControl'}
                                 options={state.options}
                                 value={state.value}
-                                onChange={(value) => { setState({ value }); setSelected({seat:0, level: value }); setNewSeat(prevState => ({...prevState, level: value}))}}
+                                onChange={(value) => { setState({ value }); setSelected({seat:0, level: value }); setNewSeat(prevState => ({...prevState, level: value})); }}
                             />
                         )}
                     </Component>
+                </Pane>
+                <Pane className={'selectionInfoPane'}>
+                    <p className={'selectionText'}>Selected Seat ID: {(selected.seat == 0) ? '-' : selected.seat} </p>
+                    <p className={'selectionText'}>Level: { selected.level }</p>
+                    <p className={'selectionText'}>Seat Name: { selected.seat==0?'-':(seats.find((seat)=>seat.id==selected.seat)).seatName}</p>
                 </Pane>
                 <Pane className={'masterPane'} border={'none'}>
                     <Pane className={'cameraControlPane'} border={'default'}>
@@ -211,11 +211,22 @@ function ModifySeatsPage(){
                                 id="status" label="Status :" placeholder="eg. Available"
                                 value={newSeat.status} onChange={handleChange} disabled
                             />
-                            <TextInputField
-                                className={'inputFieldBox'}
-                                id="unavailable" label="Unavailable :" placeholder="0-800"
-                                value={newSeat.unavailable} onChange={handleChange} disabled
-                            />
+                            {/*<TextInputField*/}
+                            {/*    className={'inputFieldBox'}*/}
+                            {/*    id="unavailable" label="Unavailable :" placeholder="0-800"*/}
+                            {/*    value={newSeat.unavailable} onChange={handleChange} disabled*/}
+                            {/*/>*/}
+                            <Component initialState={{ checked: false }}>
+                                {({ state, setState }) => (
+                                    <Checkbox
+                                        label="Unavailable"
+                                        checked={state.checked}
+                                        onChange={e => {setState({ checked: e.target.checked }); setNewSeat(prevState => ({...prevState, unavailable: !state.checked})); }}
+                                        margin={10}
+                                        paddingTop={15}
+                                    />
+                                )}
+                            </Component>
                         </Pane>
                     </Pane>
                 </Pane>
@@ -223,7 +234,7 @@ function ModifySeatsPage(){
                     <Button className={'button'} onClick={previewSeat} appearance="primary" iconBefore={SearchIcon}>Preview</Button>
                     <Button className={'button'} onClick={resetSeat} marginRight={16} appearance="primary" intent={"warning"} iconBefore={ResetIcon}>Reset</Button>
                     <Button className={'button'} onClick={modifySeat} marginRight={16} appearance="primary" intent={"success"} iconBefore={EditIcon}>Modify Seat</Button>
-                    <Button className={'button'} onClick={deleteSeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={DeleteIcon}>Delete Seat</Button>
+                    <Button className={'button'} onClick={modifySeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={TrashIcon}>Delete Seat</Button>
                 </Pane>
             </div>
 

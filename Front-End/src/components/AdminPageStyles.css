@@ -130,3 +130,12 @@
     text-align: center;
     font-size: x-large;
 }
+.selectionInfoPane{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+}
+.selectionText{
+    margin: 20px;
+    font-size: 25px;
+}
