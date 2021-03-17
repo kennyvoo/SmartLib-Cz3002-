@@ -11,6 +11,8 @@ import CreateAccountPage from "./components/CreateAccountPage"
 import ForgetPasswordPage from "./components/ForgetPasswordPage"
 import SeatInformationPage from "./components/SeatInformationPage"
 import ResetPasswordPage from "./components/ResetPasswordPage"
+import { AuthProvider } from "./context/AuthContext"
+import PrivateRoute from "./PrivateRoute"
 
 function App() {
 
@@ -36,36 +38,33 @@ function App() {
       {/* <h1>Hello</h1> */}
 
       <Router>
-        <Navbar Login={Login}/>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/MyBookings">
-            <MyBookingsPage />
-          </Route>
-          <Route path="/Account">
-            <AccountMgmtPage />
-          </Route>
-          <Route path="/Login">
-            {/* //Have to pass the login and error function as well */}
-            <LoginPage Login={Login} />
-          </Route>
-          <Route path="/CreateAccount">
-            <CreateAccountPage />
-          </Route>
-          <Route path="/ForgetPassword">
-            <ForgetPasswordPage />
-          </Route>
-          <Route path="/SeatInformation">
-            <SeatInformationPage />
-          </Route>
-          <Route path="/ResetPassword">
-            <ResetPasswordPage />
-          </Route>
-        </Switch>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <Switch>
+            <Route exact path="/"> {/* Only when the address is exactly / */}
+              <HomePage />
+            </Route>
+            <PrivateRoute path="/MyBookings" component={MyBookingsPage} />
+            <PrivateRoute path="/Account" component={AccountMgmtPage} />
+            <Route path="/Login">
+              {/* //Have to pass the login and error function as well */}
+              <LoginPage Login={Login} />
+            </Route>
+            <Route path="/CreateAccount">
+              <CreateAccountPage />
+            </Route>
+            <Route path="/ForgetPassword" component={ForgetPasswordPage} />
+            <Route path="/SeatInformation">
+              <SeatInformationPage />
+            </Route>
+            <Route path="/ResetPassword">
+              <ResetPasswordPage />
+            </Route>
+          </Switch>
+          <Footer />
+        </AuthProvider>
       </Router>
+
     </div>
   );
 }

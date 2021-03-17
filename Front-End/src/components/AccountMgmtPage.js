@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Pane, 
   Text,
   Button, 
@@ -15,7 +15,12 @@ import { Pane,
 } from "evergreen-ui";
 import { Link } from "react-router-dom";
 
+import {useAuth} from '../context/AuthContext'
+
 function AccountMgmtPage() {
+
+  const { currentUser } = useAuth()
+
   return (
     <div>
       {/* Seat description including avatar*/}
@@ -26,10 +31,10 @@ function AccountMgmtPage() {
         <Pane flex={1} display="flex" marginLeft={30} padding={16}>
           <Pane padding={16}>
             <Pane flex={1} display="flex">
-              <Heading size={800} >UserName</Heading>
+              <Heading size={800} >{currentUser.name}</Heading> {/* Currently not stored yet */}
             </Pane>
             <Pane>
-              <Heading size={800} >Example@ntu.com</Heading>
+              <Heading size={800} >{currentUser.email}</Heading>
             </Pane>
             <Pane marginTop={16}>
               <Text size={600}>- Favourite Seat: 545

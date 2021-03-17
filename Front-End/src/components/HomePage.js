@@ -1,8 +1,21 @@
 import React, { useState } from "react";
 import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 function HomePage() {
+
+  const { currentUser, logout } = useAuth()
+  const history = useHistory()
+
+  async function handleLogout() {
+    try {
+      await logout()
+      history.push("/Login")
+    } catch {
+    }
+  }
+
   const [state, setState] = useState({
     options: [
       { label: "Level 2", value: "lvl2" },
@@ -71,7 +84,7 @@ function HomePage() {
             <Link to="/SeatInformation" style={{ textDecoration: "none" }}>
               <Button marginRight={16} appearance="primary" intent="success">Test</Button>
             </Link>
-            <Button marginRight={16} appearance="primary" intent="warning">Booked</Button>
+            <Button marginRight={16} appearance="primary" intent="warning" onClick={handleLogout}>Booked</Button>
           </Pane>
         </div>
       </Pane>
