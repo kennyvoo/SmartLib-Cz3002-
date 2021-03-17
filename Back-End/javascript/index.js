@@ -282,7 +282,7 @@ class Students {
 
 
 
-let test = new Booking_Rec(0,0,0,0,0,0).to_firebase(db);
-Booking_Rec.update("1","AID",5,db)
-console.log("hello");
-console.log(Booking_Rec.get_doc("1",db));
+// let test = new Booking_Rec(0,0,0,0,0,0).to_firebase(db);
+// Booking_Rec.update("1","AID",5,db)
+// console.log("hello");
+// console.log(Booking_Rec.get_doc("1",db));
