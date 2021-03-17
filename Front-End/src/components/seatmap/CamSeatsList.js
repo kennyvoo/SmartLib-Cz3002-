@@ -12,7 +12,7 @@ export function CamSeatsList(props) {
         if(mode) return <GridLines/>
     }
     return (
-        <svg width="80vw" height="auto" viewBox="0 0 1280 720">
+        <svg width="80vw" viewBox="0 0 1280 720">
             {editMode(props.editmode)}
             {/*<rect x='0' y='0' width='1280' height='720' fill='none' stroke='#AAAAAA' strokeWidth='5px' />*/}
             {props.seats.map((seat) => {

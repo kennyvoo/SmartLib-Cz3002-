@@ -12,7 +12,7 @@ import {SeatContext} from "../contexts/SeatContext";
 import DrawRect from "./DrawRect";
 import CamSeatsList from "./seatmap/CamSeatsList";
 import SeatsList from "./seatmap/SeatsList";
-import './AddModifyPageStyles.css'
+import './AdminPageStyles.css'
 
 function AddSeatsPage(){
 
@@ -207,8 +207,8 @@ function AddSeatsPage(){
                 </Pane>
                 <Pane className={'buttonPane'}>
                     <Button className={'button'} onClick={previewSeat} appearance="primary" iconBefore={SearchIcon}>Preview</Button>
-                    <Button onClick={resetSeat} marginRight={16} appearance="primary" intent={"success"} iconBefore={ResetIcon}>Reset</Button>
-                    <Button onClick={addSeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={AddIcon}>Add Seat</Button>
+                    <Button className={'button'} onClick={resetSeat} marginRight={16} appearance="primary" intent={"warning"} iconBefore={ResetIcon}>Reset</Button>
+                    <Button className={'button'} onClick={addSeat} marginRight={16} appearance="primary" intent={"success"} iconBefore={AddIcon}>Add Seat</Button>
                 </Pane>
             </div>
 

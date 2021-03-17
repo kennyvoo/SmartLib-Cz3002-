@@ -1,36 +1,80 @@
-import React, {useContext} from "react";
-import { Pane, Text, Button, Heading, SegmentedControl, TextInput } from "evergreen-ui";
+import React, {useContext, useState} from "react";
+import {
+    Pane,
+    Text,
+    Button,
+    Heading,
+    SegmentedControl,
+    TextInput,
+    TextInputField,
+    AddIcon,
+    ResetIcon,
+    SearchIcon,
+    EditIcon, DeleteIcon
+} from "evergreen-ui";
 import { Link } from "react-router-dom";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
 import L4C1 from "./Img/L4C1.jpg";
 import L5C1 from "./Img/L5C1.jpg";
-import MapSelectorPane from "./MapSelectorPane";
-import GridLines from "./seatmap/GridLines";
-import ImagePlane from "./seatmap/ImagePlane";
-import SeatMap from "./seatmap/SeatMap";
-import EditSeatMap from "./seatmap/EditSeatMap";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import {SeatContext} from "../contexts/SeatContext";
-import CamSeatMap from "./seatmap/CamSeatMap";
-import DrawRect from "./DrawRect";
+import CamSeatsList from "./seatmap/CamSeatsList";
+import SeatsList from "./seatmap/SeatsList";
+import './AdminPageStyles.css'
 
 function ModifySeatsPage(){
 
     const [seats, setSeats] = useContext(SeatContext);
     const [selected, setSelected] = useContext(SelectedSeatContext);
+    const [tempSeats, setTempSeats]=useState(seats);
+    const [newSeat, setNewSeat]=useState(
+        {
+            id: seats[seats.length-1].id+1,
+            level: selected.level,
+            seatName: '',
+            cameraId: '',
+            x1Img: 0,
+            y1Img: 0,
+            x2Img: 0,
+            y2Img: 0,
+            xLoc: 0,
+            yLoc: 0,
+            status: 'Available',
+            unavailable: false
+        })
 
-    let seatsImg=L3C1;
+    const handleChange = (e) => {
+        const { id, value } = e.target
+        setNewSeat(prevState => ({
+            ...prevState,
+            [id]: value
+        }))
+    }
 
     function modifySeat()
     {
-        alert("Modify");
+        setSeats(prev=>[...prev, newSeat])
+        alert("Successfully Added");
     }
 
-    function deleteSeat()
-    {
+    function deleteSeat(){
+        alert("Delete Seat")
+    }
 
+    function previewSeat()
+    {
+        setTempSeats(seats);
+        console.log(tempSeats);
+        setTempSeats(prev=>[...prev, newSeat])
+        setSelected(prevState=>({...prevState,seat:newSeat.id}))
+        console.log(tempSeats);
+    }
+
+    function resetSeat()
+    {
+        setTempSeats(seats);
     }
 
     function cameraSelect(level)
@@ -48,163 +92,139 @@ function ModifySeatsPage(){
     }
 
     return(
-        <Pane
-            height='auto'
-            width='100vw'
-            backgroundColor="white"
-            display="flex"
-            justifyContent="center"
-        >
+        <Pane className={'bgPane'}>
             <div>
-            <Pane
-                height="auto"
-                width="90vw"
-                background="none"
-                display="flex"
-                alignItems={"center"}
-                justifyContent="center"
-                padding={15}
-            >
-                <Heading size={800} marginBottom={10}>
-                    Modify / Delete Seats
-                </Heading>
-            </Pane>
-
-            <Pane
-                height="auto"
-                width={"95vw"}
-                background="none"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                padding={0}
-                border="default"
-                borderRadius={5}
-            >
-                <div>
+                <h2 className={'heading'}>Modify / Delete Seat</h2>
                 {/* Segmented Control Bar*/}
-                <Component
-                    initialState={{
-                        options: [
-                            { label: "Level 2", value: 2 },
-                            { label: "Level 3", value: 3 },
-                            { label: "Level 4", value: 4 },
-                            { label: "Level 5", value: 5 },
-                        ],
-                        value: selected.level,
-                    }}
-                >
-                    {({ state, setState }) => (
-                        <SegmentedControl
-                            width="95vw"
-                            height={50}
-                            padding={10}
-                            options={state.options}
-                            value={state.value}
-                            onChange={(value) => { setState({ value }); setSelected({seat:0, level: value });}}
-                        />
-                    )}
-                </Component>
-
-                    <h3>Selected Seat: {(selected.seat == 0) ? 'None' : selected.seat}</h3>
-                    <h3>Selected Level: { selected.level }</h3>
-
-                    <Pane
-                        height="auto"
-                        width="auto"
-                        margin={10}
-                        background="tint2"
-                        border="default"
-                        borderRadius={5}
-                        justifyContent="center"
-                        alignItems="center"
-                        display="flex"
-                        backgroundImage={`url(${cameraSelect(selected.level)})`}
-                        backgroundSize={"contain"}
-                        backgroundRepeat={"no-repeat"}
-                        backgroundPosition={"center center"}
-                        backgroundOrigin={"content-box"}
+                <Pane className={'segmentedControlPane'}>
+                    <Component
+                        initialState={{
+                            options: [
+                                { label: "Level 2", value: 2 },
+                                { label: "Level 3", value: 3 },
+                                { label: "Level 4", value: 4 },
+                                { label: "Level 5", value: 5 },
+                            ],
+                            value: selected.level,
+                        }}
                     >
-                        {/*<svg width="80vw" height="45vw" viewBox="0 0 1280 720">*/}
-                        {/*    <GridLines/>*/}
-                        {/*    /!*<ImagePlane/>*!/*/}
-                        {/*</svg>*/}
-                        <CamSeatMap/>
+                        {({ state, setState }) => (
+                            <SegmentedControl
+                                className={'segmentedControl'}
+                                options={state.options}
+                                value={state.value}
+                                onChange={(value) => { setState({ value }); setSelected({seat:0, level: value }); setNewSeat(prevState => ({...prevState, level: value}))}}
+                            />
+                        )}
+                    </Component>
+                </Pane>
+                <Pane className={'masterPane'} border={'none'}>
+                    <Pane className={'cameraControlPane'} border={'default'}>
+                        <Pane className={'cameraPane'} backgroundImage={`url(${cameraSelect(selected.level)})`}>
+                            <CamSeatsList seats={tempSeats} editmode={true}/>
+                        </Pane>
 
+                        {/*<Pane>*/}
+                        {/*    <DrawRect/>*/}
+                        {/*</Pane>*/}
+
+                        <Pane className={'infoPane'} paddingBottom={20}>
+                            <Text className={'infoText'}>cameraId: {newSeat.cameraId}</Text>
+                            <Text className={'infoText'}>x1Img: {newSeat.x1Img}</Text>
+                            <Text className={'infoText'}>y1Img: {newSeat.y1Img}</Text>
+                            <Text className={'infoText'}>x2Img: {newSeat.x2Img}</Text>
+                            <Text className={'infoText'}>y2Img: {newSeat.y2Img}</Text>
+                        </Pane>
+                        <Pane className={'inputPane'}>
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="cameraId" label="cameraId :" placeholder="eg. L2C1"
+                                value={newSeat.cameraId} onChange={handleChange}
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="x1Img" label="x1 :" placeholder="0-1280"
+                                value={newSeat.x1Img} onChange={handleChange}
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="y1Img" label="y1 :" placeholder="0-720"
+                                value={newSeat.y1Img} onChange={handleChange}
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="x2Img" label="x2 :" placeholder="0-1280"
+                                value={newSeat.x2Img} onChange={handleChange}
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="y2Img" label="y2 :" placeholder="0-720"
+                                value={newSeat.y2Img} onChange={handleChange}
+                            />
+                        </Pane>
                     </Pane>
-
-                    {/*<Pane>*/}
-                    {/*    <DrawRect/>*/}
-                    {/*</Pane>*/}
-
-                    <h3>x1Img: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).x1Img}</h3>
-                    <h3>x2Img: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).x2Img}</h3>
-                    <h3>y1Img: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).y1Img}</h3>
-                    <h3>y2Img: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).y1Img}</h3>
-
-                    <Pane
-                        height={"auto"}
-                        width={"auto"}
-                        margin={10}
-                        background="tint2"
-                        border="default"
-                        borderRadius={5}
-                        justifyContent="center"
-                        alignItems="center"
-                        display="flex"
-                    >
-                        <EditSeatMap />
+                    <Pane className={'seatMapControlPane'} border={'default'}>
+                        <Pane className={'seatMapPane'} border={'none'}>
+                            <SeatsList seats={tempSeats} editmode={true}/>
+                        </Pane>
+                        <Pane className={'infoPane'}>
+                            <Text className={'infoText'}>id: {newSeat.id}</Text>
+                            <Text className={'infoText'}>level: {newSeat.level}</Text>
+                            <Text className={'infoText'}>seatName: {newSeat.seatName}</Text>
+                        </Pane>
+                        <Pane className={'infoPane'} paddingBottom={20}>
+                            <Text className={'infoText'}>xLoc: {newSeat.xLoc}</Text>
+                            <Text className={'infoText'}>yLoc: {newSeat.yLoc}</Text>
+                            <Text className={'infoText'}>status: {newSeat.status}</Text>
+                            <Text className={'infoText'}>unavailable: {newSeat.unavailable?'true':'false'}</Text>
+                        </Pane>
+                        <Pane className={'inputPane'}>
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="id" label="id :" placeholder="unique id"
+                                value={newSeat.id} onChange={handleChange} disabled
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="level" label="Level :" placeholder="2-5"
+                                value={newSeat.level} onChange={handleChange} disabled
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="seatName" label="Seat Name :" placeholder="eg. LWN-L2-13"
+                                value={newSeat.seatName} onChange={handleChange}
+                            />
+                        </Pane>
+                        <Pane className={'inputPane'}>
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="xLoc" label="xLoc :" placeholder="0-800"
+                                value={newSeat.xLoc} onChange={handleChange}
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="yLoc" label="yLoc :" placeholder="0-800"
+                                value={newSeat.yLoc} onChange={handleChange}
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="status" label="Status :" placeholder="eg. Available"
+                                value={newSeat.status} onChange={handleChange} disabled
+                            />
+                            <TextInputField
+                                className={'inputFieldBox'}
+                                id="unavailable" label="Unavailable :" placeholder="0-800"
+                                value={newSeat.unavailable} onChange={handleChange} disabled
+                            />
+                        </Pane>
                     </Pane>
-
-                    <h3>id: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).id}</h3>
-                    <h3>level: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).level }</h3>
-                    <h3>seatName: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).seatName }</h3>
-                    <h3>xLoc: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).xLoc }</h3>
-                    <h3>yLoc: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).yLoc }</h3>
-                    <h3>status: { (selected.seat == 0) ? 'None' : (seats.find((theSeat) => theSeat.id == selected.seat)).status }</h3>
-                    <h3>unavailable: { (selected.seat == 0) ? 'None' : ((seats.find((theSeat) => theSeat.id == selected.seat)).unavailable)?"True":"False" }</h3>
-
-                    <Pane>
-                        <Text>level=</Text>
-                        <TextInput
-                            name="text-input-name"
-                            placeholder="2 - 5"
-                        />
-                    </Pane>
-                    <Pane>
-                        <Text>seatName=</Text>
-                        <TextInput
-                            name="text-input-name"
-                            placeholder="string"
-                        />
-                    </Pane>
-                    <Pane>
-                        <Text>xLoc=</Text>
-                        <TextInput
-                            name="text-input-name"
-                            placeholder="x"
-                        />
-                    </Pane>
-                    <Pane>
-                        <Text>yLoc=</Text>
-                        <TextInput
-                            name="text-input-name"
-                            placeholder="y"
-                        />
-                    </Pane>
-                    <Pane>
-                        <Text>unavailable=</Text>
-                        <TextInput
-                            name="text-input-name"
-                            placeholder="true/false"
-                        />
-                    </Pane>
-
-                    <Button onClick={modifySeat} marginRight={16} appearance="primary">Ok</Button>
-
-
-                </div>
-            </Pane>
+                </Pane>
+                <Pane className={'buttonPane'}>
+                    <Button className={'button'} onClick={previewSeat} appearance="primary" iconBefore={SearchIcon}>Preview</Button>
+                    <Button className={'button'} onClick={resetSeat} marginRight={16} appearance="primary" intent={"warning"} iconBefore={ResetIcon}>Reset</Button>
+                    <Button className={'button'} onClick={modifySeat} marginRight={16} appearance="primary" intent={"success"} iconBefore={EditIcon}>Modify Seat</Button>
+                    <Button className={'button'} onClick={deleteSeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={DeleteIcon}>Delete Seat</Button>
+                </Pane>
             </div>
 
         </Pane>

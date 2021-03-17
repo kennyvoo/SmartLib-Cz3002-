@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Pane, Text, Button, Heading, SegmentedControl, Dialog, ErrorIcon, HandUpIcon } from "evergreen-ui";
-import SeatMap from "./seatmap/SeatMap";
 import Component from "@reactions/component";
 import { SeatContext } from '../contexts/SeatContext';
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
 import { useHistory } from "react-router-dom";
+import SeatsList from "./seatmap/SeatsList";
 
 function MapSelectorPane() {
   
@@ -76,7 +76,7 @@ function MapSelectorPane() {
         
         <Pane
           height="70vw"
-          width="90vw"
+          width="70vw"
           marginTop={20}
           background="tint2"
           border="default"
@@ -85,8 +85,7 @@ function MapSelectorPane() {
           alignItems="center"
           display="flex"
         >
-          {/* <Heading size={600}>Map</Heading> */}
-          <SeatMap />
+            <SeatsList seats={seats} editmode={false}/>
         </Pane>
         
         <h2>Selected Seat: {(selected.seat == 0) ? 'None' : selected.seat}</h2>
