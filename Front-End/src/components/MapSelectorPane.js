@@ -26,7 +26,15 @@ function MapSelectorPane() {
     var num = 0;
     var i;
     for (i = 0; i < seats.length; i++){
-      if (seats[i].status == keyword) num++;
+        if(keyword=='Unavailable')
+        {
+            if(seats[i].unavailable==true) num++;
+        }
+        else
+        {
+            if (seats[i].status == keyword && seats[i].unavailable==false) num++;
+        }
+
     }
     return (num);
   }

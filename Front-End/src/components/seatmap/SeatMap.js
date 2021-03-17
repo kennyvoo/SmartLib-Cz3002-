@@ -8,7 +8,7 @@ const [seats, setSeats] = useContext(SeatContext);
   return (
     <div>
       {/* <h1>Seats List</h1> */}
-      <SeatsList seats={seats} />
+      <SeatsList seats={seats} editmode={false}/>
     </div>
   );
 }
