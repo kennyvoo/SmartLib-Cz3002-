@@ -25,14 +25,28 @@ import CamSeatsList from "./seatmap/CamSeatsList";
 import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
 import Stats from "./Stats";
+import crudFirebase from '../services/crudFirebase'
+import { useCollection } from "react-firebase-hooks/firestore";
 
 function AdminHomePage(){
 
     const [seats, setSeats] = useContext(SeatContext);
+    const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [statsSel, setStatsSel]=useState({val: 0});
 
     useEffect(()=>{console.log(statsSel); },[statsSel]);
+
+    useEffect(()=> {
+        if(!loading&&dataFS) {
+            //console.log(dataFS.docs);
+            let events = [];
+            dataFS.forEach((doc) => events.push(doc.data()));
+            console.log(events);
+            setSeats(events);
+        }
+    },[dataFS]);
+
 
     function cameraSelect(level)
     {
@@ -42,7 +56,8 @@ function AdminHomePage(){
             case 3:
                 return L3C1;
             case 4:
-                return L4C1;
+                //return L4C1;
+                return 'http://10.27.35.143:8080/video';
             case 5:
                 //return L5C1;
                 return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
@@ -51,6 +66,7 @@ function AdminHomePage(){
     }
 
     return(
+        !loading&&seats?
         <Pane className={'bgPane'}>
             <div>
                 <h2 className={'heading'}>Admin Homepage</h2>
@@ -124,6 +140,8 @@ function AdminHomePage(){
             </div>
 
         </Pane>
+            :
+            <h1>Loading</h1>
 
     );
 }
