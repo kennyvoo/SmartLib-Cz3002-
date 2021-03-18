@@ -9,7 +9,7 @@ export default function PrivateRoute2({ component: Component, ...rest}) {
             {...rest}
             render={props => {
                 try{
-                    return (currentUser.email.includes("admin")) ? <Component {...props} /> : <Redirect to="/Login" />
+                    return (currentUser.email.includes("admin")) ? <Component {...props} /> : <Redirect to="/" />
                 }
                 catch{
                     return <Redirect to="/" />

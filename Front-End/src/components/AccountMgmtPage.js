@@ -13,7 +13,7 @@ import { Pane,
   EditIcon, 
   WarningSignIcon 
 } from "evergreen-ui";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 import {useAuth} from '../context/AuthContext'
 
