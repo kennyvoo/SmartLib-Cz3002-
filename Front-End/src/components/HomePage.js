@@ -30,11 +30,13 @@ function HomePage() {
           </Pane>
           <Pane
             height="auto"
-            width="95vw"
+            width="auto"
+            maxWidth={900}
             background="none"
             display="flex"
             justifyContent="center"
             padding={15}
+            margin={"auto"}
             border="default"
             borderRadius={5}
           >

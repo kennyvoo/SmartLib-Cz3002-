@@ -75,8 +75,8 @@ function MapSelectorPane() {
         </Component>
         
         <Pane
-          height="70vw"
-          width="70vw"
+          height="auto"
+          width="auto"
           marginTop={20}
           background="tint2"
           border="default"

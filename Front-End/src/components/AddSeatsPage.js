@@ -220,11 +220,10 @@ function AddSeatsPage(){
                                 <Component initialState={{ checked: false }}>
                                     {({ state, setState }) => (
                                         <Checkbox
+                                            className={'checkBox'}
                                             label="Unavailable"
                                             checked={state.checked}
                                             onChange={e => {setState({ checked: e.target.checked }); setNewSeat(prevState => ({...prevState, unavailable: !state.checked})); }}
-                                            margin={10}
-                                            paddingTop={15}
                                         />
                                     )}
                                 </Component>

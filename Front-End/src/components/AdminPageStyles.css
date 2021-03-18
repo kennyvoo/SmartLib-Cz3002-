@@ -113,14 +113,22 @@
     text-align: center;
 }
 .homepageMapComboPane{
-    max-width: 800px;
+    max-width: 600px;
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
 }
 .alertsPane{
     max-width: 800px;
-    min-width: 40%;
+    min-width: 20%;
+    min-height: 300px;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+.statsPane{
+    max-width: 800px;
+    /*min-width: 30%;*/
     min-height: 300px;
     border-radius: 5px;
     padding: 10px;
@@ -133,9 +141,20 @@
 .selectionInfoPane{
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     margin-bottom: 0px;
 }
 .selectionText{
     margin: 20px;
     font-size: 25px;
+}
+.checkBox{
+    margin: 10px;
+    padding-top: 15px;
+}
+.statsSegmentedControl{
+    width: 100%;
+    max-width: 1000px;
+    height: 30px;
+    margin: 10px;
 }
