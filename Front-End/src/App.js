@@ -11,6 +11,9 @@ import CreateAccountPage from "./components/CreateAccountPage"
 import ForgetPasswordPage from "./components/ForgetPasswordPage"
 import SeatInformationPage from "./components/SeatInformationPage"
 import ResetPasswordPage from "./components/ResetPasswordPage"
+import ModifySeatsPage from "./components/ModifySeatsPage";
+import AdminHomePage from "./components/AdminHomePage";
+import AddSeatsPage from "./components/AddSeatsPage";
 
 function App() {
 
@@ -62,6 +65,15 @@ function App() {
           </Route>
           <Route path="/ResetPassword">
             <ResetPasswordPage />
+          </Route>
+          <Route path="/Admin">
+            <AdminHomePage />
+          </Route>
+          <Route path="/ModifySeats">
+            <ModifySeatsPage />
+          </Route>
+          <Route path="/AddSeats">
+            <AddSeatsPage />
           </Route>
         </Switch>
         <Footer />

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Pane, Text, Button, Heading, SegmentedControl, Dialog, ErrorIcon, HandUpIcon } from "evergreen-ui";
-import SeatMap from "./seatmap/SeatMap";
 import Component from "@reactions/component";
 import { SeatContext } from '../contexts/SeatContext';
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
 import { useHistory } from "react-router-dom";
+import SeatsList from "./seatmap/SeatsList";
 
 function MapSelectorPane() {
   
@@ -26,7 +26,15 @@ function MapSelectorPane() {
     var num = 0;
     var i;
     for (i = 0; i < seats.length; i++){
-      if (seats[i].status == keyword) num++;
+        if(keyword=='Unavailable')
+        {
+            if(seats[i].unavailable==true) num++;
+        }
+        else
+        {
+            if (seats[i].status == keyword && seats[i].unavailable==false) num++;
+        }
+
     }
     return (num);
   }
@@ -67,8 +75,8 @@ function MapSelectorPane() {
         </Component>
         
         <Pane
-          height="70vw"
-          width="90vw"
+          height="auto"
+          width="auto"
           marginTop={20}
           background="tint2"
           border="default"
@@ -77,8 +85,7 @@ function MapSelectorPane() {
           alignItems="center"
           display="flex"
         >
-          {/* <Heading size={600}>Map</Heading> */}
-          <SeatMap />
+            <SeatsList seats={seats} editmode={false}/>
         </Pane>
         
         <h2>Selected Seat: {(selected.seat == 0) ? 'None' : selected.seat}</h2>
