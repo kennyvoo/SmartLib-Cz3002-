@@ -1,9 +1,33 @@
-import React from "react";
-import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField, Avatar, BackButton, CrossIcon, InfoSignIcon, EditIcon, WarningSignIcon } from "evergreen-ui";
+import React, { useContext } from "react";
+import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField, Avatar, BackButton, CrossIcon, InfoSignIcon, EditIcon, WarningSignIcon, Dialog } from "evergreen-ui";
 import { Link } from "react-router-dom";
+import Component from "@reactions/component";
 import background from "./Img/Stress.png";
+import { SelectedSeatContext } from '../contexts/SelectSeatContext';
+import crudFirebase from '../services/crudFirebase'
+import { useCollection } from "react-firebase-hooks/firestore";
+import axios from 'axios';
 
 function SeatInformationPage() {
+  
+  const [selected, setSelected] = useContext(SelectedSeatContext);
+
+  function handleBook(){
+    crudFirebase.update('Seats',(selected.seat).toString(),{status: 'Reserved'});
+    axios({
+      method: "POST", 
+      url:"http://localhost:4000/api/sendEmail", 
+      data: {
+          name: "test",   
+          subject: "test", 
+          email: "taiwilson5@gmail.com", 
+      }
+    }).then((response)=>{
+      console.log(response.data.msg)
+  })
+
+  }
+
   return (
     <div>
       {/* Back Button */}
@@ -24,7 +48,7 @@ function SeatInformationPage() {
               <Pane>
                 <InfoSignIcon color="info" marginRight={16} size={30} />
               </Pane>
-              <Heading size={800} >Seat #120</Heading>
+              <Heading size={800} >{selected.seat}</Heading>
             </Pane>
             <Pane>
               <Heading size={800} >Description</Heading>
@@ -37,16 +61,13 @@ function SeatInformationPage() {
             {/* Booking Button*/}
             <Pane display="flex" marginTop={100}>
               <Pane flex={1} alignItems="center" display="flex">
-                <WarningSignIcon color="warning" size={30}marginRight={16} />
+                <WarningSignIcon color="warning" size={30} marginRight={16} />
                 <Heading size={600} color={"red"}>Please be at your seat by 15 mins<br></br>
                 or your booking will be terminated</Heading>
               </Pane>
-              <Pane>
-                {/* Below you can see the marginRight property on a Button. */}
-                <Link to="/Login" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
-                  <Button appearance="primary" height={48}>Book</Button>
-                </Link>
-              </Pane>
+              <Link to="/BookingSuccessful" style={{ textDecoration: "none" }}>
+                <Button appearance="primary" height={48} onClick={handleBook}>Book</Button>
+              </Link>
             </Pane>
 
           </Pane>

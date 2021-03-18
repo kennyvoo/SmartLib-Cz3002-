@@ -43,6 +43,7 @@ function MapSelectorPane() {
 
   function clickBook() {
     console.log("Booked");
+    setSeats()
     history.push('/SeatInformation');
   }
 

@@ -46,10 +46,7 @@ export default class MyBookingsPage extends React.Component {
                 Date & Time
             </Table.TextHeaderCell>
               <Table.TextHeaderCell>
-                Seat ID
-            </Table.TextHeaderCell>
-              <Table.TextHeaderCell>
-                Ratings
+                Seat Name
             </Table.TextHeaderCell>
             </Table.Head>
             <Table.VirtualBody height={50}>
@@ -60,17 +57,14 @@ export default class MyBookingsPage extends React.Component {
                   <Table.TextCell isNumber>
                     {profile.seatID}
                   </Table.TextCell>
-                  <Table.TextCell isNumber>
-                    {profile.ratings}
-                  </Table.TextCell>
-                  <Table.Cell width={48} flex="none">
+                  {/* <Table.Cell width={48} flex="none">
                     <Popover
                       content={this.renderRowMenu}
                       position={Position.BOTTOM_RIGHT}
                     >
                       <IconButton icon={MoreIcon} height={24} appearance="minimal" />
                     </Popover>
-                  </Table.Cell>
+                  </Table.Cell> */}
                 </Table.Row>
               ))}
             </Table.VirtualBody>
@@ -91,9 +85,6 @@ export default class MyBookingsPage extends React.Component {
               <Table.TextHeaderCell>
                 Seat ID
             </Table.TextHeaderCell>
-              <Table.TextHeaderCell>
-                Ratings
-            </Table.TextHeaderCell>
             </Table.Head>
             <Table.VirtualBody height={140}>
               {bookingHistory.map(bookingHistory => (
@@ -102,9 +93,6 @@ export default class MyBookingsPage extends React.Component {
                   <Table.TextCell>{bookingHistory.timeBooked}</Table.TextCell>
                   <Table.TextCell isNumber>
                     {bookingHistory.seatID}
-                  </Table.TextCell>
-                  <Table.TextCell isNumber>
-                    {bookingHistory.ratings}
                   </Table.TextCell>
                 </Table.Row>
               ))}

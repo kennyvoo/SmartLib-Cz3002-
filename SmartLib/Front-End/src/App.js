@@ -17,6 +17,7 @@ import AdminPage from "./components/AdminPage"
 import { AuthProvider } from "./context/AuthContext"
 import PrivateRoute from "./PrivateRoute"
 import PrivateRoute2 from "./PrivateRoute2"
+import SuccessBookingPage from "./components/SuccessBookingPage";
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
             <PrivateRoute path="/MyBookings" component={MyBookingsPage} />
             <PrivateRoute path="/Account" component={AccountMgmtPage} />
             <PrivateRoute path="/SeatInformation" component={SeatInformationPage} />
+            <PrivateRoute path="/BookingSuccessful" component={SuccessBookingPage} />
             <PrivateRoute2 path="/Admin" component={AdminHomePage} />
             <PrivateRoute2 path="/ModifySeats" component={ModifySeatsPage} />
             <PrivateRoute2 path="/AddSeats" component={AddSeatsPage} />

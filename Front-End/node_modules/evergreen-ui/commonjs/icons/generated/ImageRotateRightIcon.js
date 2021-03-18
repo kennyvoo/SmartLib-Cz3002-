@@ -1,0 +1,29 @@
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ImageRotateRightIcon = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Icon = _interopRequireDefault(require("../src/Icon"));
+
+var svgPaths16 = ['M5.71 5.71l2-2C7.89 3.53 8 3.28 8 3c0-.28-.11-.53-.29-.71l-2-2a1.003 1.003 0 00-1.42 1.42l.3.29H3C1.34 2 0 3.34 0 5v3c0 .55.45 1 1 1s1-.45 1-1V5c0-.55.45-1 1-1h1.59l-.3.29a1.003 1.003 0 001.42 1.42zM12.5 11c.28 0 .5-.22.5-.5s-.22-.5-.5-.5-.5.22-.5.5.22.5.5.5zM15 7H6c-.55 0-1 .45-1 1v7c0 .55.45 1 1 1h9c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1zm-1 6.33L12 12l-1 1-2-3-2 2.67V9h7v4.33z'];
+var svgPaths20 = ['M5.29 4.29a1.003 1.003 0 001.42 1.42l2-2C8.89 3.53 9 3.28 9 3c0-.28-.11-.53-.29-.71l-2-2a1.003 1.003 0 00-1.42 1.42l.3.29H4C1.79 2 0 3.79 0 6v3c0 .55.45 1 1 1s1-.45 1-1V6c0-1.1.9-2 2-2h1.59l-.3.29zM15.5 13c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM19 7H6c-.55 0-1 .45-1 1v11c0 .55.45 1 1 1h13c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1zm-1 10l-5-3-1 2-2-4-3 4.5V9h11v8z'];
+var ImageRotateRightIcon = (0, _react.memo)((0, _react.forwardRef)(function ImageRotateRightIcon(props, ref) {
+  return _react["default"].createElement(_Icon["default"], (0, _extends2["default"])({
+    svgPaths16: svgPaths16,
+    svgPaths20: svgPaths20,
+    ref: ref,
+    name: "image-rotate-right"
+  }, props));
+}));
+exports.ImageRotateRightIcon = ImageRotateRightIcon;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9pY29ucy9nZW5lcmF0ZWQvSW1hZ2VSb3RhdGVSaWdodEljb24uanMiXSwibmFtZXMiOlsic3ZnUGF0aHMxNiIsInN2Z1BhdGhzMjAiLCJJbWFnZVJvdGF0ZVJpZ2h0SWNvbiIsInByb3BzIiwicmVmIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBRUEsSUFBTUEsVUFBVSxHQUFHLENBQ2pCLDJYQURpQixDQUFuQjtBQUdBLElBQU1DLFVBQVUsR0FBRyxDQUNqQixzWUFEaUIsQ0FBbkI7QUFJTyxJQUFNQyxvQkFBb0IsR0FBRyxpQkFDbEMsdUJBQVcsU0FBU0Esb0JBQVQsQ0FBOEJDLEtBQTlCLEVBQXFDQyxHQUFyQyxFQUEwQztBQUNuRCxTQUNFLGdDQUFDLGdCQUFEO0FBQ0UsSUFBQSxVQUFVLEVBQUVKLFVBRGQ7QUFFRSxJQUFBLFVBQVUsRUFBRUMsVUFGZDtBQUdFLElBQUEsR0FBRyxFQUFFRyxHQUhQO0FBSUUsSUFBQSxJQUFJLEVBQUM7QUFKUCxLQUtNRCxLQUxOLEVBREY7QUFTRCxDQVZELENBRGtDLENBQTdCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7IG1lbW8sIGZvcndhcmRSZWYgfSBmcm9tICdyZWFjdCdcbmltcG9ydCBJY29uIGZyb20gJy4uL3NyYy9JY29uJ1xuXG5jb25zdCBzdmdQYXRoczE2ID0gW1xuICAnTTUuNzEgNS43MWwyLTJDNy44OSAzLjUzIDggMy4yOCA4IDNjMC0uMjgtLjExLS41My0uMjktLjcxbC0yLTJhMS4wMDMgMS4wMDMgMCAwMC0xLjQyIDEuNDJsLjMuMjlIM0MxLjM0IDIgMCAzLjM0IDAgNXYzYzAgLjU1LjQ1IDEgMSAxczEtLjQ1IDEtMVY1YzAtLjU1LjQ1LTEgMS0xaDEuNTlsLS4zLjI5YTEuMDAzIDEuMDAzIDAgMDAxLjQyIDEuNDJ6TTEyLjUgMTFjLjI4IDAgLjUtLjIyLjUtLjVzLS4yMi0uNS0uNS0uNS0uNS4yMi0uNS41LjIyLjUuNS41ek0xNSA3SDZjLS41NSAwLTEgLjQ1LTEgMXY3YzAgLjU1LjQ1IDEgMSAxaDljLjU1IDAgMS0uNDUgMS0xVjhjMC0uNTUtLjQ1LTEtMS0xem0tMSA2LjMzTDEyIDEybC0xIDEtMi0zLTIgMi42N1Y5aDd2NC4zM3onXG5dXG5jb25zdCBzdmdQYXRoczIwID0gW1xuICAnTTUuMjkgNC4yOWExLjAwMyAxLjAwMyAwIDAwMS40MiAxLjQybDItMkM4Ljg5IDMuNTMgOSAzLjI4IDkgM2MwLS4yOC0uMTEtLjUzLS4yOS0uNzFsLTItMmExLjAwMyAxLjAwMyAwIDAwLTEuNDIgMS40MmwuMy4yOUg0QzEuNzkgMiAwIDMuNzkgMCA2djNjMCAuNTUuNDUgMSAxIDFzMS0uNDUgMS0xVjZjMC0xLjEuOS0yIDItMmgxLjU5bC0uMy4yOXpNMTUuNSAxM2MuODMgMCAxLjUtLjY3IDEuNS0xLjVzLS42Ny0xLjUtMS41LTEuNS0xLjUuNjctMS41IDEuNS42NyAxLjUgMS41IDEuNXpNMTkgN0g2Yy0uNTUgMC0xIC40NS0xIDF2MTFjMCAuNTUuNDUgMSAxIDFoMTNjLjU1IDAgMS0uNDUgMS0xVjhjMC0uNTUtLjQ1LTEtMS0xem0tMSAxMGwtNS0zLTEgMi0yLTQtMyA0LjVWOWgxMXY4eidcbl1cblxuZXhwb3J0IGNvbnN0IEltYWdlUm90YXRlUmlnaHRJY29uID0gbWVtbyhcbiAgZm9yd2FyZFJlZihmdW5jdGlvbiBJbWFnZVJvdGF0ZVJpZ2h0SWNvbihwcm9wcywgcmVmKSB7XG4gICAgcmV0dXJuIChcbiAgICAgIDxJY29uXG4gICAgICAgIHN2Z1BhdGhzMTY9e3N2Z1BhdGhzMTZ9XG4gICAgICAgIHN2Z1BhdGhzMjA9e3N2Z1BhdGhzMjB9XG4gICAgICAgIHJlZj17cmVmfVxuICAgICAgICBuYW1lPVwiaW1hZ2Utcm90YXRlLXJpZ2h0XCJcbiAgICAgICAgey4uLnByb3BzfVxuICAgICAgLz5cbiAgICApXG4gIH0pXG4pXG4iXX0=
