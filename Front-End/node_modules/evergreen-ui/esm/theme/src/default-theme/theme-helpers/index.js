@@ -1,0 +1,168 @@
+import themedProperty from '../utils/themedProperty';
+import { colors, elevations } from '../foundational-styles';
+import { fontFamilies, headings, paragraph, text } from '../typography';
+/**
+ * Controls include:
+ * - Button
+ * - IconButton
+ * - TextInput
+ * @param {number} height
+ * @return {number} border radius
+ */
+
+var getBorderRadiusForControlHeight = function getBorderRadiusForControlHeight(height) {
+  if (height <= 40) return 3;
+  return 4;
+};
+/**
+ * Get the text size for a control with a certain height.
+ * @param {number} height
+ * @return {number} text size of the control height.
+ */
+
+
+var getTextSizeForControlHeight = function getTextSizeForControlHeight(height) {
+  if (height <= 24) return 300;
+  if (height <= 28) return 300;
+  if (height <= 32) return 300;
+  if (height <= 36) return 400;
+  if (height <= 40) return 400;
+  return 500;
+};
+/**
+ * Get the size for a icon in a Button with a certain height.
+ * @param {number} height
+ * @return {number} icon size
+ */
+
+
+var getIconSizeForButton = function getIconSizeForButton(height) {
+  if (height <= 28) return 12;
+  if (height <= 32) return 12;
+  if (height <= 40) return 16;
+  if (height <= 48) return 18;
+  return 20;
+}; // Use the same for input components.
+
+
+var getIconSizeForInput = getIconSizeForButton;
+var getIconSizeForSelect = getIconSizeForButton;
+/**
+ * Get the size for a icon in a IconButton with a certain height.
+ * @param {number} height
+ * @return {number} icon size
+ */
+
+var getIconSizeForIconButton = function getIconSizeForIconButton(height) {
+  if (height <= 28) return 12;
+  if (height <= 32) return 14; // Slightly bigger than getIconSizeForButton
+
+  if (height <= 40) return 16;
+  if (height <= 48) return 18;
+  return 20;
+};
+/**
+ * Get background property.
+ * @param {string} background
+ * @return {string} background property.
+ */
+
+
+var getBackground = function getBackground(background) {
+  /**
+   * Return one of theme presets or the original value.
+   */
+  return themedProperty(colors.background, background);
+};
+/**
+ * Get box-shadow (elevation).
+ * @param {string} level — level of elevation.
+ * @return {string} elevation box-shadow.
+ */
+
+
+var getElevation = function getElevation(level) {
+  /**
+   * There is no fallback, undefined will be returned.
+   */
+  return elevations[level];
+};
+/**
+ * Get the color for an icon.
+ * @param {string} color
+ * @return {string} color of the icon
+ */
+
+
+var getIconColor = function getIconColor(color) {
+  /**
+   * Check if there is a preset in the theme for the icon color.
+   */
+  return themedProperty(colors.icon, color);
+};
+/**
+ * Heading styles.
+ * @param {number} size - 100–900. 500 is default.
+ * @return {Object} heading style.
+ */
+
+
+var getHeadingStyle = function getHeadingStyle(size) {
+  return themedProperty(headings, String(size));
+};
+/**
+ * Text styles for single line text.
+ * This is used in the Text component. The Text component is used by:
+ * - Small
+ * - Strong
+ * - Code
+ * - ListItem
+ * - Label
+ * @param {number} size - 300–500. 400 is default.
+ * @return {Object} text style.
+ */
+
+
+var getTextStyle = function getTextStyle(size) {
+  return themedProperty(text, String(size));
+};
+/**
+ * Text styles for paragraphs (multi line text).
+ * This is used in the Paragraph.
+ * @param {number} size - 300–500. 400 is default.
+ * @return {Object} text style.
+ */
+
+
+var getParagraphStyle = function getParagraphStyle(size) {
+  return themedProperty(paragraph, String(size));
+};
+/**
+ * Get the font family. This is used to override the font family.
+ * @param {string} fontFamily
+ * @return {string} font family
+ */
+
+
+var getFontFamily = function getFontFamily(fontFamily) {
+  /**
+   * Allow for passing in a custom fontFamily not in the theme.
+   */
+  return themedProperty(fontFamilies, fontFamily);
+};
+/**
+ * Get the text color. This is used to override the color.
+ * @param {string} fontFamily
+ * @return {string} font family
+ */
+
+
+var getTextColor = function getTextColor(color) {
+  /**
+   * Allow for passing in a custom text color not in the theme.
+   */
+  return themedProperty(colors.text, color);
+};
+
+export { getBorderRadiusForControlHeight, getTextSizeForControlHeight, getIconSizeForButton, getIconSizeForInput, getIconSizeForSelect, getIconSizeForIconButton, getBackground, getElevation, getIconColor, getHeadingStyle, getTextStyle, getParagraphStyle, getFontFamily, getTextColor };
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3NyYy90aGVtZS9zcmMvZGVmYXVsdC10aGVtZS90aGVtZS1oZWxwZXJzL2luZGV4LmpzIl0sIm5hbWVzIjpbInRoZW1lZFByb3BlcnR5IiwiY29sb3JzIiwiZWxldmF0aW9ucyIsImZvbnRGYW1pbGllcyIsImhlYWRpbmdzIiwicGFyYWdyYXBoIiwidGV4dCIsImdldEJvcmRlclJhZGl1c0ZvckNvbnRyb2xIZWlnaHQiLCJoZWlnaHQiLCJnZXRUZXh0U2l6ZUZvckNvbnRyb2xIZWlnaHQiLCJnZXRJY29uU2l6ZUZvckJ1dHRvbiIsImdldEljb25TaXplRm9ySW5wdXQiLCJnZXRJY29uU2l6ZUZvclNlbGVjdCIsImdldEljb25TaXplRm9ySWNvbkJ1dHRvbiIsImdldEJhY2tncm91bmQiLCJiYWNrZ3JvdW5kIiwiZ2V0RWxldmF0aW9uIiwibGV2ZWwiLCJnZXRJY29uQ29sb3IiLCJjb2xvciIsImljb24iLCJnZXRIZWFkaW5nU3R5bGUiLCJzaXplIiwiU3RyaW5nIiwiZ2V0VGV4dFN0eWxlIiwiZ2V0UGFyYWdyYXBoU3R5bGUiLCJnZXRGb250RmFtaWx5IiwiZm9udEZhbWlseSIsImdldFRleHRDb2xvciJdLCJtYXBwaW5ncyI6IkFBQUEsT0FBT0EsY0FBUCxNQUEyQix5QkFBM0I7QUFDQSxTQUFTQyxNQUFULEVBQWlCQyxVQUFqQixRQUFtQyx3QkFBbkM7QUFDQSxTQUFTQyxZQUFULEVBQXVCQyxRQUF2QixFQUFpQ0MsU0FBakMsRUFBNENDLElBQTVDLFFBQXdELGVBQXhEO0FBRUE7Ozs7Ozs7OztBQVFBLElBQU1DLCtCQUErQixHQUFHLFNBQWxDQSwrQkFBa0MsQ0FBQUMsTUFBTSxFQUFJO0FBQ2hELE1BQUlBLE1BQU0sSUFBSSxFQUFkLEVBQWtCLE9BQU8sQ0FBUDtBQUNsQixTQUFPLENBQVA7QUFDRCxDQUhEO0FBS0E7Ozs7Ozs7QUFLQSxJQUFNQywyQkFBMkIsR0FBRyxTQUE5QkEsMkJBQThCLENBQUFELE1BQU0sRUFBSTtB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LFlBQWUsQ0FBQVQsS0FBSyxFQUFJO0FBQzVCOzs7QUFHQSxTQUFPbkIsY0FBYyxDQUFDQyxNQUFNLENBQUNLLElBQVIsRUFBY2EsS0FBZCxDQUFyQjtBQUNELENBTEQ7O0FBT0EsU0FDRVosK0JBREYsRUFFRUUsMkJBRkYsRUFHRUMsb0JBSEYsRUFJRUMsbUJBSkYsRUFLRUMsb0JBTEYsRUFNRUMsd0JBTkYsRUFPRUMsYUFQRixFQVFFRSxZQVJGLEVBU0VFLFlBVEYsRUFVRUcsZUFWRixFQVdFRyxZQVhGLEVBWUVDLGlCQVpGLEVBYUVDLGFBYkYsRUFjRUUsWUFkRiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB0aGVtZWRQcm9wZXJ0eSBmcm9tICcuLi91dGlscy90aGVtZWRQcm9wZXJ0eSdcbmltcG9ydCB7IGNvbG9ycywgZWxldmF0aW9ucyB9IGZyb20gJy4uL2ZvdW5kYXRpb25hbC1zdHlsZXMnXG5pbXBvcnQgeyBmb250RmFtaWxpZXMsIGhlYWRpbmdzLCBwYXJhZ3JhcGgsIHRleHQgfSBmcm9tICcuLi90eXBvZ3JhcGh5J1xuXG4vKipcbiAqIENvbnRyb2xzIGluY2x1ZGU6XG4gKiAtIEJ1dHRvblxuICogLSBJY29uQnV0dG9uXG4gKiAtIFRleHRJbnB1dFxuICogQHBhcmFtIHtudW1iZXJ9IGhlaWdodFxuICogQHJldHVybiB7bnVtYmVyfSBib3JkZXIgcmFkaXVzXG4gKi9cbmNvbnN0IGdldEJvcmRlclJhZGl1c0ZvckNvbnRyb2xIZWlnaHQgPSBoZWlnaHQgPT4ge1xuICBpZiAoaGVpZ2h0IDw9IDQwKSByZXR1cm4gM1xuICByZXR1cm4gNFxufVxuXG4vKipcbiAqIEdldCB0aGUgdGV4dCBzaXplIGZvciBhIGNvbnRyb2wgd2l0aCBhIGNlcnRhaW4gaGVpZ2h0LlxuICogQHBhcmFtIHtudW1iZXJ9IGhlaWdodFxuICogQHJldHVybiB7bnVtYmVyfSB0ZXh0IHNpemUgb2YgdGhlIGNvbnRyb2wgaGVpZ2h0LlxuICovXG5jb25zdCBnZXRUZXh0U2l6ZUZvckNvbnRyb2xIZWlnaHQgPSBoZWlnaHQgPT4ge1xuICBpZiAoaGVpZ2h0IDw9IDI0KSByZXR1cm4gMzAwXG4gIGlmIChoZWlnaHQgPD0gMjgpIHJldHVybiAzMDBcbiAgaWYgKGhlaWdodCA8PSAzMikgcmV0dXJuIDMwMFxuICBpZiAoaGVpZ2h0IDw9IDM2KSByZXR1cm4gNDAwXG4gIGlmIChoZWlnaHQgPD0gNDApIHJldHVybiA0MDBcbiAgcmV0dXJuIDUwMFxufVxuXG4vKipcbiAqIEdldCB0aGUgc2l6ZSBmb3IgYSBpY29uIGluIGEgQnV0dG9uIHdpdGggYSBjZXJ0YWluIGhlaWdodC5cbiAqIEBwYXJhbSB7bnVtYmVyfSBoZWlnaHRcbiAqIEByZXR1cm4ge251bWJlcn0gaWNvbiBzaXplXG4gKi9cbmNvbnN0IGdldEljb25TaXplRm9yQnV0dG9uID0gaGVpZ2h0ID0+IHtcbiAgaWYgKGhlaWdodCA8PSAyOCkgcmV0dXJuIDEyXG4gIGlmIChoZWlnaHQgPD0gMzIpIHJldHVybiAxMlxuICBpZiAoaGVpZ2h0IDw9IDQwKSByZXR1cm4gMTZcbiAgaWYgKGhlaWdodCA8PSA0OCkgcmV0dXJuIDE4XG4gIHJldHVybiAyMFxufVxuXG4vLyBVc2UgdGhlIHNhbWUgZm9yIGlucHV0IGNvbXBvbmVudHMuXG5jb25zdCBnZXRJY29uU2l6ZUZvcklucHV0ID0gZ2V0SWNvblNpemVGb3JCdXR0b25cbmNvbnN0IGdldEljb25TaXplRm9yU2VsZWN0ID0gZ2V0SWNvblNpemVGb3JCdXR0b25cblxuLyoqXG4gKiBHZXQgdGhlIHNpemUgZm9yIGEgaWNvbiBpbiBhIEljb25CdXR0b24gd2l0aCBhIGNlcnRhaW4gaGVpZ2h0LlxuICogQHBhcmFtIHtudW1iZXJ9IGhlaWdodFxuICogQHJldHVybiB7bnVtYmVyfSBpY29uIHNpemVcbiAqL1xuY29uc3QgZ2V0SWNvblNpemVGb3JJY29uQnV0dG9uID0gaGVpZ2h0ID0+IHtcbiAgaWYgKGhlaWdodCA8PSAyOCkgcmV0dXJuIDEyXG4gIGlmIChoZWlnaHQgPD0gMzIpIHJldHVybiAxNCAvLyBTbGlnaHRseSBiaWdnZXIgdGhhbiBnZXRJY29uU2l6ZUZvckJ1dHRvblxuICBpZiAoaGVpZ2h0IDw9IDQwKSByZXR1cm4gMTZcbiAgaWYgKGhlaWdodCA8PSA0OCkgcmV0dXJuIDE4XG4gIHJldHVybiAyMFxufVxuXG4vKipcbiAqIEdldCBiYWNrZ3JvdW5kIHByb3BlcnR5LlxuICogQHBhcmFtIHtzdHJpbmd9IGJhY2tncm91bmRcbiAqIEByZXR1cm4ge3N0cmluZ30gYmFja2dyb3VuZCBwcm9wZXJ0eS5cbiAqL1xuY29uc3QgZ2V0QmFja2dyb3VuZCA9IGJhY2tncm91bmQgPT4ge1xuICAvKipcbiAgICogUmV0dXJuIG9uZSBvZiB0aGVtZSBwcmVzZXRzIG9yIHRoZSBvcmlnaW5hbCB2YWx1ZS5cbiAgICovXG4gIHJldHVybiB0aGVtZWRQcm9wZXJ0eShjb2xvcnMuYmFja2dyb3VuZCwgYmFja2dyb3VuZClcbn1cblxuLyoqXG4gKiBHZXQgYm94LXNoYWRvdyAoZWxldmF0aW9uKS5cbiAqIEBwYXJhbSB7c3RyaW5nfSBsZXZlbCDigJQgbGV2ZWwgb2YgZWxldmF0aW9uLlxuICogQHJldHVybiB7c3RyaW5nfSBlbGV2YXRpb24gYm94LXNoYWRvdy5cbiAqL1xuY29uc3QgZ2V0RWxldmF0aW9uID0gbGV2ZWwgPT4ge1xuICAvKipcbiAgICogVGhlcmUgaXMgbm8gZmFsbGJhY2ssIHVuZGVmaW5lZCB3aWxsIGJlIHJldHVybmVkLlxuICAgKi9cbiAgcmV0dXJuIGVsZXZhdGlvbnNbbGV2ZWxdXG59XG5cbi8qKlxuICogR2V0IHRoZSBjb2xvciBmb3IgYW4gaWNvbi5cbiAqIEBwYXJhbSB7c3RyaW5nfSBjb2xvclxuICogQHJldHVybiB7c3RyaW5nfSBjb2xvciBvZiB0aGUgaWNvblxuICovXG5jb25zdCBnZXRJY29uQ29sb3IgPSBjb2xvciA9PiB7XG4gIC8qKlxuICAgKiBDaGVjayBpZiB0aGVyZSBpcyBhIHByZXNldCBpbiB0aGUgdGhlbWUgZm9yIHRoZSBpY29uIGNvbG9yLlxuICAgKi9cbiAgcmV0dXJuIHRoZW1lZFByb3BlcnR5KGNvbG9ycy5pY29uLCBjb2xvcilcbn1cblxuLyoqXG4gKiBIZWFkaW5nIHN0eWxlcy5cbiAqIEBwYXJhbSB7bnVtYmVyfSBzaXplIC0gMTAw4oCTOTAwLiA1MDAgaXMgZGVmYXVsdC5cbiAqIEByZXR1cm4ge09iamVjdH0gaGVhZGluZyBzdHlsZS5cbiAqL1xuY29uc3QgZ2V0SGVhZGluZ1N0eWxlID0gc2l6ZSA9PiB7XG4gIHJldHVybiB0aGVtZWRQcm9wZXJ0eShoZWFkaW5ncywgU3RyaW5nKHNpemUpKVxufVxuXG4vKipcbiAqIFRleHQgc3R5bGVzIGZvciBzaW5nbGUgbGluZSB0ZXh0LlxuICogVGhpcyBpcyB1c2VkIGluIHRoZSBUZXh0IGNvbXBvbmVudC4gVGhlIFRleHQgY29tcG9uZW50IGlzIHVzZWQgYnk6XG4gKiAtIFNtYWxsXG4gKiAtIFN0cm9uZ1xuICogLSBDb2RlXG4gKiAtIExpc3RJdGVtXG4gKiAtIExhYmVsXG4gKiBAcGFyYW0ge251bWJlcn0gc2l6ZSAtIDMwMOKAkzUwMC4gNDAwIGlzIGRlZmF1bHQuXG4gKiBAcmV0dXJuIHtPYmplY3R9IHRleHQgc3R5bGUuXG4gKi9cbmNvbnN0IGdldFRleHRTdHlsZSA9IHNpemUgPT4ge1xuICByZXR1cm4gdGhlbWVkUHJvcGVydHkodGV4dCwgU3RyaW5nKHNpemUpKVxufVxuXG4vKipcbiAqIFRleHQgc3R5bGVzIGZvciBwYXJhZ3JhcGhzIChtdWx0aSBsaW5lIHRleHQpLlxuICogVGhpcyBpcyB1c2VkIGluIHRoZSBQYXJhZ3JhcGguXG4gKiBAcGFyYW0ge251bWJlcn0gc2l6ZSAtIDMwMOKAkzUwMC4gNDAwIGlzIGRlZmF1bHQuXG4gKiBAcmV0dXJuIHtPYmplY3R9IHRleHQgc3R5bGUuXG4gKi9cbmNvbnN0IGdldFBhcmFncmFwaFN0eWxlID0gc2l6ZSA9PiB7XG4gIHJldHVybiB0aGVtZWRQcm9wZXJ0eShwYXJhZ3JhcGgsIFN0cmluZyhzaXplKSlcbn1cblxuLyoqXG4gKiBHZXQgdGhlIGZvbnQgZmFtaWx5LiBUaGlzIGlzIHVzZWQgdG8gb3ZlcnJpZGUgdGhlIGZvbnQgZmFtaWx5LlxuICogQHBhcmFtIHtzdHJpbmd9IGZvbnRGYW1pbHlcbiAqIEByZXR1cm4ge3N0cmluZ30gZm9udCBmYW1pbHlcbiAqL1xuY29uc3QgZ2V0Rm9udEZhbWlseSA9IGZvbnRGYW1pbHkgPT4ge1xuICAvKipcbiAgICogQWxsb3cgZm9yIHBhc3NpbmcgaW4gYSBjdXN0b20gZm9udEZhbWlseSBub3QgaW4gdGhlIHRoZW1lLlxuICAgKi9cbiAgcmV0dXJuIHRoZW1lZFByb3BlcnR5KGZvbnRGYW1pbGllcywgZm9udEZhbWlseSlcbn1cblxuLyoqXG4gKiBHZXQgdGhlIHRleHQgY29sb3IuIFRoaXMgaXMgdXNlZCB0byBvdmVycmlkZSB0aGUgY29sb3IuXG4gKiBAcGFyYW0ge3N0cmluZ30gZm9udEZhbWlseVxuICogQHJldHVybiB7c3RyaW5nfSBmb250IGZhbWlseVxuICovXG5jb25zdCBnZXRUZXh0Q29sb3IgPSBjb2xvciA9PiB7XG4gIC8qKlxuICAgKiBBbGxvdyBmb3IgcGFzc2luZyBpbiBhIGN1c3RvbSB0ZXh0IGNvbG9yIG5vdCBpbiB0aGUgdGhlbWUuXG4gICAqL1xuICByZXR1cm4gdGhlbWVkUHJvcGVydHkoY29sb3JzLnRleHQsIGNvbG9yKVxufVxuXG5leHBvcnQge1xuICBnZXRCb3JkZXJSYWRpdXNGb3JDb250cm9sSGVpZ2h0LFxuICBnZXRUZXh0U2l6ZUZvckNvbnRyb2xIZWlnaHQsXG4gIGdldEljb25TaXplRm9yQnV0dG9uLFxuICBnZXRJY29uU2l6ZUZvcklucHV0LFxuICBnZXRJY29uU2l6ZUZvclNlbGVjdCxcbiAgZ2V0SWNvblNpemVGb3JJY29uQnV0dG9uLFxuICBnZXRCYWNrZ3JvdW5kLFxuICBnZXRFbGV2YXRpb24sXG4gIGdldEljb25Db2xvcixcbiAgZ2V0SGVhZGluZ1N0eWxlLFxuICBnZXRUZXh0U3R5bGUsXG4gIGdldFBhcmFncmFwaFN0eWxlLFxuICBnZXRGb250RmFtaWx5LFxuICBnZXRUZXh0Q29sb3Jcbn1cbiJdfQ==

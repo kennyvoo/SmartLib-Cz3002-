@@ -15,6 +15,11 @@ const update = (q,id, value) => {
   return db.doc(id).update(value);
 };
 
+const set = (q,id, value) => {
+  const db = app.firestore().collection(q);
+  return db.doc(id).set(value);
+};
+
 const remove = (q,id) => {
   const db = app.firestore().collection(q);
   return db.doc(id).delete();
@@ -24,7 +29,8 @@ const crudFirebase = {
   getAll,
   create,
   update,
-  remove
+  remove,
+  set
 };
 
 export default crudFirebase;

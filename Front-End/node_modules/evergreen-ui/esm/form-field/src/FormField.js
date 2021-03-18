@@ -1,0 +1,77 @@
+import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
+import _extends from "@babel/runtime/helpers/esm/extends";
+import _objectWithoutProperties from "@babel/runtime/helpers/esm/objectWithoutProperties";
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+import React, { memo, forwardRef } from 'react';
+import PropTypes from 'prop-types';
+import Box, { dimensions, spacing, position, layout } from 'ui-box';
+import FormFieldLabel from './FormFieldLabel';
+import FormFieldDescription from './FormFieldDescription';
+import FormFieldValidationMessage from './FormFieldValidationMessage';
+import FormFieldHint from './FormFieldHint';
+var FormField = memo(forwardRef(function FormField(props, ref) {
+  var hint = props.hint,
+      label = props.label,
+      labelFor = props.labelFor,
+      children = props.children,
+      isRequired = props.isRequired,
+      _props$labelProps = props.labelProps,
+      labelProps = _props$labelProps === void 0 ? {
+    size: 400
+  } : _props$labelProps,
+      description = props.description,
+      validationMessage = props.validationMessage,
+      rest = _objectWithoutProperties(props, ["hint", "label", "labelFor", "children", "isRequired", "labelProps", "description", "validationMessage"]);
+
+  return React.createElement(Box, _extends({}, rest, {
+    ref: ref
+  }), React.createElement(FormFieldLabel, _extends({
+    htmlFor: labelFor,
+    isAstrixShown: isRequired,
+    marginBottom: description ? 0 : 4
+  }, labelProps), label), typeof description === 'string' ? React.createElement(FormFieldDescription, {
+    marginBottom: 4
+  }, description) : description, children, typeof validationMessage === 'string' ? React.createElement(FormFieldValidationMessage, {
+    marginTop: 8
+  }, validationMessage) : validationMessage, typeof hint === 'string' ? React.createElement(FormFieldHint, {
+    marginTop: 6
+  }, hint) : hint);
+}));
+FormField.propTypes = _objectSpread(_objectSpread(_objectSpread(_objectSpread({
+  /**
+   * The label used above the input element.
+   */
+  label: PropTypes.node.isRequired,
+
+  /**
+   * Passed on the label as a htmlFor prop.
+   */
+  labelFor: PropTypes.string,
+
+  /**
+   * Whether or not show an asterix after the label.
+   */
+  isRequired: PropTypes.bool,
+
+  /**
+   * An optional description of the field under the label, above the input element.
+   */
+  description: PropTypes.node,
+
+  /**
+   * An optional hint under the input element.
+   */
+  hint: PropTypes.node,
+
+  /**
+   * If a validation message is passed it is shown under the input element
+   * and above the hint. This is unaffected by `isInvalid`.
+   */
+  validationMessage: PropTypes.node
+}, dimensions.propTypes), spacing.propTypes), position.propTypes), layout.propTypes);
+export default FormField;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9mb3JtLWZpZWxkL3NyYy9Gb3JtRmllbGQuanMiXSwibmFtZXMiOlsiUmVhY3QiLCJtZW1vIiwiZm9yd2FyZFJlZiIsIlByb3BUeXBlcyIsIkJveCIsImRpbWVuc2lvbnMiLCJzcGFjaW5nIiwicG9zaXRpb24iLCJsYXlvdXQiLCJGb3JtRmllbGRMYWJlbCIsIkZvcm1GaWVsZERlc2NyaXB0aW9uIiwiRm9ybUZpZWxkVmFsaWRhdGlvbk1lc3NhZ2UiLCJGb3JtRmllbGRIaW50IiwiRm9ybUZpZWxkIiwicHJvcHMiLCJyZWYiLCJoaW50IiwibGFiZWwiLCJsYWJlbEZvciIsImNoaWxkcmVuIiwiaXNSZXF1aXJlZCIsImxhYmVsUHJvcHMiLCJzaXplIiwiZGVzY3JpcHRpb24iLCJ2YWxpZGF0aW9uTWVzc2FnZSIsInJlc3QiLCJwcm9wVHlwZXMiLCJub2RlIiwic3RyaW5nIiwiYm9vbCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFBQSxPQUFPQSxLQUFQLElBQWdCQyxJQUFoQixFQUFzQkMsVUFBdEIsUUFBd0MsT0FBeEM7QUFDQSxPQUFPQyxTQUFQLE1BQXNCLFlBQXRCO0FBQ0EsT0FBT0MsR0FBUCxJQUFjQyxVQUFkLEVBQTBCQyxPQUExQixFQUFtQ0MsUUFBbkMsRUFBNkNDLE1BQTdDLFFBQTJELFFBQTNEO0FBQ0EsT0FBT0MsY0FBUCxNQUEyQixrQkFBM0I7QUFDQSxPQUFPQyxvQkFBUCxNQUFpQyx3QkFBakM7QUFDQSxPQUFPQywwQkFBUCxNQUF1Qyw4QkFBdkM7QUFDQSxPQUFPQyxhQUFQLE1BQTBCLGlCQUExQjtBQUVBLElBQU1DLFNBQVMsR0FBR1osSUFBSSxDQUNwQkMsVUFBVSxDQUFDLFNBQVNXLFNBQVQsQ0FBbUJDLEtBQW5CLEVBQTBCQyxHQUExQixFQUErQjtBQUFBLE1BRXRDQyxJQUZzQyxHQVdwQ0YsS0FYb0MsQ0FFdENFLElBRnNDO0FBQUEsTUFHdENDLEtBSHNDLEdBV3BDSCxLQVhvQyxDQUd0Q0csS0FIc0M7QUFBQSxNQUl0Q0MsUUFKc0MsR0FXcENKLEtBWG9DLENBSXRDSSxRQUpzQztBQUFBLE1BS3RDQyxRQUxzQyxHQVdwQ0wsS0FYb0MsQ0FLdENLLFFBTHNDO0FBQUEsTUFNdENDLFVBTnNDLEdBV3BDTixLQVhvQyxDQU10Q00sVUFOc0M7QUFBQSwwQkFXcENOLEtBWG9DLENBT3RDTyxVQVBzQztBQUFBLE1BT3RDQSxVQVBzQyxrQ0FPekI7QUFBRUMsSUFBQUEsSUFBSSxFQUFFO0FBQVIsR0FQeUI7QUFBQSxNQVF0Q0MsV0FSc0MsR0FXcENULEtBWG9DLENBUXRDUyxXQVJzQztBQUFBLE1BU3RDQyxpQkFUc0MsR0FXcENWLEtBWG9DLENBU3RDVSxpQkFUc0M7QUFBQSxNQVVuQ0MsSUFWbUMsNEJBV3BDWCxLQVhvQzs7QUFheEMsU0FDRSxvQkFBQyxHQUFELGVBQVNXLElBQVQ7QUFBZSxJQUFBLEdBQUcsRUFBRVY7QUFBcEIsTUFDRSxvQkFBQyxjQUFEO0FBQ0UsSUFBQSxPQUFPLEVBQUVHLFFBRFg7QUFFRSxJQUFBLGFBQWEsRUFBRUUsVUFGakI7QUFHRSxJQUFBLFlBQVksRUFBRUcsV0FBVyxHQUFHLENBQUgsR0FBTztBQUhsQyxLQUlNRixVQUpOLEdBTUdKLEtBTkgsQ0FERixFQVNHLE9BQU9NLFdBQVAsS0FBdUIsUUFBdkIsR0FDQyxvQkFBQyxvQkFBRDtBQUFzQixJQUFBLFlBQVksRUFBRTtBQUFwQyxLQUNHQSxXQURILENBREQsR0FLQ0EsV0FkSixFQWdCR0osUUFoQkgsRUFpQkcsT0FBT0ssaUJBQVAsS0FBNkIsUUFBN0IsR0FDQyxvQkFBQywwQkFBRDtBQUE0QixJQUFBLFNBQVMsRUFBRTtBQUF2QyxLQUNHQSxpQkFESCxDQURELEdBS0NBLGlCQXRCSixFQXdCRyxPQUFPUixJQUFQLEtBQWdCLFFBQWhCLEdBQ0Msb0JBQUMsYUFBRDtBQUFlLElBQUEsU0FBUyxFQUFFO0FBQTFCLEtBQThCQSxJQUE5QixDQURELEdBR0NBLElBM0JKLENBREY7QUFnQ0QsQ0E3Q1MsQ0FEVSxDQUF0QjtBQWlEQUgsU0FBUyxDQUFDYSxTQUFWO0FBQ0U7OztBQUdBVCxFQUFBQSxLQUFLLEVBQUVkLFNBQVMsQ0FBQ3dCLElBQVYsQ0FBZVAsVUFKeEI7O0FBTUU7OztBQUdBRixFQUFBQSxRQUFRLEVBQUVmLFNBQVMsQ0FBQ3lCLE1BVHRCOztBQVdFOzs7QUFHQVIsRUFBQUEsVUFBVSxFQUFFakIsU0FBUyxDQUFDMEIsSUFkeEI7O0FBZ0JFOzs7QUFHQU4sRUFBQUEsV0FBVyxFQUFFcEIsU0FBUyxDQUFDd0IsSUFuQnpCOztBQXFCRTs7O0FBR0FYLEVBQUFBLElBQUksRUFBRWIsU0FBUyxDQUFDd0IsSUF4QmxCOztBQTBCRTs7OztBQUlBSCxFQUFBQSxpQkFBaUIsRUFBRXJCLFNBQVMsQ0FBQ3dCO0FBOUIvQixHQW1DS3RCLFVBQVUsQ0FBQ3FCLFNBbkNoQixHQXdDS3BCLE9BQU8sQ0FBQ29CLFNBeENiLEdBNkNLbkIsUUFBUSxDQUFDbUIsU0E3Q2QsR0FrREtsQixNQUFNLENBQUNrQixTQWxEWjtBQXFEQSxlQUFlYixTQUFmIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7IG1lbW8sIGZvcndhcmRSZWYgfSBmcm9tICdyZWFjdCdcbmltcG9ydCBQcm9wVHlwZXMgZnJvbSAncHJvcC10eXBlcydcbmltcG9ydCBCb3gsIHsgZGltZW5zaW9ucywgc3BhY2luZywgcG9zaXRpb24sIGxheW91dCB9IGZyb20gJ3VpLWJveCdcbmltcG9ydCBGb3JtRmllbGRMYWJlbCBmcm9tICcuL0Zvcm1GaWVsZExhYmVsJ1xuaW1wb3J0IEZvcm1GaWVsZERlc2NyaXB0aW9uIGZyb20gJy4vRm9ybUZpZWxkRGVzY3JpcHRpb24nXG5pbXBvcnQgRm9ybUZpZWxkVmFsaWRhdGlvbk1lc3NhZ2UgZnJvbSAnLi9Gb3JtRmllbGRWYWxpZGF0aW9uTWVzc2FnZSdcbmltcG9ydCBGb3JtRmllbGRIaW50IGZyb20gJy4vRm9ybUZpZWxkSGludCdcblxuY29uc3QgRm9ybUZpZWxkID0gbWVtbyhcbiAgZm9yd2FyZFJlZihmdW5jdGlvbiBGb3JtRmllbGQocHJvcHMsIHJlZikge1xuICAgIGNvbnN0IHtcbiAgICAgIGhpbnQsXG4gICAgICBsYWJlbCxcbiAgICAgIGxhYmVsRm9yLFxuICAgICAgY2hpbGRyZW4sXG4gICAgICBpc1JlcXVpcmVkLFxuICAgICAgbGFiZWxQcm9wcyA9IHsgc2l6ZTogNDAwIH0sXG4gICAgICBkZXNjcmlwdGlvbixcbiAgICAgIHZhbGlkYXRpb25NZXNzYWdlLFxuICAgICAgLi4ucmVzdFxuICAgIH0gPSBwcm9wc1xuXG4gICAgcmV0dXJuIChcbiAgICAgIDxCb3ggey4uLnJlc3R9IHJlZj17cmVmfT5cbiAgICAgICAgPEZvcm1GaWVsZExhYmVsXG4gICAgICAgICAgaHRtbEZvcj17bGFiZWxGb3J9XG4gICAgICAgICAgaXNBc3RyaXhTaG93bj17aXNSZXF1aXJlZH1cbiAgICAgICAgICBtYXJnaW5Cb3R0b209e2Rlc2NyaXB0aW9uID8gMCA6IDR9XG4gICAgICAgICAgey4uLmxhYmVsUHJvcHN9XG4gICAgICAgID5cbiAgICAgICAgICB7bGFiZWx9XG4gICAgICAgIDwvRm9ybUZpZWxkTGFiZWw+XG4gICAgICAgIHt0eXBlb2YgZGVzY3JpcHRpb24gPT09ICdzdHJpbmcnID8gKFxuICAgICAgICAgIDxGb3JtRmllbGREZXNjcmlwdGlvbiBtYXJnaW5Cb3R0b209ezR9PlxuICAgICAgICAgICAge2Rlc2NyaXB0aW9ufVxuICAgICAgICAgIDwvRm9ybUZpZWxkRGVzY3JpcHRpb24+XG4gICAgICAgICkgOiAoXG4gICAgICAgICAgZGVzY3JpcHRpb25cbiAgICAgICAgKX1cbiAgICAgICAge2NoaWxkcmVufVxuICAgICAgICB7dHlwZW9mIHZhbGlkYXRpb25NZXNzYWdlID09PSAnc3RyaW5nJyA/IChcbiAgICAgICAgICA8Rm9ybUZpZWxkVmFsaWRhdGlvbk1lc3NhZ2UgbWFyZ2luVG9wPXs4fT5cbiAgICAgICAgICAgIHt2YWxpZGF0aW9uTWVzc2FnZX1cbiAgICAgICAgICA8L0Zvcm1GaWVsZFZhbGlkYXRpb25NZXNzYWdlPlxuICAgICAgICApIDogKFxuICAgICAgICAgIHZhbGlkYXRpb25NZXNzYWdlXG4gICAgICAgICl9XG4gICAgICAgIHt0eXBlb2YgaGludCA9PT0gJ3N0cmluZycgPyAoXG4gICAgICAgICAgPEZvcm1GaWVsZEhpbnQgbWFyZ2luVG9wPXs2fT57aGludH08L0Zvcm1GaWVsZEhpbnQ+XG4gICAgICAgICkgOiAoXG4gICAgICAgICAgaGludFxuICAgICAgICApfVxuICAgICAgPC9Cb3g+XG4gICAgKVxuICB9KVxuKVxuXG5Gb3JtRmllbGQucHJvcFR5cGVzID0ge1xuICAvKipcbiAgICogVGhlIGxhYmVsIHVzZWQgYWJvdmUgdGhlIGlucHV0IGVsZW1lbnQuXG4gICAqL1xuICBsYWJlbDogUHJvcFR5cGVzLm5vZGUuaXNSZXF1aXJlZCxcblxuICAvKipcbiAgICogUGFzc2VkIG9uIHRoZSBsYWJlbCBhcyBhIGh0bWxGb3IgcHJvcC5cbiAgICovXG4gIGxhYmVsRm9yOiBQcm9wVHlwZXMuc3RyaW5nLFxuXG4gIC8qKlxuICAgKiBXaGV0aGVyIG9yIG5vdCBzaG93IGFuIGFzdGVyaXggYWZ0ZXIgdGhlIGxhYmVsLlxuICAgKi9cbiAgaXNSZXF1aXJlZDogUHJvcFR5cGVzLmJvb2wsXG5cbiAgLyoqXG4gICAqIEFuIG9wdGlvbmFsIGRlc2NyaXB0aW9uIG9mIHRoZSBmaWVsZCB1bmRlciB0aGUgbGFiZWwsIGFib3ZlIHRoZSBpbnB1dCBlbGVtZW50LlxuICAgKi9cbiAgZGVzY3JpcHRpb246IFByb3BUeXBlcy5ub2RlLFxuXG4gIC8qKlxuICAgKiBBbiBvcHRpb25hbCBoaW50IHVuZGVyIHRoZSBpbnB1dCBlbGVtZW50LlxuICAgKi9cbiAgaGludDogUHJvcFR5cGVzLm5vZGUsXG5cbiAgLyoqXG4gICAqIElmIGEgdmFsaWRhdGlvbiBtZXNzYWdlIGlzIHBhc3NlZCBpdCBpcyBzaG93biB1bmRlciB0aGUgaW5wdXQgZWxlbWVudFxuICAgKiBhbmQgYWJvdmUgdGhlIGhpbnQuIFRoaXMgaXMgdW5hZmZlY3RlZCBieSBgaXNJbnZhbGlkYC5cbiAgICovXG4gIHZhbGlkYXRpb25NZXNzYWdlOiBQcm9wVHlwZXMubm9kZSxcblxuICAvKipcbiAgICogQ29tcG9zZXMgdGhlIGRpbWVuc2lvbnMgc3BlYyBmcm9tIHRoZSBCb3ggcHJpbWl0aXZlLlxuICAgKi9cbiAgLi4uZGltZW5zaW9ucy5wcm9wVHlwZXMsXG5cbiAgLyoqXG4gICAqIENvbXBvc2VzIHRoZSBzcGFjaW5nIHNwZWMgZnJvbSB0aGUgQm94IHByaW1pdGl2ZS5cbiAgICovXG4gIC4uLnNwYWNpbmcucHJvcFR5cGVzLFxuXG4gIC8qKlxuICAgKiBDb21wb3NlcyB0aGUgcG9zaXRpb24gc3BlYyBmcm9tIHRoZSBCb3ggcHJpbWl0aXZlLlxuICAgKi9cbiAgLi4ucG9zaXRpb24ucHJvcFR5cGVzLFxuXG4gIC8qKlxuICAgKiBDb21wb3NlcyB0aGUgbGF5b3V0IHNwZWMgZnJvbSB0aGUgQm94IHByaW1pdGl2ZS5cbiAgICovXG4gIC4uLmxheW91dC5wcm9wVHlwZXNcbn1cblxuZXhwb3J0IGRlZmF1bHQgRm9ybUZpZWxkXG4iXX0=
