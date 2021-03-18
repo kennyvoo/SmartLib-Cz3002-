@@ -1,0 +1,10 @@
+.seatMapPane{
+    height: auto;
+    width: auto;
+    max-width: 500px;
+    /*min-width: 200px;*/
+    margin: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
