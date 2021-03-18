@@ -25,6 +25,8 @@ import DrawRect from "./DrawRect";
 import CamSeatsList from "./seatmap/CamSeatsList";
 import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
+import crudFirebase from '../services/crudFirebase'
+import { useCollection } from "react-firebase-hooks/firestore";
 
 function AddSeatsPage(){
 
@@ -57,7 +59,8 @@ function AddSeatsPage(){
 
     function addSeat()
     {
-        setSeats(prev=>[...prev, newSeat])
+        //setSeats(prev=>[...prev, newSeat])
+        crudFirebase.create('Seats',newSeat.id,newSeat);
         alert("Successfully Added");
     }
 
