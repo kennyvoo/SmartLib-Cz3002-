@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
 import L4C1 from "./Img/L4C1.jpg";
+//import L4C1 from "https://www.homengardeningtips.com/wp-content/uploads/dedicated-home-library.jpg"
 import L5C1 from "./Img/L5C1.jpg";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
@@ -43,7 +44,9 @@ function AdminHomePage(){
             case 4:
                 return L4C1;
             case 5:
-                return L5C1;
+                //return L5C1;
+                return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
+                //return 'http://10.27.35.143:8080/video';
         }
     }
 
@@ -51,11 +54,10 @@ function AdminHomePage(){
         <Pane className={'bgPane'}>
             <div>
                 <h2 className={'heading'}>Admin Homepage</h2>
-                {/* Segmented Control Bar*/}
-
                 <Pane className={'masterPane'} border={'none'}>
                     <Pane className={'statsPane'} border={'default'}>
                         <h2 className={'sectionHeading'}>Statistics</h2>
+                        {/* Segmented Control Bar*/}
                         <Pane className={'segmentedControlPane'}>
                             <Component
                                 initialState={{
@@ -105,7 +107,10 @@ function AdminHomePage(){
                                 )}
                             </Component>
                         </Pane>
-                        <Pane className={'cameraPane'} backgroundImage={`url(${cameraSelect(selected.level)})`}>
+                        <Pane className={'cameraPane'}
+                              // backgroundImage={`url("http://10.27.35.143:8080/video")`}
+                              backgroundImage={`url(${cameraSelect(selected.level)})`}
+                        >
                             <CamSeatsList seats={seats} editmode={false}/>
                         </Pane>
                         <Pane className={'seatMapPane'} border={'none'}>

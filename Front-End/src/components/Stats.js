@@ -70,7 +70,6 @@ export default function Stats(props){
           <h3>Hogged: {stats.hogged}</h3>
           <h3>Unavailable: {stats.unavail}</h3>
           <h3>Added up check: {stats.avail+stats.reserved+stats.occupied+stats.hogged+stats.unavail}</h3>
-
       </div>
     );
 }

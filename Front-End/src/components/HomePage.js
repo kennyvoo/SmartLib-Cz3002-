@@ -3,18 +3,13 @@ import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import MapSelectorPane from "./MapSelectorPane";
 import firebase from '../services/firebase';
+import './HomePage.css'
 
 function HomePage() {
 
   return (
     <div>
-      <Pane
-        height='auto'
-        backgroundColor="white"
-        display="flex"
-        justifyContent="center"
-        padding={20}
-      >
+      <Pane className={'bgPane'}>
         <div>
           <Pane
             height="auto"
