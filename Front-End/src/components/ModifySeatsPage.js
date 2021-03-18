@@ -56,8 +56,9 @@ function ModifySeatsPage(){
 
     function deleteSeat()
     {
-        // seats.find((seat)=>seat.id==selected.seat)
-        alert("Successfully Added");
+        //seats.find((seat)=>seat.id==selected.seat)
+        seats.filter(seat => seat.id !== tempSeats.id)
+        alert("Successfully Deleted");
     }
 
     function previewSeat()
@@ -101,7 +102,6 @@ function ModifySeatsPage(){
         <Pane className={'bgPane'}>
             <div>
                 <h2 className={'heading'}>Modify / Delete Seat</h2>
-                {/* Segmented Control Bar*/}
                 <Pane className={'segmentedControlPane'}>
                     <Component
                         initialState={{
@@ -134,11 +134,6 @@ function ModifySeatsPage(){
                         <Pane className={'cameraPane'} backgroundImage={`url(${cameraSelect(selected.level)})`}>
                             <CamSeatsList seats={tempSeats} editmode={true}/>
                         </Pane>
-
-                        {/*<Pane>*/}
-                        {/*    <DrawRect/>*/}
-                        {/*</Pane>*/}
-
                         <Pane className={'infoPane'} paddingBottom={20}>
                             <Text className={'infoText'}>cameraId: {selSeat.cameraId}</Text>
                             <Text className={'infoText'}>x1Img: {selSeat.x1Img}</Text>
@@ -244,10 +239,9 @@ function ModifySeatsPage(){
                     <Button className={'button'} onClick={previewSeat} appearance="primary" iconBefore={SearchIcon}>Preview</Button>
                     <Button className={'button'} onClick={resetSeat} marginRight={16} appearance="primary" intent={"warning"} iconBefore={ResetIcon}>Reset</Button>
                     <Button className={'button'} onClick={modifySeat} marginRight={16} appearance="primary" intent={"success"} iconBefore={EditIcon}>Modify Seat</Button>
-                    <Button className={'button'} onClick={modifySeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={TrashIcon}>Delete Seat</Button>
+                    <Button className={'button'} onClick={deleteSeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={TrashIcon}>Delete Seat</Button>
                 </Pane>
             </div>
-
         </Pane>
 
     );

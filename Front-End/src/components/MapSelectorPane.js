@@ -5,6 +5,7 @@ import { SeatContext } from '../contexts/SeatContext';
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
 import { useHistory } from "react-router-dom";
 import SeatsList from "./seatmap/SeatsList";
+import './HomePage.css'
 
 function MapSelectorPane() {
   
@@ -47,10 +48,7 @@ function MapSelectorPane() {
 
     return (
       <div>
-        <Heading padding={10} size={700}>The library has {seats.length} seats in total.</Heading>
-        <Heading padding={10} size={700}>The library has {countSeats('Available')} available seats, {countSeats('Reserved')} reserved seats, {countSeats('Occupied')} occupied seats, {countSeats('Hogged')} hogged seats, {countSeats('Unavailable')} unavailable seats.</Heading>
-        <Heading padding={10} size={700}>The library is currently {occupancy('Available')}% full.</Heading>
-        
+
         {/* Segmented Control Bar*/}
         <Component
           initialState={{
@@ -78,8 +76,8 @@ function MapSelectorPane() {
           height="auto"
           width="auto"
           marginTop={20}
-          background="tint2"
-          border="default"
+          // background="tint2"
+          // border="default"
           borderRadius={5}
           justifyContent="center"
           alignItems="center"
@@ -87,10 +85,10 @@ function MapSelectorPane() {
         >
             <SeatsList seats={seats} editmode={false}/>
         </Pane>
-        
-        <h2>Selected Seat: {(selected.seat == 0) ? 'None' : selected.seat}</h2>
-        <h2>Selected Level: { selected.level }</h2>
-        
+          <Heading padding={10} size={700}>The library has {seats.length} seats in total.</Heading>
+          <Heading padding={10} size={700}>The library has {countSeats('Available')} available seats, {countSeats('Reserved')} reserved seats, {countSeats('Occupied')} occupied seats, {countSeats('Hogged')} hogged seats, {countSeats('Unavailable')} unavailable seats.</Heading>
+          <Heading padding={10} size={700}>The library is currently {occupancy('Available')}% full.</Heading>
+
         {/* Book Button and Dialog */}
         <Component initialState={{ isShown: false }}>
           {({ state, setState }) => (
@@ -106,15 +104,22 @@ function MapSelectorPane() {
                 <ErrorIcon size={30} marginRight={10}/>The seat you have chosen is not available for booking. 
               </Dialog>
 
-              <Button
-                appearance="primary"
-                iconBefore={HandUpIcon}
-                height={40}
-                disabled={selected.seat == 0}
-                onClick={() => (seats.find((theSeat) => theSeat.id == selected.seat)).status != "Available" ? setState({ isShown: true }) : clickBook()}
-              >
-                Book
-              </Button>
+                <Pane className={'bookingPane'} border={'default'} padding={10} borderRadius={5}>
+                    <h2 className={'sectionHeading'}>Seat Reservation</h2>
+                    <p className={'seatInfoText'}>Selected Seat: {(selected.seat == 0) ? 'None' : (seats.find((seat) => seat.id === selected.seat)).seatName}</p>
+                    <p className={'seatInfoText'}>Level: { selected.level }</p>
+                    <Pane className={'buttonPane'} display={"flex"} justifyContent={"center"}>
+                      <Button
+                        appearance="primary"
+                        iconBefore={HandUpIcon}
+                        height={40}
+                        disabled={selected.seat == 0}
+                        onClick={() => (seats.find((theSeat) => theSeat.id == selected.seat)).status != "Available" ? setState({ isShown: true }) : clickBook()}
+                      >
+                        Book
+                      </Button>
+                    </Pane>
+                </Pane>
             </Pane>
           )}
         </Component>

@@ -16,8 +16,6 @@ import { Link } from "react-router-dom";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
 import L4C1 from "./Img/L4C1.jpg";
-//import L4C1 from "https://www.homengardeningtips.com/wp-content/uploads/dedicated-home-library.jpg"
-import L5C1 from "./Img/L5C1.jpg";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import {SeatContext} from "../contexts/SeatContext";
@@ -25,6 +23,7 @@ import CamSeatsList from "./seatmap/CamSeatsList";
 import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
 import Stats from "./Stats";
+import AlertList from "./AlertList";
 
 function AdminHomePage(){
 
@@ -119,6 +118,7 @@ function AdminHomePage(){
                     </Pane>
                     <Pane className={'alertsPane'} border={'default'}>
                         <h2 className={'sectionHeading'}>Alerts</h2>
+                        <AlertList seats={seats}/>
                     </Pane>
                 </Pane>
             </div>

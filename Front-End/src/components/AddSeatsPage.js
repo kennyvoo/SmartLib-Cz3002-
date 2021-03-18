@@ -32,7 +32,8 @@ function AddSeatsPage(){
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
     const defaultSeat = {
-        id: seats[seats.length-1].id+1,
+        // id: seats[seats.length-1].id+1,
+        id: generateUID(),
         level: selected.level,
         seatName: '',
         cameraId: '',
@@ -53,6 +54,18 @@ function AddSeatsPage(){
             ...prevState,
             [id]: value
         }))
+    }
+
+    function generateUID(){
+        let id=1;
+        while(1)
+        {
+            if((seats.find((seat) => seat.id === id))==null) {
+                console.log('id: '+id);
+                return id;
+            }
+            else id++;
+        }
     }
 
     function addSeat()
@@ -89,7 +102,8 @@ function AddSeatsPage(){
     }
 
     useEffect(() => {console.log('tempSeats:'); console.log(tempSeats)}, [tempSeats]);
-    useEffect(() => {console.log('seats:'); console.log(seats); setNewSeat(prevState => ({...prevState,id:seats[seats.length-1].id+1}))}, [seats]);
+    // useEffect(() => {console.log('seats:'); console.log(seats); setNewSeat(prevState => ({...prevState,id:seats[seats.length-1].id+1}))}, [seats]);
+    useEffect(() => {console.log('seats:'); console.log(seats); setNewSeat(prevState => ({...prevState,id: generateUID()}))}, [seats]);
     useEffect(() => {console.log('newSeat:'); console.log(newSeat)}, [newSeat]);
 
     return(
