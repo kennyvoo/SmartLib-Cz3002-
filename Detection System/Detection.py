@@ -73,12 +73,12 @@ while True:
 
      ##Crop out seats images 
      for i in SeatsArray:
-          im=frame[i["y1Img"]:i["y2Img"],i["x1Img"]:i["x2Img"]]
+          im=frame[int(i["y1Img"]):int(i["y2Img"]),int(i["x1Img"]):int(i["x2Img"])]
           #im1 = imutils.resize(im, width=416)
           seatImageToDetect.append(im)
-          seatImageToDetectSize.append([i["x2Img"]-i["x1Img"],i["y2Img"]-i["y1Img"]])
-          cv2.rectangle(frame, (i["x1Img"], i["y1Img"]), (i["x2Img"], i["y2Img"]), (255,0,0), 2)
-          cv2.putText(frame,i["seatName"], (i["x1Img"],i["y1Img"] + 30), font, 3, (255,0,0), 3)
+          seatImageToDetectSize.append([int(i["x2Img"])-int(i["x1Img"]),int(i["y2Img"])-int(i["y1Img"])])
+          cv2.rectangle(frame, (int(i["x1Img"]), int(i["y1Img"])), (int(i["x2Img"]), int(i["y2Img"])), (255,0,0), 2)
+          cv2.putText(frame,i["seatName"], (int(i["x1Img"]),int(i["y1Img"]) + 30), font, 3, (255,0,0), 3)
      blob = cv2.dnn.blobFromImages(seatImageToDetect, 1/255, (416, 416), (0, 0, 0), True, crop=False)
      net.setInput(blob)
      outs = net.forward(output_layers)
@@ -96,10 +96,10 @@ while True:
                     scores = detection[5:]
                     class_id = np.argmax(scores)
                     confidence = scores[class_id]
-                    if confidence > 0.7:
+                    if confidence > 0.6:
                          # Object detected
-                         center_x = int(detection[0] *seatImageToDetectSize[i][0])+SeatsArray[i]["x1Img"]
-                         center_y = int(detection[1] *seatImageToDetectSize[i][1])+SeatsArray[i]["y1Img"]
+                         center_x = int(detection[0] *seatImageToDetectSize[i][0])+int(SeatsArray[i]["x1Img"])
+                         center_y = int(detection[1] *seatImageToDetectSize[i][1])+int(SeatsArray[i]["y1Img"])
                          w = int(detection[2] *seatImageToDetectSize[i][0])
                          h = int(detection[3] *seatImageToDetectSize[i][1])
 
@@ -111,6 +111,10 @@ while True:
                          confidences.append(float(confidence))
                          class_ids.append(class_id)
 
+
+
+                         if(classes[class_id]=="bottle"):
+                              hoggedDetected=True
 
                          detectionCheck=True
                          if(classes[class_id]=="person"):
@@ -124,8 +128,7 @@ while True:
                               hoggedDetected=True
                               print("Object Detected")
 
-                         if(classes[class_id]=="bottle"):
-                              hoggedDetected=True
+
           if(SeatsArray[i]["status"]=="Reserved" or SeatsArray[i]["unavailable"]==True):
                continue
           
@@ -133,23 +136,23 @@ while True:
                SeatsArray[i]["status"]="Occupied"
                db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Occupied'})
                print( SeatsArray[i]["id"]+" Updated to occupied")
-          elif(hoggedDetected and SeatsArray[i]["status"]!="Hogged" ):
+          elif(hoggedDetected and SeatsArray[i]["status"]!="Hogged" and not humanDetected):
                diff=round(time.time(),0) -SeatsArray[i]["timeStamp"]
                print(diff)
                if(diff>=5):
                     SeatsArray[i]["status"]="Hogged"
                     db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Hogged'})
                     print(SeatsArray[i]["id"]+" Updated to Hogged")
-          elif (SeatsArray[i]["status"]!="Unoccupied" and not humanDetected and not hoggedDetected):
-               SeatsArray[i]["status"]="Unoccupied"
-               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Unoccupied'})
-               print(SeatsArray[i]["id"]+" Updated to Unoccupied")
+          elif (SeatsArray[i]["status"]!="Available" and not humanDetected and not hoggedDetected):
+               SeatsArray[i]["status"]="Available"
+               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Available'})
+               print(SeatsArray[i]["id"]+" Updated to Available")
                break
 
-          if (not detectionCheck and SeatsArray[i]["status"]!="Unoccupied" and SeatsArray[i]["status"]!="Reserved" and SeatsArray[i]["unavailable"]==False):
-               SeatsArray[i]["status"]="Unoccupied"
-               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Unoccupied'})
-               print(SeatsArray[i]["id"]+"  Updated to Unoccupied")
+          if (not detectionCheck and SeatsArray[i]["status"]!="Available" and SeatsArray[i]["status"]!="Reserved" and SeatsArray[i]["unavailable"]==False):
+               SeatsArray[i]["status"]="Available"
+               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Available'})
+               print(SeatsArray[i]["id"]+"  Updated to Available")
      indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.7, 0.3)
 
      for i in range(len(boxes)):
