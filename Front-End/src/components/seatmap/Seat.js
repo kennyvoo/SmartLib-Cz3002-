@@ -16,14 +16,20 @@ const colorReserved = "#f4a261";
 const colorOccupied = "#fc5353";
 const colorHogged = "#AAAAAA";
 const colorUnavailable = "#28363d";
+const colorError = "#FF0000";
 
 function Seat(props) {
   
     //const [seats, setSeats] = useContext(SeatContext);
     const [selected, setSelected] = useContext(SelectedSeatContext);
 
-    function renderColor(param) {
-    switch (param) {
+    function renderColor(status, unavailable) {
+        if(unavailable==true)
+        {
+            return colorUnavailable;
+        }
+
+        switch (status) {
       case "Available":
         return colorAvailable;
       case "Reserved":
@@ -33,7 +39,7 @@ function Seat(props) {
       case "Hogged":
         return colorHogged;
       default:
-        return colorUnavailable;
+        return colorError;
     }
   }
 
@@ -54,15 +60,15 @@ function Seat(props) {
         width={boxWidth}
         rx={boxRx}
         ry={boxRy}
-        fill={renderColor(props.seat.status)}
+        fill={renderColor(props.seat.status, props.seat.unavailable)}
         stroke={(selected.seat==props.seat.id)? boxStrokeSelected:boxStroke}
         strokeWidth={(selected.seat==props.seat.id)? boxStrokeWidthSelected:boxStrokeWidth}
       />
       <text
         className="seatText"
         textAnchor="middle"
-        x={props.seat.xLoc + boxWidth / 2}
-        y={props.seat.yLoc + boxHeight / 2}
+        x={parseFloat(props.seat.xLoc) + boxWidth / 2}
+        y={parseFloat(props.seat.yLoc) + boxHeight / 2}
         //x='10' y='10'
       >
         {props.seat.seatName}

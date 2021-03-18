@@ -21,6 +21,7 @@ import {
   SmallCrossIcon,
   UndoIcon,
   TimeIcon,
+  AsteriskIcon
 } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import { IoLibraryOutline } from "react-icons/io5";
@@ -66,6 +67,15 @@ function Navbar() {
                 </Link>
                 <Link to="/Account" style={{ textDecoration: "none" }}>
                   <Menu.Item icon={PeopleIcon}>Account Settings</Menu.Item>
+                </Link>
+                <Link to="/Admin" style={{ textDecoration: "none" }}>
+                  <Menu.Item icon={AsteriskIcon}>Admin Home Page</Menu.Item>
+                </Link>
+                <Link to="/ModifySeats" style={{ textDecoration: "none" }}>
+                  <Menu.Item icon={AsteriskIcon}>Modify Seats</Menu.Item>
+                </Link>
+                <Link to="/AddSeats" style={{ textDecoration: "none" }}>
+                  <Menu.Item icon={AsteriskIcon}>Add New Seat</Menu.Item>
                 </Link>
               </Menu.Group>
               <Menu.Divider />
