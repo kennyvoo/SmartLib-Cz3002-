@@ -10,10 +10,13 @@ import Footer from "./components/Footer";
 import CreateAccountPage from "./components/CreateAccountPage"
 import ForgetPasswordPage from "./components/ForgetPasswordPage"
 import SeatInformationPage from "./components/SeatInformationPage"
-import ResetPasswordPage from "./components/ResetPasswordPage"
 import ModifySeatsPage from "./components/ModifySeatsPage";
 import AdminHomePage from "./components/AdminHomePage";
 import AddSeatsPage from "./components/AddSeatsPage";
+import AdminPage from "./components/AdminPage"
+import { AuthProvider } from "./context/AuthContext"
+import PrivateRoute from "./PrivateRoute"
+import PrivateRoute2 from "./PrivateRoute2"
 
 function App() {
 
@@ -39,45 +42,24 @@ function App() {
       {/* <h1>Hello</h1> */}
 
       <Router>
-        <Navbar Login={Login}/>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/MyBookings">
-            <MyBookingsPage />
-          </Route>
-          <Route path="/Account">
-            <AccountMgmtPage />
-          </Route>
-          <Route path="/Login">
-            {/* //Have to pass the login and error function as well */}
-            <LoginPage Login={Login} />
-          </Route>
-          <Route path="/CreateAccount">
-            <CreateAccountPage />
-          </Route>
-          <Route path="/ForgetPassword">
-            <ForgetPasswordPage />
-          </Route>
-          <Route path="/SeatInformation">
-            <SeatInformationPage />
-          </Route>
-          <Route path="/ResetPassword">
-            <ResetPasswordPage />
-          </Route>
-          <Route path="/Admin">
-            <AdminHomePage />
-          </Route>
-          <Route path="/ModifySeats">
-            <ModifySeatsPage />
-          </Route>
-          <Route path="/AddSeats">
-            <AddSeatsPage />
-          </Route>
-        </Switch>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={HomePage} /> {/* Only when the address is exactly / */}
+            <Route path="/Login" component={LoginPage} />
+            <Route path="/CreateAccount"component={CreateAccountPage} />
+            <Route path="/ForgetPassword" component={ForgetPasswordPage} />
+            <PrivateRoute path="/MyBookings" component={MyBookingsPage} />
+            <PrivateRoute path="/Account" component={AccountMgmtPage} />
+            <PrivateRoute path="/SeatInformation" component={SeatInformationPage} />
+            <PrivateRoute2 path="/Admin" component={AdminHomePage} />
+            <PrivateRoute2 path="/ModifySeats" component={ModifySeatsPage} />
+            <PrivateRoute2 path="/AddSeats" component={AddSeatsPage} />
+          </Switch>
+          <Footer />
+        </AuthProvider>
       </Router>
+
     </div>
   );
 }
