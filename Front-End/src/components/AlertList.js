@@ -11,7 +11,7 @@ export default function AlertList(props){
           {/*    //return (<Seat seat={seat} key={seat.id} />);*/}
           {/*})}*/}
           {
-              (props.seats.filter((seat) => seat.status==='Hogged')).map((seat) => {
+              (props.seats.filter((seat) => (seat.status==='Hogged' && seat.unavailable===false))).map((seat) => {
                   return (<AlertComponents seat={seat} key={seat.id} />);
               })
           }
