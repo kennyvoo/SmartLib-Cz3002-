@@ -1,42 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField, TextInput, Alert } from "evergreen-ui";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import background from "./Img/lib2.png";
 
+import { useAuth } from '../context/AuthContext'
+
 //Pass in props/object into the LoginPage function
-function LoginPage({Login}) {
+function LoginPage() {
 
-  const studentUser = {
-    email: "1@1.com",
-    password: "asd"
-  }
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const {login} = useAuth()
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
 
-  //Local details
-  const [details, setDetails] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+  async function handleSubmit(e) {
+    e.preventDefault()  //Prevent from refreshing
 
-  //Function to handle the submit of the details
-  const submitHandler = e => {
-
-    console.log('here');
-    e.preventDefault(); //Prevent page from rerendering
-
-    if (details.email == studentUser.email && details.password == studentUser.password) {
-      console.log("Logged in");
-      setError("");
-      //Send back user data to App.js
-      Login(details);
-
-      // Function to redirect to home
+    try {
+      setError('')
+      setLoading(true) //Prevent them from creating multiple acc at the same time when keep clicking submit button
+      await login(emailRef.current.value, passwordRef.current.value)
+      if ((emailRef.current.value).includes("admin")) {
+        history.push("/Admin")
+      } else {
+        history.push("/")
+      }
+      console.log("Sign in");
+    } catch {
+      setError('Failed to sign in')
     }
-    else if (details.email != studentUser.email) {
-      console.log("Wrong Email");
-      setError("Wrong email entered");
-    }
-    else {
-      console.log("Wrong Password");
-      setError("Wrong Password entered");
-    }
+    setLoading(false) //Aft sign up
   }
 
   return (
@@ -46,16 +41,11 @@ function LoginPage({Login}) {
         <Text size={600} color={'white'}><br></br><br></br><br></br>Where student meet seats</Text>
       </Pane>
       <Pane height={1000} backgroundColor="beige" display="flex" justifyContent="center" padding={20}>
-        {/* <form onSubmit={submitHandler}>
-          <input type="email" name="email" value="email" onChange={e => setDetails({ ...details, email: e.target.value })} value={details.email} />
-          <input type="password" name="password" value="password" onChange={e => setDetails({ ...details, password: e.target.value })} value={details.password} />
-          <input type="submit" value="LOGIN" />
-        </form> */}
         {/* Can't use Formfield from Evergreen ui as it somehow don't support onSubmit function */}
-        <form onSubmit={submitHandler}>
+        <form onSubmit={handleSubmit}>
           <Heading size={800} >Login Page</Heading>
           <Text><br></br></Text>
-          {(error != "") ? (<Pane>
+          {(error != '') ? (<Pane>
             <Alert
               intent="danger"
               title={error}
@@ -69,7 +59,7 @@ function LoginPage({Login}) {
             inputHeight={45}
             inputWidth={450}
             type="email"
-            onChange={e => setDetails({ ...details, email: e.target.value })} value={details.email}
+            ref={emailRef}
           />
           <TextInputField
             id="Password Information"
@@ -79,7 +69,8 @@ function LoginPage({Login}) {
             inputHeight={45}
             inputWidth={450}
             type="password"
-            onChange={e => setDetails({ ...details, password: e.target.value })} value={details.password}
+            //onChange={e => setDetails({ ...details, password: e.target.value })} value={details.password}
+            ref={passwordRef}
           />
           {/* This is the container/pane for the login section */}
           <Pane display="flex" borderRadius={3}>
@@ -87,7 +78,7 @@ function LoginPage({Login}) {
               <Link to="/ForgetPassword">Forget Password?</Link>
             </Pane>
             <Pane paddingBottom={20}>
-              <Button appearance="primary" intent="success" height={48} type="submit">Login</Button>
+              <Button appearance="primary" intent="success" height={48} type="submit" disabled = {loading}>Login</Button>
               {/*<Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text
                 <Button appearance="primary" intent="success" height={48} type = "submit">Login</Button>
             </Link>*/}

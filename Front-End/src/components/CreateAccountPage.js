@@ -1,34 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Pane, Text, Button, Heading, Paragraph, TextInput, TextInputField, FormField, Alert} from "evergreen-ui";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import background from "./Img/c1.png";
 
-function CreateAccountPage(props) {
+import { useAuth } from '../context/AuthContext'
 
-  const [state, setState] = useState({ name: "", email: "", password: "", confirmPassword: "" }) //Initial Local state
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+function CreateAccountPage() {
 
-  const handleChange = (e) => {
-    const { id, value } = e.target
-    setState(prevState => ({
-      ...prevState,
-      [id]: value
-    }))
-  }
-  
-  const handleSubmitClick = (e) => {
-    e.preventDefault();
-    if (state.password === state.confirmPassword) {
-      // Add in the code to forward the prop 'state' to the backend server
-      // Also check if the school email entered already exist
-      setSuccess("Account created successfully");
-      setError("");
-    } else {
+  const nameRef = useRef()
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const passwordConfirmRef = useRef()
+  const {signup} = useAuth()
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
+
+  async function handleSubmit(e) {
+    e.preventDefault()  //Prevent from refreshing
+
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       console.log("Details do not match");
-      setError("Password Do not Match");
-      setSuccess("");
+      return setError('Passwords do not match') // We want to immediately get out of the Fn without going to the signup Fn
     }
+
+    if ((emailRef.current.value).includes("admin")) {
+      console.log("Details do not match");
+      return setError('You are not authorized to create an admin account.') // We want to immediately get out of the Fn without going to the signup Fn
+    }
+
+    try {
+      setError('')
+      setLoading(true) //Prevent them from creating multiple acc at the same time when keep clicking submit button
+      await signup(emailRef.current.value, passwordRef.current.value)
+      history.push("/")
+      console.log("Sign in");
+    } catch {
+      setError('Failed to create an account')
+    }
+    setLoading(false) //Aft sign up 
   }
 
   return (
@@ -38,22 +48,16 @@ function CreateAccountPage(props) {
         <Text size={600} color={'white'}><br></br><br></br><br></br>Making life simpler for you!</Text>
       </Pane>
       <Pane height={1000} backgroundColor="beige" display="flex" justifyContent="center" padding={20}>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Heading size={800} >Create New Account</Heading>
           <Text><br></br></Text>
-          {(error != "") ? (<Pane>
+          
+          {(error != '') ? (<Pane>
             <Alert
               intent="danger"
               title={error}
             />
           </Pane>) : (<Pane></Pane>)}
-
-          {(success != "") ? (<Pane>
-            <Alert
-              intent="success"
-              title={success}
-            />
-          </Pane>) : (<Pane></Pane>)}  
 
           <TextInputField
             id="name"
@@ -62,8 +66,7 @@ function CreateAccountPage(props) {
             placeholder="Jacob Ballas"
             inputHeight={45}
             inputWidth={450}
-            value={state.name}
-            onChange={handleChange}
+            ref={nameRef}
           />
           <TextInputField
             id="email"
@@ -73,8 +76,7 @@ function CreateAccountPage(props) {
             inputHeight={45}
             inputWidth={450}
             type="email"
-            value={state.email}
-            onChange={handleChange}
+            ref={emailRef}
           />
           <TextInputField
             id="password"
@@ -84,8 +86,7 @@ function CreateAccountPage(props) {
             inputHeight={45}
             inputWidth={450}
             type="password"
-            value={state.password}
-            onChange={handleChange}
+            ref={passwordRef}
           />
           <TextInputField
             id="confirmPassword"
@@ -94,8 +95,7 @@ function CreateAccountPage(props) {
             inputHeight={45}
             inputWidth={450}
             type="password"
-            value={state.confirmPassword}
-            onChange={handleChange}
+            ref={passwordConfirmRef}
           />
           {/* This is the container/pane for the login section */}
           <Pane display="flex" borderRadius={3}>
@@ -103,7 +103,7 @@ function CreateAccountPage(props) {
               <Link to="/ForgetPassword">Forget Password?</Link>
             </Pane>
             <Pane paddingBottom={20}>
-              <Button appearance="primary" height={48} type="submit" onClick={handleSubmitClick}>Create Account</Button>
+              <Button appearance="primary" height={48} type="submit" disabled={loading}>Create Account</Button>
               {/* <Link to="/Login" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text
                 
               </Link> */}
