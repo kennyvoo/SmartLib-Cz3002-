@@ -9,13 +9,13 @@ const boxWidth = 70;
 const boxStroke = "#909090";
 const boxStrokeSelected = "#000000";
 const boxStrokeWidth = "2px";
-const boxStrokeWidthSelected = "3px";
+const boxStrokeWidthSelected = "5px";
 
 const colorAvailable = "#5cd89f";
-const colorReserved = "#f4a261";
-const colorOccupied = "#fc5353";
-const colorHogged = "#AAAAAA";
-const colorUnavailable = "#28363d";
+const colorReserved = "#4287f5";
+const colorOccupied = "#f4a261";
+const colorHogged = "#fc5353";
+const colorUnavailable = "#AAAAAA";
 const colorError = "#FF0000";
 
 function Seat(props) {
@@ -67,6 +67,7 @@ function Seat(props) {
       <text
         className="seatText"
         textAnchor="middle"
+        fontSize={20}
         x={parseFloat(props.seat.xLoc) + boxWidth / 2}
         y={parseFloat(props.seat.yLoc) + boxHeight / 2}
         //x='10' y='10'

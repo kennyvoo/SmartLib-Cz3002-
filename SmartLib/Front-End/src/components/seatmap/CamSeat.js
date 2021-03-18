@@ -4,10 +4,10 @@ import { SelectedSeatContext } from "../../contexts/SelectSeatContext";
 
 const boxRx = 0;
 const boxRy = 0;
-const boxStroke = "#000000";
+const boxStroke = "#0000FF";
 const boxStrokeSelected = "#FF0000";
-const boxStrokeWidth = "5px";
-const boxStrokeWidthSelected = "8px";
+const boxStrokeWidth = "6px";
+const boxStrokeWidthSelected = "9px";
 
 function CamSeat(props) {
 
