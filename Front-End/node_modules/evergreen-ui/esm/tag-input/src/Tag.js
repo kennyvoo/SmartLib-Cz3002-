@@ -1,0 +1,52 @@
+import _extends from "@babel/runtime/helpers/esm/extends";
+import _objectWithoutProperties from "@babel/runtime/helpers/esm/objectWithoutProperties";
+
+/**
+ * @overview TagInput accepts multiple values that can be individually removed
+ */
+import React, { memo, forwardRef } from 'react';
+import PropTypes from 'prop-types';
+import { Badge } from '../../badges';
+import { CrossIcon } from '../../icons';
+import { minorScale } from '../../scales';
+var Tag = memo(forwardRef(function Tag(props, ref) {
+  var children = props.children,
+      onRemove = props.onRemove,
+      isRemovable = props.isRemovable,
+      restProps = _objectWithoutProperties(props, ["children", "onRemove", "isRemovable"]);
+
+  var badgeStyles = {
+    alignItems: 'center',
+    display: 'inline-flex',
+    fontWeight: 400,
+    textTransform: 'none'
+  };
+
+  if (isRemovable) {
+    badgeStyles.paddingRight = minorScale(1);
+  }
+
+  return React.createElement(Badge, _extends({
+    ref: ref,
+    isInteractive: true
+  }, badgeStyles, restProps), children, isRemovable && React.createElement(CrossIcon, {
+    marginLeft: minorScale(1),
+    onClick: onRemove,
+    size: minorScale(3)
+  }));
+}));
+Tag.propTypes = {
+  /** The tag content */
+  children: PropTypes.node,
+
+  /**
+   * Callback invoked when the removal icon is clicked.
+   * (event) => void
+   */
+  onRemove: PropTypes.func,
+
+  /** Whether or not the tag can be removed. */
+  isRemovable: PropTypes.bool
+};
+export default Tag;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy90YWctaW5wdXQvc3JjL1RhZy5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIm1lbW8iLCJmb3J3YXJkUmVmIiwiUHJvcFR5cGVzIiwiQmFkZ2UiLCJDcm9zc0ljb24iLCJtaW5vclNjYWxlIiwiVGFnIiwicHJvcHMiLCJyZWYiLCJjaGlsZHJlbiIsIm9uUmVtb3ZlIiwiaXNSZW1vdmFibGUiLCJyZXN0UHJvcHMiLCJiYWRnZVN0eWxlcyIsImFsaWduSXRlbXMiLCJkaXNwbGF5IiwiZm9udFdlaWdodCIsInRleHRUcmFuc2Zvcm0iLCJwYWRkaW5nUmlnaHQiLCJwcm9wVHlwZXMiLCJub2RlIiwiZnVuYyIsImJvb2wiXSwibWFwcGluZ3MiOiI7OztBQUFBOzs7QUFHQSxPQUFPQSxLQUFQLElBQWdCQyxJQUFoQixFQUFzQkMsVUFBdEIsUUFBd0MsT0FBeEM7QUFDQSxPQUFPQyxTQUFQLE1BQXNCLFlBQXRCO0FBQ0EsU0FBU0MsS0FBVCxRQUFzQixjQUF0QjtBQUNBLFNBQVNDLFNBQVQsUUFBMEIsYUFBMUI7QUFDQSxTQUFTQyxVQUFULFFBQTJCLGNBQTNCO0FBRUEsSUFBTUMsR0FBRyxHQUFHTixJQUFJLENBQ2RDLFVBQVUsQ0FBQyxTQUFTSyxHQUFULENBQWFDLEtBQWIsRUFBb0JDLEdBQXBCLEVBQXlCO0FBQUEsTUFDMUJDLFFBRDBCLEdBQ3dCRixLQUR4QixDQUMxQkUsUUFEMEI7QUFBQSxNQUNoQkMsUUFEZ0IsR0FDd0JILEtBRHhCLENBQ2hCRyxRQURnQjtBQUFBLE1BQ05DLFdBRE0sR0FDd0JKLEtBRHhCLENBQ05JLFdBRE07QUFBQSxNQUNVQyxTQURWLDRCQUN3QkwsS0FEeEI7O0FBR2xDLE1BQU1NLFdBQVcsR0FBRztBQUNsQkMsSUFBQUEsVUFBVSxFQUFFLFFBRE07QUFFbEJDLElBQUFBLE9BQU8sRUFBRSxhQUZTO0FBR2xCQyxJQUFBQSxVQUFVLEVBQUUsR0FITTtBQUlsQkMsSUFBQUEsYUFBYSxFQUFFO0FBSkcsR0FBcEI7O0FBT0EsTUFBSU4sV0FBSixFQUFpQjtBQUNmRSxJQUFBQSxXQUFXLENBQUNLLFlBQVosR0FBMkJiLFVBQVUsQ0FBQyxDQUFELENBQXJDO0FBQ0Q7O0FBRUQsU0FDRSxvQkFBQyxLQUFEO0FBQU8sSUFBQSxHQUFHLEVBQUVHLEdBQVo7QUFBaUIsSUFBQSxhQUFhO0FBQTlCLEtBQW1DSyxXQUFuQyxFQUFvREQsU0FBcEQsR0FDR0gsUUFESCxFQUVHRSxXQUFXLElBQ1Ysb0JBQUMsU0FBRDtBQUNFLElBQUEsVUFBVSxFQUFFTixVQUFVLENBQUMsQ0FBRCxDQUR4QjtBQUVFLElBQUEsT0FBTyxFQUFFSyxRQUZYO0FBR0UsSUFBQSxJQUFJLEVBQUVMLFVBQVUsQ0FBQyxDQUFEO0FBSGxCLElBSEosQ0FERjtBQVlELENBMUJTLENBREksQ0FBaEI7QUE4QkFDLEdBQUcsQ0FBQ2EsU0FBSixHQUFnQjtBQUNkO0FBQ0FWLEVBQUFBLFFBQVEsRUFBRVAsU0FBUyxDQUFDa0IsSUFGTjs7QUFJZDs7OztBQUlBVixFQUFBQSxRQUFRLEVBQUVSLFNBQVMsQ0FBQ21CLElBUk47O0FBU2Q7QUFDQVYsRUFBQUEsV0FBVyxFQUFFVCxTQUFTLENBQUNvQjtBQVZULENBQWhCO0FBYUEsZUFBZWhCLEdBQWYiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEBvdmVydmlldyBUYWdJbnB1dCBhY2NlcHRzIG11bHRpcGxlIHZhbHVlcyB0aGF0IGNhbiBiZSBpbmRpdmlkdWFsbHkgcmVtb3ZlZFxuICovXG5pbXBvcnQgUmVhY3QsIHsgbWVtbywgZm9yd2FyZFJlZiB9IGZyb20gJ3JlYWN0J1xuaW1wb3J0IFByb3BUeXBlcyBmcm9tICdwcm9wLXR5cGVzJ1xuaW1wb3J0IHsgQmFkZ2UgfSBmcm9tICcuLi8uLi9iYWRnZXMnXG5pbXBvcnQgeyBDcm9zc0ljb24gfSBmcm9tICcuLi8uLi9pY29ucydcbmltcG9ydCB7IG1pbm9yU2NhbGUgfSBmcm9tICcuLi8uLi9zY2FsZXMnXG5cbmNvbnN0IFRhZyA9IG1lbW8oXG4gIGZvcndhcmRSZWYoZnVuY3Rpb24gVGFnKHByb3BzLCByZWYpIHtcbiAgICBjb25zdCB7IGNoaWxkcmVuLCBvblJlbW92ZSwgaXNSZW1vdmFibGUsIC4uLnJlc3RQcm9wcyB9ID0gcHJvcHNcblxuICAgIGNvbnN0IGJhZGdlU3R5bGVzID0ge1xuICAgICAgYWxpZ25JdGVtczogJ2NlbnRlcicsXG4gICAgICBkaXNwbGF5OiAnaW5saW5lLWZsZXgnLFxuICAgICAgZm9udFdlaWdodDogNDAwLFxuICAgICAgdGV4dFRyYW5zZm9ybTogJ25vbmUnXG4gICAgfVxuXG4gICAgaWYgKGlzUmVtb3ZhYmxlKSB7XG4gICAgICBiYWRnZVN0eWxlcy5wYWRkaW5nUmlnaHQgPSBtaW5vclNjYWxlKDEpXG4gICAgfVxuXG4gICAgcmV0dXJuIChcbiAgICAgIDxCYWRnZSByZWY9e3JlZn0gaXNJbnRlcmFjdGl2ZSB7Li4uYmFkZ2VTdHlsZXN9IHsuLi5yZXN0UHJvcHN9PlxuICAgICAgICB7Y2hpbGRyZW59XG4gICAgICAgIHtpc1JlbW92YWJsZSAmJiAoXG4gICAgICAgICAgPENyb3NzSWNvblxuICAgICAgICAgICAgbWFyZ2luTGVmdD17bWlub3JTY2FsZSgxKX1cbiAgICAgICAgICAgIG9uQ2xpY2s9e29uUmVtb3ZlfVxuICAgICAgICAgICAgc2l6ZT17bWlub3JTY2FsZSgzKX1cbiAgICAgICAgICAvPlxuICAgICAgICApfVxuICAgICAgPC9CYWRnZT5cbiAgICApXG4gIH0pXG4pXG5cblRhZy5wcm9wVHlwZXMgPSB7XG4gIC8qKiBUaGUgdGFnIGNvbnRlbnQgKi9cbiAgY2hpbGRyZW46IFByb3BUeXBlcy5ub2RlLFxuXG4gIC8qKlxuICAgKiBDYWxsYmFjayBpbnZva2VkIHdoZW4gdGhlIHJlbW92YWwgaWNvbiBpcyBjbGlja2VkLlxuICAgKiAoZXZlbnQpID0+IHZvaWRcbiAgICovXG4gIG9uUmVtb3ZlOiBQcm9wVHlwZXMuZnVuYyxcbiAgLyoqIFdoZXRoZXIgb3Igbm90IHRoZSB0YWcgY2FuIGJlIHJlbW92ZWQuICovXG4gIGlzUmVtb3ZhYmxlOiBQcm9wVHlwZXMuYm9vbFxufVxuXG5leHBvcnQgZGVmYXVsdCBUYWdcbiJdfQ==

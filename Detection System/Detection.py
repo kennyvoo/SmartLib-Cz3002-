@@ -12,7 +12,7 @@ ticker = threading.Event()
 from PIL import Image 
 import imutils
 
-
+#print(round(time.time(),0))
 ### Set Up FireStore ###
 cred = credentials.Certificate('FireStore.json')
 firebase_admin.initialize_app(cred)
@@ -22,9 +22,9 @@ db = firestore.client()
 cameraId= "LWN_L4_C1"
 lib="LWN"
 level="L4"
-cap = cv2.VideoCapture('http://10.27.35.143:8080/video')  ## ip camera using android phone app.  Ip Webcam
-cap.set(cv2.CAP_PROP_BUFFERSIZE, 0)     ## no buffer
-cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)
+# cap = cv2.VideoCapture('http://10.27.35.143:8080/video')  ## ip camera using android phone app.  Ip Webcam
+# cap.set(cv2.CAP_PROP_BUFFERSIZE, 0)     ## no buffer
+# cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)
 
 font = cv2.FONT_HERSHEY_PLAIN
 
@@ -50,13 +50,13 @@ colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 ### Inference every 5 seconds
 WAIT_TIME_SECONDS = 5
-starting_time = time.time()
 frame_id = 0
 #not ticker.wait(WAIT_TIME_SECONDS)
 while True:
+     
      #print(SeatsArray)
      cap = cv2.VideoCapture('http://10.27.35.143:8080/video')
-
+     #cap = cv2.VideoCapture('http://192.168.1.245:8080/video')
      _, frame = cap.read()
      frame_id += 1
      height, width, channels = frame.shape
@@ -86,7 +86,9 @@ while True:
 
      for i in range(len(seatImageToDetect)):
           #i=len(seatImageToDetect)-u-1
-          detectionCheck=0
+          humanDetected=False
+          hoggedDetected=False
+          detectionCheck=False
           for out in outs:
                out_tensor = out[i]
 
@@ -108,30 +110,47 @@ while True:
                          boxes.append([x, y, w, h])
                          confidences.append(float(confidence))
                          class_ids.append(class_id)
-                         detectionCheck=1
-                         #### update database
-                         if(SeatsArray[i]["status"]=="Reserved" or SeatsArray[i]["unavailable"]==True):
-                              break
-                         elif classes[class_id]=="person" and SeatsArray[i]["status"]!="Occupied":
-                              SeatsArray[i]["status"]="Occupied"
-                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Occupied'})
-                              print("Seat Updated to occupied")
-                              break
-                         elif classes[class_id]=="bottle" and SeatsArray[i]["status"]!="Hogged":
-                              SeatsArray[i]["status"]="Hogged"
-                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Hogged'})
-                              print("Seat Updated to Hogged")
-                              break
-                         elif SeatsArray[i]["status"]!="Unoccupied":
-                              SeatsArray[i]["status"]="Unoccupied"
-                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Unoccupied'})
-                              print("Seat Updated to Unoccupied")
-                              break
-          if (detectionCheck==0 and SeatsArray[i]["status"]!="Unoccupied" and SeatsArray[i]["status"]!="Reserved" and SeatsArray[i]["unavailable"]==False):
+
+
+                         detectionCheck=True
+                         if(classes[class_id]=="person"):
+                              humanDetected=True
+                              hoggedDetected=False 
+                         elif (classes[class_id]=="bottle" and not humanDetected and SeatsArray[i]["status"]!="Detected" and SeatsArray[i]["status"]!="Hogged"):
+                              SeatsArray[i]["status"]="Detected"
+                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Detected'})
+                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'timeStamp':round(time.time(),0)})
+                              SeatsArray[i]["timeStamp"]=round(time.time(),0)
+                              hoggedDetected=True
+                              print("Object Detected")
+
+                         if(classes[class_id]=="bottle"):
+                              hoggedDetected=True
+          if(SeatsArray[i]["status"]=="Reserved" or SeatsArray[i]["unavailable"]==True):
+               continue
+          
+          if(humanDetected and SeatsArray[i]["status"]!="Occupied"):
+               SeatsArray[i]["status"]="Occupied"
+               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Occupied'})
+               print( SeatsArray[i]["id"]+" Updated to occupied")
+          elif(hoggedDetected and SeatsArray[i]["status"]!="Hogged" ):
+               diff=round(time.time(),0) -SeatsArray[i]["timeStamp"]
+               print(diff)
+               if(diff>=5):
+                    SeatsArray[i]["status"]="Hogged"
+                    db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Hogged'})
+                    print(SeatsArray[i]["id"]+" Updated to Hogged")
+          elif (SeatsArray[i]["status"]!="Unoccupied" and not humanDetected and not hoggedDetected):
                SeatsArray[i]["status"]="Unoccupied"
                db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Unoccupied'})
-               print("Database updated")
-     indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.8, 0.3)
+               print(SeatsArray[i]["id"]+" Updated to Unoccupied")
+               break
+
+          if (not detectionCheck and SeatsArray[i]["status"]!="Unoccupied" and SeatsArray[i]["status"]!="Reserved" and SeatsArray[i]["unavailable"]==False):
+               SeatsArray[i]["status"]="Unoccupied"
+               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Unoccupied'})
+               print(SeatsArray[i]["id"]+"  Updated to Unoccupied")
+     indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.7, 0.3)
 
      for i in range(len(boxes)):
           if i in indexes:
