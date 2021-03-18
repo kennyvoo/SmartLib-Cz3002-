@@ -36,7 +36,8 @@ function LoginPage() {
 
   return (
     <div>
-      <Pane backgroundImage={`url(${background})`} display="flex" alignItems="center" justifyContent="center" padding={100} flexDirection="column">
+      <Pane backgroundImage={`url(${background})`}
+       display="flex" alignItems="center" justifyContent="center" padding={100} flexDirection="column">
         <Heading fontSize={100} color={'white'}>SmartLib</Heading>
         <Text size={600} color={'white'}><br></br><br></br><br></br>Where student meet seats</Text>
       </Pane>

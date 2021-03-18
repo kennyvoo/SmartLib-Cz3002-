@@ -37,12 +37,6 @@ function HomePage() {
           >
             <MapSelectorPane />
           </Pane>
-          <Pane>
-            <Link to="/SeatInformation" style={{ textDecoration: "none" }}>
-              <Button marginRight={16} appearance="primary" intent="success">Test</Button>
-            </Link>
-            <Button marginRight={16} appearance="primary" intent="warning">Booked</Button>
-          </Pane>
         </div>
       </Pane>
 
