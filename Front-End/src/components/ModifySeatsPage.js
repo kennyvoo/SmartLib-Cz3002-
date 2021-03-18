@@ -11,6 +11,8 @@ import {SeatContext} from "../contexts/SeatContext";
 import CamSeatsList from "./seatmap/CamSeatsList";
 import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
+import crudFirebase from '../services/crudFirebase'
+import { useCollection } from "react-firebase-hooks/firestore";
 
 function ModifySeatsPage(){
 
@@ -50,14 +52,15 @@ function ModifySeatsPage(){
 
     function modifySeat()
     {
-        setSeats(prev=>[...prev, selSeat])
-        alert("Successfully Added");
+        //setSeats(prev=>[...prev, selSeat])
+        crudFirebase.update('Seats',selSeat.id,selSeat);
+        alert("Successfully Modified");
     }
 
     function deleteSeat()
     {
-        //seats.find((seat)=>seat.id==selected.seat)
-        seats.filter(seat => seat.id !== tempSeats.id)
+        // seats.find((seat)=>seat.id==selected.seat)
+        crudFirebase.remove('Seats',selSeat.id);
         alert("Successfully Deleted");
     }
 
