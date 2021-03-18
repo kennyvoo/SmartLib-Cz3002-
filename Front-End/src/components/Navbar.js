@@ -24,19 +24,21 @@ import {
 } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
 import { IoLibraryOutline } from "react-icons/io5";
-
 import { useAuth } from "../context/AuthContext"
 
-function Navbar() {
+export default function Navbar() {
+
   var accName = "Hou Jing";
 
   const { currentUser, logout } = useAuth()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const history = useHistory()
 
   async function handleLogout() {
     try {
       await logout()
       history.push("/Login")
+      setIsLoggedIn(false)
     } catch {
     }
   }
@@ -123,5 +125,3 @@ function UserAvatar() {
     <Avatar name="Hou Jing" size={30} margin={8} />
   );
 }
-
-export default Navbar;

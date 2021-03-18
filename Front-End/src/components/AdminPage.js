@@ -3,7 +3,7 @@ import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField, Text
 import { Link } from "react-router-dom";
 import background from "./Img/ResetPwd.jpg";
 
-function ResetPasswordPage() {
+function AdminPage() {
   return (
     <div>
       <Pane backgroundImage = {`url(${background})`} display="flex" alignItems="center" justifyContent="center" padding={100} flexDirection="column">
@@ -12,31 +12,14 @@ function ResetPasswordPage() {
       </Pane>
       <Pane height={1000} backgroundColor="beige" display="flex" justifyContent="center" padding={20}>
         <FormField>
-        <Heading size={800} >Reset Account Password</Heading>
+        <Heading size={800} >Admin Page</Heading>
         <Text><br></br></Text>
-        <TextInputField
-          id="Password Information"
-          required
-          label="New Password"
-          placeholder="New Password"
-          inputHeight = {45}
-          inputWidth = {450}
-        />
-        <TextInputField
-          id="Confirm Password Information"
-          required
-          label="Confirm Password"
-          placeholder="New Password"
-          secureTextEntry={true}
-          inputHeight = {45}
-          inputWidth = {450}
-        />
         {/* This is the container/pane for the login section */}
         <Pane display="flex">
           <Pane flex={1} alignItems="center" display="flex"></Pane> {/* In Order to keep the button on right side */}
           <Pane paddingBottom={20}>
             <Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
-                <Button appearance="primary" intent="success" height={48}>Change Password</Button>
+                <Button appearance="primary" intent="success" height={48}>Some button</Button>
             </Link>
           </Pane>
         </Pane>
@@ -46,4 +29,4 @@ function ResetPasswordPage() {
   );
 }
 
-export default ResetPasswordPage;
+export default AdminPage;

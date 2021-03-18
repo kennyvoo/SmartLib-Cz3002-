@@ -24,6 +24,11 @@ function CreateAccountPage() {
       return setError('Passwords do not match') // We want to immediately get out of the Fn without going to the signup Fn
     }
 
+    if ((emailRef.current.value).includes("admin")) {
+      console.log("Details do not match");
+      return setError('You are not authorized to create an admin account.') // We want to immediately get out of the Fn without going to the signup Fn
+    }
+
     try {
       setError('')
       setLoading(true) //Prevent them from creating multiple acc at the same time when keep clicking submit button

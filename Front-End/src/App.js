@@ -10,9 +10,10 @@ import Footer from "./components/Footer";
 import CreateAccountPage from "./components/CreateAccountPage"
 import ForgetPasswordPage from "./components/ForgetPasswordPage"
 import SeatInformationPage from "./components/SeatInformationPage"
-import ResetPasswordPage from "./components/ResetPasswordPage"
+import AdminPage from "./components/AdminPage"
 import { AuthProvider } from "./context/AuthContext"
 import PrivateRoute from "./PrivateRoute"
+import PrivateRoute2 from "./PrivateRoute2"
 
 function App() {
 
@@ -57,9 +58,7 @@ function App() {
             <Route path="/SeatInformation">
               <SeatInformationPage />
             </Route>
-            <Route path="/ResetPassword">
-              <ResetPasswordPage />
-            </Route>
+            <PrivateRoute2 path="/Admin" component={AdminPage} />
           </Switch>
           <Footer />
         </AuthProvider>

@@ -34,7 +34,7 @@ export function AuthProvider({children}) {
             
         })
 
-        return unsubscribe //Will unsubscribe the auth componenet when we unmount this component
+        return unsubscribe //Will unsubscribe the auth component when we unmount this component
     }, [])
     
     // Place to export the functions

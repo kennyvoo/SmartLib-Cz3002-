@@ -22,7 +22,11 @@ function LoginPage() {
       setError('')
       setLoading(true) //Prevent them from creating multiple acc at the same time when keep clicking submit button
       await login(emailRef.current.value, passwordRef.current.value)
-      history.push("/")
+      if ((emailRef.current.value).includes("admin")) {
+        history.push("/Admin")
+      } else {
+        history.push("/")
+      }
       console.log("Sign in");
     } catch {
       setError('Failed to sign in')
