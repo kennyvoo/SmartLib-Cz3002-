@@ -11,6 +11,8 @@ import {SeatContext} from "../contexts/SeatContext";
 import CamSeatsList from "./seatmap/CamSeatsList";
 import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
+import crudFirebase from '../services/crudFirebase'
+import { useCollection } from "react-firebase-hooks/firestore";
 
 function ModifySeatsPage(){
 
@@ -50,13 +52,15 @@ function ModifySeatsPage(){
 
     function modifySeat()
     {
-        setSeats(prev=>[...prev, selSeat])
+        //setSeats(prev=>[...prev, selSeat])
+        crudFirebase.update('Seats',selSeat.id,selSeat);
         alert("Successfully Added");
     }
 
     function deleteSeat()
     {
         // seats.find((seat)=>seat.id==selected.seat)
+        crudFirebase.remove('Seats',selSeat.id);
         alert("Successfully Added");
     }
 
@@ -244,7 +248,7 @@ function ModifySeatsPage(){
                     <Button className={'button'} onClick={previewSeat} appearance="primary" iconBefore={SearchIcon}>Preview</Button>
                     <Button className={'button'} onClick={resetSeat} marginRight={16} appearance="primary" intent={"warning"} iconBefore={ResetIcon}>Reset</Button>
                     <Button className={'button'} onClick={modifySeat} marginRight={16} appearance="primary" intent={"success"} iconBefore={EditIcon}>Modify Seat</Button>
-                    <Button className={'button'} onClick={modifySeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={TrashIcon}>Delete Seat</Button>
+                    <Button className={'button'} onClick={deleteSeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={TrashIcon}>Delete Seat</Button>
                 </Pane>
             </div>
 
