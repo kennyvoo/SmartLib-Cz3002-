@@ -150,7 +150,7 @@ function AddSeatsPage(){
                                 {
                                     setState({ value });
                                     setSelected({seat:0, level: value });
-                                    setNewSeat(prevState => ({...prevState, level: value.toString}));
+                                    setNewSeat(prevState => ({...prevState, level: value.toString()}));
                                 }}
                             />
                         )}

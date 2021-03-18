@@ -88,7 +88,7 @@ function MapSelectorPane() {
         </Pane>
           <Heading padding={10} size={700}>The library has {seats.length} seats in total.</Heading>
           <Heading padding={10} size={700}>The library has {countSeats('Available')} available seats, {countSeats('Reserved')} reserved seats, {countSeats('Occupied')} occupied seats, {countSeats('Hogged')} hogged seats, {countSeats('Unavailable')} unavailable seats.</Heading>
-          <Heading padding={10} size={700}>The library is currently {occupancy('Available')}% full.</Heading>
+          <Heading padding={10} size={700}>Seat Availability is currently at {occupancy('Available').toFixed(2)}%.</Heading>
 
         {/* Book Button and Dialog */}
         <Component initialState={{ isShown: false }}>
