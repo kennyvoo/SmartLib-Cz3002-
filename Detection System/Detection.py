@@ -18,8 +18,9 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 ### Camera Parameter ###
-cameraId= "LWN_L4_C1"
-cameraIP='http://10.27.35.143:8080/video'
+CAMERA_ID= "LWN_L4_C1"
+CAMERA_IP='http://10.27.35.143:8080/video'
+FIRESTORE_COLLECTION='Seats'
 lib="LWN"
 level="L4"
 
@@ -40,7 +41,7 @@ colors = np.random.uniform(0, 255, size=(len(classes), 3))
 #WAIT_TIME_SECONDS = 5
 #while not ticker.wait(WAIT_TIME_SECONDS):
 while True:
-     cap = cv2.VideoCapture(cameraIP)
+     cap = cv2.VideoCapture(CAMERA_IP)
      _, frame = cap.read()
      class_ids = []
      confidences = []
@@ -50,7 +51,7 @@ while True:
      SeatsArray=[]
 
      ### Retrieve all thet Seats related to this camera from the database###
-     SeatsList= db.collection(u'Seats').where(u"cameraId",u"==",cameraId).stream()
+     SeatsList= db.collection(FIRESTORE_COLLECTION).where(u"cameraId",u"==",CAMERA_ID).stream()
      SeatsArray = [ seat.to_dict() for seat in SeatsList ]
 
      ##Crop out seats images from the full picture
@@ -108,8 +109,8 @@ while True:
                               # record the starting time when the bottle is first detected. change the status to detected.
                          elif (classes[class_id]=="bottle" and not humanDetected and SeatsArray[i]["status"]!="Detected" and SeatsArray[i]["status"]!="Hogged"):
                               SeatsArray[i]["status"]="Detected"
-                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Detected'})
-                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'timeStamp':round(time.time(),0)})
+                              db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Detected'})
+                              db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'timeStamp':round(time.time(),0)})
                               SeatsArray[i]["timeStamp"]=round(time.time(),0)
                               itemDetected=True
                               print("Object Detected")
@@ -121,7 +122,7 @@ while True:
           #  if human is detected and the seat status is not occupied 
           if(humanDetected and SeatsArray[i]["status"]!="Occupied"):
                SeatsArray[i]["status"]="Occupied"
-               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Occupied'})
+               db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Occupied'})
                print( SeatsArray[i]["id"]+" Updated to occupied")
           #  if item is detected and seat status is not Hogged
           elif(itemDetected and SeatsArray[i]["status"]!="Hogged" and not humanDetected):
@@ -130,12 +131,12 @@ while True:
                # if it's more than 5s, changed the seat status to hogged
                if(diff>=5):
                     SeatsArray[i]["status"]="Hogged"
-                    db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Hogged'})
+                    db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Hogged'})
                     print(SeatsArray[i]["id"]+" Updated to Hogged")
           # if no human and item is detected, change the status to available if it's not available.
           elif (SeatsArray[i]["status"]!="Available" and not humanDetected and not itemDetected):
                SeatsArray[i]["status"]="Available"
-               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Available'})
+               db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Available'})
                print(SeatsArray[i]["id"]+" Updated to Available")
 
      # perform nms to eliminate the overlap boxes.
