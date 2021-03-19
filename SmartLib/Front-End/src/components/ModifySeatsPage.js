@@ -17,11 +17,12 @@ import { useCollection } from "react-firebase-hooks/firestore";
 function ModifySeatsPage(){
 
     const [seats, setSeats] = useContext(SeatContext);
+    const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
     const defaultSeat = {
-        id: null,
-        level: selected.level,
+        id: '',
+        level: '',
         seatName: '',
         cameraId: '',
         x1Img: 0,
@@ -30,10 +31,21 @@ function ModifySeatsPage(){
         y2Img: 0,
         xLoc: 0,
         yLoc: 0,
-        status: null,
-        unavailable: null
+        status: '',
+        unavailable: false
     }
     const [selSeat, setSelSeat]=useState(defaultSeat)
+
+    useEffect(()=> {
+        if(!loading&&dataFS) {
+            //console.log(dataFS.docs);
+            let events = [];
+            dataFS.forEach((doc) => events.push(doc.data()));
+            console.log(events);
+            setSeats(events);
+            setTempSeats(events);
+        }
+    },[dataFS]);
 
     const handleChange = (e) => {
         const { id, value } = e.target
@@ -66,15 +78,31 @@ function ModifySeatsPage(){
 
     function previewSeat()
     {
-        setTempSeats(seats);
-        setTempSeats(prev=>[...prev, selSeat])
-        setSelected(prevState=>({...prevState,seat:selSeat.id}))
+        console.log("preview clicked")
+        let found = seats.find((seat)=>(seat.id===selSeat.id));
+        let index=seats.indexOf(found);
+        console.log('found',found)
+        console.log('index',index)
+        console.log('selSeat.id.toString()',selSeat.id.toString());
+        if(index!= null) {
+            console.log("index found")
+            setTempSeats(()=>{
+                let temp=tempSeats;
+                temp.splice(index,1,selSeat)
+                setTempSeats(temp);
+            });
+        }
+
+        // setTempSeats(seats);
+        // setTempSeats(prev=>[...prev, selSeat])
+        // setSelected(prevState=>({...prevState,seat:selSeat.id}))
     }
 
     function resetSeat()
     {
         setTempSeats(seats);
-        setSelSeat(defaultSeat);
+        //setSelSeat(defaultSeat);
+        reset();
     }
 
     function cameraSelect(level)
@@ -96,12 +124,20 @@ function ModifySeatsPage(){
     useEffect(() => {console.log('selSeat:'); console.log(selSeat)}, [selSeat]);
     useEffect(()=>{
         console.log('selected: id: '+selected.id+' lvl: '+selected.level);
+        // const seat = seats.find((seat)=>seat.id==selected.seat);
+        // if(seat!=null) setSelSeat(seat);
+        // else setSelSeat(defaultSeat);
+        reset();
+        },[selected])
+
+    function reset(){
         const seat = seats.find((seat)=>seat.id==selected.seat);
         if(seat!=null) setSelSeat(seat);
         else setSelSeat(defaultSeat);
-        },[selected])
+    }
 
     return(
+        !loading&&seats?
         <Pane className={'bgPane'}>
             <div>
                 <h2 className={'heading'}>Modify / Delete Seat</h2>
@@ -122,7 +158,7 @@ function ModifySeatsPage(){
                                 className={'segmentedControl'}
                                 options={state.options}
                                 value={state.value}
-                                onChange={(value) => { setState({ value }); setSelected({seat:0, level: value }); setSelSeat(prevState => ({...prevState, level: value})); }}
+                                onChange={(value) => { setState({ value }); setSelected({seat:0, level: value }); }}
                             />
                         )}
                     </Component>
@@ -196,7 +232,7 @@ function ModifySeatsPage(){
                             <TextInputField
                                 className={'inputFieldBox'}
                                 id="level" label="Level :" placeholder="2-5"
-                                value={selSeat.level} onChange={handleChange} disabled
+                                value={selSeat.level} onChange={handleChange}
                             />
                             <TextInputField
                                 className={'inputFieldBox'}
@@ -218,7 +254,7 @@ function ModifySeatsPage(){
                             <TextInputField
                                 className={'inputFieldBox'}
                                 id="status" label="Status :" placeholder="eg. Available"
-                                value={selSeat.status} onChange={handleChange} disabled
+                                value={selSeat.status} onChange={handleChange}
                             />
                             {/*<TextInputField*/}
                             {/*    className={'inputFieldBox'}*/}
@@ -245,7 +281,8 @@ function ModifySeatsPage(){
                     <Button className={'button'} onClick={deleteSeat} marginRight={16} appearance="primary" intent={"danger"} iconBefore={TrashIcon}>Delete Seat</Button>
                 </Pane>
             </div>
-        </Pane>
+        </Pane>:
+            <h1>Loading</h1>
 
     );
 }
