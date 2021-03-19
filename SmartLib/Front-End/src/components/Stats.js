@@ -37,7 +37,7 @@ export default function Stats(props){
         return (stats);
     }
 
-    const levelSeats = (props.statsSel.val==0 ? props.seats : props.seats.filter(seat => seat.level === props.statsSel.val));
+    const levelSeats = (props.statsSel.val==0 ? props.seats : props.seats.filter(seat => seat.level === props.statsSel.val.toString()));
     // console.log(props.statsSel);
     // console.log(props.seats);
     console.log(levelSeats);

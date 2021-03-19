@@ -23,7 +23,7 @@ import {
   TimeIcon,
   AsteriskIcon,
   Alert,
-  CaretDownIcon,
+  CaretDownIcon, AddIcon,
 } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
 import { IoLibraryOutline } from "react-icons/io5";
@@ -69,10 +69,10 @@ export default function Navbar() {
               <Menu>
                 <Menu.Group>
                     <Link to="/ModifySeats" style={{ textDecoration: "none" }}>
-                      <Menu.Item icon={AsteriskIcon}>Modify Seats</Menu.Item>
+                      <Menu.Item icon={EditIcon}>Modify / Remove Seats</Menu.Item>
                     </Link>
                     <Link to="/AddSeats" style={{ textDecoration: "none" }}>
-                      <Menu.Item icon={AsteriskIcon}>Add New Seat</Menu.Item>
+                      <Menu.Item icon={AddIcon}>Add New Seat</Menu.Item>
                     </Link>
                 </Menu.Group>
                 <Menu.Divider />
