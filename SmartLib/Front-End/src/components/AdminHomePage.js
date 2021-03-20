@@ -59,8 +59,8 @@ function AdminHomePage(){
                 return 'http://10.27.35.143:8080/video';
             case 5:
                 //return L5C1;
-                return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
-                //return 'http://10.27.35.143:8080/video';
+                //return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
+                return 'http://10.27.168.181:8080/video';
         }
     }
 

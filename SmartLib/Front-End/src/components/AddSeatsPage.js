@@ -27,6 +27,7 @@ import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
+import DrawAnnotations from "./CamKonva";
 
 function AddSeatsPage(){
 
@@ -61,6 +62,16 @@ function AddSeatsPage(){
             setTempSeats(events);
         }
     },[dataFS]);
+
+    useEffect(()=>{
+        setNewSeat(prevState => ({
+            ...prevState,
+            x1Img: selected.drawX1,
+            y1Img: selected.drawY1,
+            x2Img: selected.drawX2,
+            y2Img: selected.drawY2,
+        }))
+    },[selected])
 
     const handleChange = (e) => {
         const { id, value } = e.target
@@ -111,10 +122,14 @@ function AddSeatsPage(){
                 return L2C1;
             case 3:
                 return L3C1;
+                //return 'https://webcam.ntu.edu.sg/upload/slider/lwn-inside.jpg';
+                //return 'https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg';
             case 4:
-                return L4C1;
+                //return L4C1;
+                return 'http://10.27.35.143:8080/video';
             case 5:
-                return L5C1;
+                //return L5C1;
+                return 'http://10.27.168.181:8080/video';
         }
     }
 
@@ -159,13 +174,10 @@ function AddSeatsPage(){
                 <Pane className={'masterPane'} border={'none'}>
                         <Pane className={'cameraControlPane'} border={'default'}>
                             <Pane className={'cameraPane'} backgroundImage={`url(${cameraSelect(selected.level)})`}>
-                                <CamSeatsList seats={tempSeats} editmode={true}/>
+                                {/*<CamSeatsList seats={tempSeats} editmode={true}/>*/}
+                                <DrawAnnotations/>
                             </Pane>
-
-                            {/*<Pane>*/}
-                            {/*    <DrawRect/>*/}
-                            {/*</Pane>*/}
-
+                            <p> Click and Drag to draw bounding box</p>
                             <Pane className={'infoPane'} paddingBottom={20}>
                                 <Text className={'infoText'}>cameraId: {newSeat.cameraId}</Text>
                                 <Text className={'infoText'}>x1Img: {newSeat.x1Img}</Text>
