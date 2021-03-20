@@ -12,17 +12,13 @@ import {
     SearchIcon,
     Checkbox
 } from "evergreen-ui";
-import { Link } from "react-router-dom";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
 import L4C1 from "./Img/L4C1.jpg";
 import L5C1 from "./Img/L5C1.jpg";
-import ImagePlane from "./seatmap/ImagePlane";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import {SeatContext} from "../contexts/SeatContext";
-import DrawRect from "./DrawRect";
-import CamSeatsList from "./seatmap/CamSeatsList";
 import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
 import crudFirebase from '../services/crudFirebase'
@@ -36,7 +32,6 @@ function AddSeatsPage(){
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
     const defaultSeat = {
-        // id: seats[seats.length-1].id+1,
         id: generateUID(),
         level: selected.level.toString(),
         seatName: '',
