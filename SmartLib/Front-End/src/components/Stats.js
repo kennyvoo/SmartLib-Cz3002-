@@ -6,6 +6,7 @@ import {
 } from "evergreen-ui";
 import './Stats.css';
 import Component from "@reactions/component";
+import Colors from "./Colors";
 
 export default function Stats(props){
 
@@ -74,6 +75,16 @@ export default function Stats(props){
                       ['Hogged', stats.hogged],
                       ['Unavailable', stats.unavail]
                   ]}
+                  options={{
+                      pieStartAngle: -90,
+                      slices: {
+                          0: { color: Colors.colorAvailable },
+                          1: { color: Colors.colorReserved },
+                          2: { color: Colors.colorOccupied },
+                          3: { color: Colors.colorHogged },
+                          4: { color: Colors.colorUnavailable },
+                      },
+                  }}
                   rootProps={{ 'data-testid': '1' }}
               />
           </Pane>

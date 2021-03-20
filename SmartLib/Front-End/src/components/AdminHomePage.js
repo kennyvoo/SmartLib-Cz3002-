@@ -26,6 +26,7 @@ import Stats from "./Stats";
 import AlertList from "./AlertList";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
+import Legend from "./seatmap/Legend";
 
 function AdminHomePage(){
 
@@ -103,6 +104,9 @@ function AdminHomePage(){
                         </Pane>
                         <Pane className={'seatMapPane'} border={'none'}>
                             <SeatsList seats={seats} editmode={false}/>
+                        </Pane>
+                        <Pane border={'default'} borderRadius={5} marginTop={10} padding={10}>
+                            <Legend/>
                         </Pane>
                     </Pane>
                     <Pane className={'alertsPane'} border={'default'}>

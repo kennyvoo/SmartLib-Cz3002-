@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-// import { SeatContext } from '../../contexts/SeatContext';
 import { SelectedSeatContext } from "../../contexts/SelectSeatContext";
+import Colors from "../Colors";
 
 const boxRx = 0;
 const boxRy = 0;
@@ -9,35 +9,26 @@ const boxStrokeSelected = "#FF0000";
 const boxStrokeWidth = "6px";
 const boxStrokeWidthSelected = "9px";
 
-const colorAvailable = "#5cd89f";
-const colorReserved = "#4287f5";
-const colorOccupied = "#f4a261";
-const colorHogged = "#fc5353";
-const colorUnavailable = "#AAAAAA";
-const colorError = "#FF0000";
-
 function CamSeat(props) {
-
-    //const [seats, setSeats] = useContext(SeatContext);
     const [selected, setSelected] = useContext(SelectedSeatContext);
 
     function renderColor(status, unavailable) {
         if(unavailable==true)
         {
-            return colorUnavailable;
+            return Colors.colorUnavailable;
         }
 
         switch (status) {
             case "Available":
-                return colorAvailable;
+                return Colors.colorAvailable;
             case "Reserved":
-                return colorReserved;
+                return Colors.colorReserved;
             case "Occupied":
-                return colorOccupied;
+                return Colors.colorOccupied;
             case "Hogged":
-                return colorHogged;
+                return Colors.colorHogged;
             default:
-                return colorError;
+                return Colors.colorError;
         }
     }
 
@@ -46,10 +37,8 @@ function CamSeat(props) {
         //   alert("Clicked " + props.seat.seatName);
         setSelected({ seat: props.seat.id, level:selected.level });
     }
+
     return (
-        // <li>
-        //     {this.props.seat.xLoc} {this.props.seat.yLoc}
-        // </li>
         <g onClick={clickSeat} cursor="pointer">
             <rect
                 x={props.seat.x1Img}
