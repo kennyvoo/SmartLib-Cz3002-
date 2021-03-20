@@ -20,6 +20,7 @@ function ModifySeatsPage(){
     const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
+    const [checked, setChecked] = useState()
     const defaultSeat = {
         id: '',
         level: '',
@@ -113,9 +114,11 @@ function ModifySeatsPage(){
             case 3:
                 return L3C1;
             case 4:
-                return L4C1;
+                //return L4C1;
+                return 'http://10.27.35.143:8080/video';
             case 5:
-                return L5C1;
+                //return L5C1;
+                return 'http://10.27.168.181:8080/video';
         }
     }
 
@@ -132,7 +135,10 @@ function ModifySeatsPage(){
 
     function reset(){
         const seat = seats.find((seat)=>seat.id==selected.seat);
-        if(seat!=null) setSelSeat(seat);
+        if(seat!=null) {
+            setSelSeat(seat);
+            setChecked(seat.unavailable);
+        }
         else setSelSeat(defaultSeat);
     }
 
@@ -261,13 +267,13 @@ function ModifySeatsPage(){
                             {/*    id="unavailable" label="Unavailable :" placeholder="0-800"*/}
                             {/*    value={selSeat.unavailable} onChange={handleChange} disabled*/}
                             {/*/>*/}
-                            <Component initialState={{ checked: false }}>
+                            <Component initialState={{ checked: selSeat.unavailable }}>
                                 {({ state, setState }) => (
                                     <Checkbox
                                         className={'checkBox'}
                                         label="Unavailable"
-                                        checked={selSeat.unavailable}
-                                        onChange={e => {setState({ checked: e.target.checked }); setSelSeat(prevState => ({...prevState, unavailable: !state.checked})); }}
+                                        checked={checked}
+                                        onChange={e => {setState({ checked: e.target.checked }); setSelSeat(prevState => ({...prevState, unavailable: !state.checked})); setChecked(!state.checked) }}
                                     />
                                 )}
                             </Component>
