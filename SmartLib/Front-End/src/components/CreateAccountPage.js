@@ -32,7 +32,8 @@ function CreateAccountPage() {
     try {
       setError('')
       setLoading(true) //Prevent them from creating multiple acc at the same time when keep clicking submit button
-      await signup(emailRef.current.value, passwordRef.current.value)
+      await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
+      console.log(nameRef.current.value);
       history.push("/")
       console.log("Sign in");
     } catch {
