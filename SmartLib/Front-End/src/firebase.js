@@ -2,6 +2,7 @@ import firebase from "firebase/app"
 import 'firebase/firestore';
 import "firebase/auth"
 
+//Irsyad Acc
 // const app = firebase.initializeApp({
 //     apiKey: "AIzaSyAHcwWnc7MDfB6oR293waIiqyswSRsmTWg",
 //     authDomain: "login-c88b6.firebaseapp.com",
@@ -11,15 +12,20 @@ import "firebase/auth"
 //     appId: "1:332223947244:web:51ab07b6beada5e204e0c9"
 // })
 
+//Kenny Acc
+// const app = firebase.initializeApp({
+//     apiKey: "AIzaSyDnGX3alVu6uWRCWM0YNfWK1MJzBiZbgOY",
+//     authDomain: "cz3003-d6c84.firebaseapp.com",
+//     databaseURL: "https://cz3003-d6c84-default-rtdb.firebaseio.com",
+//     projectId: "cz3003-d6c84",
+//     storageBucket: "cz3003-d6c84.appspot.com",
+//     messagingSenderId: "1037419195011",
+//     appId: "1:1037419195011:web:3a06e38ea94252b004c9b6",
+//     measurementId: "G-PD6RWC6N5Y"
+// })
+
+//Shared Acc
 const app = firebase.initializeApp({
-    // apiKey: "AIzaSyDnGX3alVu6uWRCWM0YNfWK1MJzBiZbgOY",
-    // authDomain: "cz3003-d6c84.firebaseapp.com",
-    // databaseURL: "https://cz3003-d6c84-default-rtdb.firebaseio.com",
-    // projectId: "cz3003-d6c84",
-    // storageBucket: "cz3003-d6c84.appspot.com",
-    // messagingSenderId: "1037419195011",
-    // appId: "1:1037419195011:web:3a06e38ea94252b004c9b6",
-    // measurementId: "G-PD6RWC6N5Y"
     apiKey: "AIzaSyCSpEdAkTWd2HMTcY-cTeppis3K963HJH0",
     authDomain: "smartlib-66322.firebaseapp.com",
     projectId: "smartlib-66322",

@@ -11,6 +11,7 @@ import threading, time
 ticker = threading.Event()
 from PIL import Image 
 import imutils
+import urllib
 
 #print(round(time.time(),0))
 ### Set Up FireStore ###
@@ -19,21 +20,22 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 ### Camera Parameter ###
-cameraId= "LWN_L4_C1"
+# CAMERA_ID= ["LWN_L4_C1","LWN_L5_C1"]
+# CAMERA_IP=['http://10.27.35.143:8080/video','http://10.27.168.181:8080/video']
+CAMERA_ID= ["LWN_L3_C1"]
+CAMERA_IP=['https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg']
+FIRESTORE_COLLECTION='Seats'
 lib="LWN"
 level="L4"
-# cap = cv2.VideoCapture('http://10.27.35.143:8080/video')  ## ip camera using android phone app.  Ip Webcam
-# cap.set(cv2.CAP_PROP_BUFFERSIZE, 0)     ## no buffer
-# cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)
-
 font = cv2.FONT_HERSHEY_PLAIN
+multiplayer=False
 
-
-# ### Retrieve all thet Seats related to this camera ###
-# SeatsList= db.collection(u'Seats').where(u"cameraId",u"==",cameraId).stream()
-# SeatsArray = [ seat.to_dict() for seat in SeatsList ]
-# print(SeatsArray)
-
+### CHECK CAMERA
+if(len(CAMERA_ID)!=len(CAMERA_IP)):
+     print("error")
+     exit()
+if(len(CAMERA_ID)>1):
+     multiplayer=True
 
 ### Load Yolo ###
 
@@ -42,64 +44,77 @@ classes = []
 with open("coco.names", "r") as f:
     classes = [line.strip() for line in f.readlines()]
 layer_names = net.getLayerNames()
-#print(layer_names)
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
-#print(output_layers)
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 
-### Inference every 5 seconds
-WAIT_TIME_SECONDS = 5
-frame_id = 0
-#not ticker.wait(WAIT_TIME_SECONDS)
+seatItemDetectedTime={}
+
+### Inference every 5s if replace while True
+#WAIT_TIME_SECONDS = 5
+#while not ticker.wait(WAIT_TIME_SECONDS):
 while True:
-     
-     #print(SeatsArray)
-     cap = cv2.VideoCapture('http://10.27.35.143:8080/video')
-     #cap = cv2.VideoCapture('http://192.168.1.245:8080/video')
-     _, frame = cap.read()
-     frame_id += 1
-     height, width, channels = frame.shape
      class_ids = []
      confidences = []
      boxes = []
      seatImageToDetect=[]
      seatImageToDetectSize=[]
      SeatsArray=[]
-     ### Retrieve all thet Seats related to this camera ###
-     SeatsList= db.collection(u'Seats').where(u"cameraId",u"==",cameraId).stream()
-     SeatsArray = [ seat.to_dict() for seat in SeatsList ]
-     # print(SeatsArray)
+     SeatsOnLevel=0
+     for i in range(len(CAMERA_IP)):
+          
+          cap = cv2.VideoCapture(CAMERA_IP[i])
+          _, frame = cap.read()
+ 
 
-     ##Crop out seats images 
-     for i in SeatsArray:
-          im=frame[i["y1Img"]:i["y2Img"],i["x1Img"]:i["x2Img"]]
-          #im1 = imutils.resize(im, width=416)
-          seatImageToDetect.append(im)
-          seatImageToDetectSize.append([i["x2Img"]-i["x1Img"],i["y2Img"]-i["y1Img"]])
-          cv2.rectangle(frame, (i["x1Img"], i["y1Img"]), (i["x2Img"], i["y2Img"]), (255,0,0), 2)
-          cv2.putText(frame,i["seatName"], (i["x1Img"],i["y1Img"] + 30), font, 3, (255,0,0), 3)
+          seatTemp=[]
+          ### Retrieve all thet Seats related to this camera from the database###
+          SeatsList= db.collection(FIRESTORE_COLLECTION).where(u"cameraId",u"==",CAMERA_ID[i]).stream()
+          for seat in SeatsList:
+               SeatsArray.append(seat.to_dict()) 
+               seatTemp.append(seat.to_dict())
+          #SeatsArray.ap[ seat.to_dict() for seat in SeatsList ]
+
+
+               ##Crop out seats images from the full picture
+          for i in seatTemp:
+
+               im1=frame[int(i["y1Img"]):int(i["y2Img"]),int(i["x1Img"]):int(i["x2Img"])]
+               im = imutils.resize(im1, width=416)
+
+               #append the frame and the size of the fram for drawing bounding box in the postprocessing part
+               seatImageToDetect.append(im) 
+               seatImageToDetectSize.append([int(i["x2Img"])-int(i["x1Img"]),int(i["y2Img"])-int(i["y1Img"])])
+
+               #draw out a bounding box for each seats in blue colour
+               cv2.rectangle(frame, (int(i["x1Img"]), int(i["y1Img"])), (int(i["x2Img"]), int(i["y2Img"])), (255,0,0), 2)
+               cv2.putText(frame,i["seatName"], (int(i["x1Img"]),int(i["y1Img"]) + 30), font, 3, (255,0,0), 3)
+          
+          if(multiplayer):
+               cap.release()
+
+
+     ### fit into the network
      blob = cv2.dnn.blobFromImages(seatImageToDetect, 1/255, (416, 416), (0, 0, 0), True, crop=False)
      net.setInput(blob)
      outs = net.forward(output_layers)
 
-
+     # print(len(seatImageToDetect))
+     #post-processing the output of the network
      for i in range(len(seatImageToDetect)):
-          #i=len(seatImageToDetect)-u-1
           humanDetected=False
-          hoggedDetected=False
-          detectionCheck=False
+          itemDetected=False
+
           for out in outs:
                out_tensor = out[i]
-
                for detection in out_tensor:
                     scores = detection[5:]
                     class_id = np.argmax(scores)
                     confidence = scores[class_id]
-                    if confidence > 0.7:
+                    if confidence > 0.6:
                          # Object detected
-                         center_x = int(detection[0] *seatImageToDetectSize[i][0])+SeatsArray[i]["x1Img"]
-                         center_y = int(detection[1] *seatImageToDetectSize[i][1])+SeatsArray[i]["y1Img"]
+                         center_x = int(detection[0] *seatImageToDetectSize[i][0])+int(SeatsArray[i]["x1Img"])
+                         center_y = int(detection[1] *seatImageToDetectSize[i][1])+int(SeatsArray[i]["y1Img"])
                          w = int(detection[2] *seatImageToDetectSize[i][0])
                          h = int(detection[3] *seatImageToDetectSize[i][1])
 
@@ -112,46 +127,55 @@ while True:
                          class_ids.append(class_id)
 
 
-                         detectionCheck=True
-                         if(classes[class_id]=="person"):
+
+                         if(classes[class_id]=="bottle"):  # check if bottle is detected
+                              itemDetected=True
+  
+                         if(classes[class_id]=="person"): # if a person is detected 
                               humanDetected=True
-                              hoggedDetected=False 
+                              itemDetected=False 
+                              print("human detected")
+                              # record the starting time when the bottle is first detected. change the status to detected.
                          elif (classes[class_id]=="bottle" and not humanDetected and SeatsArray[i]["status"]!="Detected" and SeatsArray[i]["status"]!="Hogged"):
                               SeatsArray[i]["status"]="Detected"
-                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Detected'})
-                              db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'timeStamp':round(time.time(),0)})
-                              SeatsArray[i]["timeStamp"]=round(time.time(),0)
-                              hoggedDetected=True
+                              db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Detected'})
+                              # db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'timeStamp':round(time.time(),0)})
+                              # SeatsArray[i]["timeStamp"]=round(time.time(),0)
+                              seatItemDetectedTime[SeatsArray[i]["id"]]=round(time.time(),0)
+                              itemDetected=True
                               print("Object Detected")
-
-                         if(classes[class_id]=="bottle"):
-                              hoggedDetected=True
+                         
+          # print(len(SeatsArray))
+          # If the Seat is reserved or unavailable, skip the updating of the status. Can be improved by skipping the detection in the first placee
           if(SeatsArray[i]["status"]=="Reserved" or SeatsArray[i]["unavailable"]==True):
                continue
           
+          #  if human is detected and the seat status is not occupied 
           if(humanDetected and SeatsArray[i]["status"]!="Occupied"):
                SeatsArray[i]["status"]="Occupied"
-               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Occupied'})
+               db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Occupied'})
                print( SeatsArray[i]["id"]+" Updated to occupied")
-          elif(hoggedDetected and SeatsArray[i]["status"]!="Hogged" ):
-               diff=round(time.time(),0) -SeatsArray[i]["timeStamp"]
+          #  if item is detected and seat status is not Hogged
+          elif(itemDetected and SeatsArray[i]["status"]!="Hogged" and not humanDetected):
+               #minus the difference in time
+               diff=round(time.time(),0) -seatItemDetectedTime[SeatsArray[i]["id"]]
+               # if it's more than 5s, changed the seat status to hogged
                print(diff)
                if(diff>=5):
                     SeatsArray[i]["status"]="Hogged"
-                    db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Hogged'})
+                    db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Hogged'})
                     print(SeatsArray[i]["id"]+" Updated to Hogged")
-          elif (SeatsArray[i]["status"]!="Unoccupied" and not humanDetected and not hoggedDetected):
-               SeatsArray[i]["status"]="Unoccupied"
-               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Unoccupied'})
-               print(SeatsArray[i]["id"]+" Updated to Unoccupied")
-               break
+          # if no human and item is detected, change the status to available if it's not available.
+          elif (SeatsArray[i]["status"]!="Available" and not humanDetected and not itemDetected):
+               SeatsArray[i]["status"]="Available"
+               db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Available'})
+               print(SeatsArray[i]["id"]+" Updated to Available")
 
-          if (not detectionCheck and SeatsArray[i]["status"]!="Unoccupied" and SeatsArray[i]["status"]!="Reserved" and SeatsArray[i]["unavailable"]==False):
-               SeatsArray[i]["status"]="Unoccupied"
-               db.collection(u'Seats').document(SeatsArray[i]["id"]).update({u'status':'Unoccupied'})
-               print(SeatsArray[i]["id"]+"  Updated to Unoccupied")
+     # perform nms to eliminate the overlap boxes.
      indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.7, 0.3)
+     
 
+     # draw out bouding box for detected bounding boxes
      for i in range(len(boxes)):
           if i in indexes:
                x, y, w, h = boxes[i]
@@ -161,7 +185,7 @@ while True:
                cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
                cv2.putText(frame, label + " " + str(round(confidence, 2)), (x, y + 30), font, 3, color, 3)
 
-     #print(outs)
+     # resize the frame to smaller size.
      imS = cv2.resize(frame, (960, 540))
      cap.release()
      cv2.imshow("Image", imS)

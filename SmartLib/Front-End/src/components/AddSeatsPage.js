@@ -31,12 +31,13 @@ import { useCollection } from "react-firebase-hooks/firestore";
 function AddSeatsPage(){
 
     const [seats, setSeats] = useContext(SeatContext);
+    const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
     const defaultSeat = {
         // id: seats[seats.length-1].id+1,
         id: generateUID(),
-        level: selected.level,
+        level: selected.level.toString(),
         seatName: '',
         cameraId: '',
         x1Img: 0,
@@ -50,6 +51,17 @@ function AddSeatsPage(){
     }
     const [newSeat, setNewSeat]=useState(defaultSeat)
 
+    useEffect(()=> {
+        if(!loading&&dataFS) {
+            //console.log(dataFS.docs);
+            let events = [];
+            dataFS.forEach((doc) => events.push(doc.data()));
+            console.log('events: ',events);
+            setSeats(events);
+            setTempSeats(events);
+        }
+    },[dataFS]);
+
     const handleChange = (e) => {
         const { id, value } = e.target
         setNewSeat(prevState => ({
@@ -62,9 +74,9 @@ function AddSeatsPage(){
         let id=1;
         while(1)
         {
-            if((seats.find((seat) => seat.id === id))==null) {
+            if((seats.find((seat) => seat.id === id.toString()))==null) {
                 console.log('id: '+id);
-                return id;
+                return id.toString();
             }
             else id++;
         }
@@ -73,8 +85,10 @@ function AddSeatsPage(){
     function addSeat()
     {
         //setSeats(prev=>[...prev, newSeat])
-        crudFirebase.create('Seats',newSeat.id,newSeat);
+        console.log("NEWSEATID",newSeat.id)
+        crudFirebase.create('Seats',newSeat.id.toString(),newSeat);
         alert("Successfully Added");
+        setNewSeat(defaultSeat);
     }
 
     function previewSeat()
@@ -104,12 +118,13 @@ function AddSeatsPage(){
         }
     }
 
-    useEffect(() => {console.log('tempSeats:'); console.log(tempSeats)}, [tempSeats]);
+    useEffect(() => {console.log('tempSeats',tempSeats)}, [tempSeats]);
     // useEffect(() => {console.log('seats:'); console.log(seats); setNewSeat(prevState => ({...prevState,id:seats[seats.length-1].id+1}))}, [seats]);
-    useEffect(() => {console.log('seats:'); console.log(seats); setNewSeat(prevState => ({...prevState,id: generateUID()}))}, [seats]);
-    useEffect(() => {console.log('newSeat:'); console.log(newSeat)}, [newSeat]);
+    useEffect(() => {console.log('seats',seats); setNewSeat(prevState => ({...prevState,id: generateUID()}))}, [seats]);
+    useEffect(() => {console.log('newSeat: ',newSeat)}, [newSeat]);
 
     return(
+        !loading&&seats?
         <Pane className={'bgPane'}>
             <div>
                 <h2 className={'heading'}>Add New Seat</h2>
@@ -131,7 +146,12 @@ function AddSeatsPage(){
                                 className={'segmentedControl'}
                                 options={state.options}
                                 value={state.value}
-                                onChange={(value) => { setState({ value }); setSelected({seat:0, level: value }); setNewSeat(prevState => ({...prevState, level: value}))}}
+                                onChange={(value) =>
+                                {
+                                    setState({ value });
+                                    setSelected({seat:0, level: value });
+                                    setNewSeat(prevState => ({...prevState, level: value.toString()}));
+                                }}
                             />
                         )}
                     </Component>
@@ -254,7 +274,8 @@ function AddSeatsPage(){
                 </Pane>
             </div>
 
-        </Pane>
+        </Pane>:
+            <h1>Loading</h1>
 
     );
 }

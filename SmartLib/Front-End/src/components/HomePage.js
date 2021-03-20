@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import MapSelectorPane from "./MapSelectorPane";
@@ -8,13 +8,27 @@ import Stats from "./Stats";
 import Component from "@reactions/component";
 import {SeatContext} from "../contexts/SeatContext";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
+import crudFirebase from '../services/crudFirebase'
+import { useCollection } from "react-firebase-hooks/firestore";
 
 function HomePage() {
   const [seats, setSeats] = useContext(SeatContext);
+  const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
   const [selected, setSelected] = useContext(SelectedSeatContext);
   const [statsSel, setStatsSel]=useState({val: 0});
 
+  useEffect(()=> {
+    if(!loading&&dataFS) {
+      //console.log(dataFS.docs);
+      let events = [];
+      dataFS.forEach((doc) => events.push(doc.data()));
+      console.log(events);
+      setSeats(events);
+    }
+  },[dataFS]);
+
   return (
+      !loading&&seats?
     <div>
       <Pane className={'bgPane'}>
         <div>
@@ -76,7 +90,8 @@ function HomePage() {
         </div>
       </Pane>
 
-    </div>
+    </div>:
+          <h1>Loading</h1>
   );
 }
 
