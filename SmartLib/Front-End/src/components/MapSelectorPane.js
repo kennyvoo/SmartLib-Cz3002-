@@ -109,7 +109,7 @@ function MapSelectorPane() {
                         iconBefore={HandUpIcon}
                         height={40}
                         disabled={selected.seat == 0}
-                        onClick={() => (seats.find((theSeat) => theSeat.id == selected.seat)).status != "Available" ? setState({ isShown: true }) : clickBook()}
+                        onClick={() => ((seats.find((theSeat) => theSeat.id == selected.seat)).status != "Available") || ((seats.find((theSeat) => theSeat.id == selected.seat)).unavailable === true) ? setState({ isShown: true }) : clickBook()}
                       >
                         Book
                       </Button>
