@@ -1,4 +1,4 @@
-## Object Detection system
+## Object Detection system with FireStore
 This is an object detection system that perform inference on user defined spots( multiple small images cropped from the full picture ) on live feed video from mobile phone using [IP Webcam](https://play.google.com/store/apps/details?id=com.pas.webcam&hl=en_SG&gl=US) or any ip camera. It will then update the result to firebase.
 
 **Application**:
@@ -8,14 +8,14 @@ Detect whether the seats in library are occupied or hogged by the user (specifie
 
 **Hardware**: 
 1. Any Phone with camera
-2. laptop without GPU is fine.
+2. CPU
 
 **Language**: 
-1. Phyton
+1. Python
 &nbsp;
 ## Dependencies
-1. opencv
-2. [firestore](https://firebase.google.com/docs/firestore/quickstart#python)
+1. opencv 4.5.1
+2. firebase-admin 4.5.2
 
 ## Installation
 ```bash
@@ -31,32 +31,36 @@ modify "CAMERA_IP", "CAMERA_ID","FIRESTORE_COLLECTION" to your respective camera
 &nbsp;
 
 ## How to Run?
-1. python Detection.py
+1. python Detection.py_k
 
 &nbsp;
 
 ## TODO
 - [X] Set up firestore to update status 
-- [X] Crop images from defined top left and bottom right corner from the document retrieve from firestore.
-- [ ] 
+- [X] Crop images from defined top left and bottom right corner from the document retrieve from firestore. 
 - [X] read live stream image from an IP Camera
-- [ ] support multiple camera
+- [X] support multiple camera
 - [ ] Trained a custom model to detect for specific application
 
 
 &nbsp;
 
-## remarks
+## Remarks
 The yolo inference is modified from this [repo](https://github.com/DhrumilParikh-github/ObjectDetection-without-GPU)
 
-&nbsp;
 
-### Some image to illustrate the application
+Multicamera mode does not support showing the output frame.
+&nbsp;
+### Some images to illustrate the application
 ![Data Stored in firebase](firestore.jpg)
 
-The example of the data stored in the firestore
+The example of the data stored in the firestore. \
+cameraId: camera that is capturing this seat. \
+x1Img,y1Img : top left of the bounding box \
+x2Img,y2Img : bottom right of the bounding box
 
 &nbsp;
 
 ![Example of the result](detection.jpg)
-The example of the detected frame. Each blue bounding box is referred to a seat. 
+The example of the detected frame. Each blue bounding box is referred to a seat labeled by user. In this application, the labeled part will be cropped out and inferred in batch. 
+
