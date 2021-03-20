@@ -23,7 +23,7 @@ import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import DrawAnnotations from "./CamKonva";
+import DrawAnnotations from "./seatmap/CamKonva";
 
 function AddSeatsPage(){
 
@@ -168,11 +168,11 @@ function AddSeatsPage(){
                 </Pane>
                 <Pane className={'masterPane'} border={'none'}>
                         <Pane className={'cameraControlPane'} border={'default'}>
+                            <p className={'infoText1'}> Hint: Click and drag to draw bounding box</p>
                             <Pane className={'cameraPane'} backgroundImage={`url(${cameraSelect(selected.level)})`}>
                                 {/*<CamSeatsList seats={tempSeats} editmode={true}/>*/}
                                 <DrawAnnotations/>
                             </Pane>
-                            <p> Click and Drag to draw bounding box</p>
                             <Pane className={'infoPane'} paddingBottom={20}>
                                 <Text className={'infoText'}>cameraId: {newSeat.cameraId}</Text>
                                 <Text className={'infoText'}>x1Img: {newSeat.x1Img}</Text>

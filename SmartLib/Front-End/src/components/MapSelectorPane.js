@@ -5,6 +5,7 @@ import { SeatContext } from '../contexts/SeatContext';
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
 import { useHistory } from "react-router-dom";
 import SeatsList from "./seatmap/SeatsList";
+import Legend from "./seatmap/Legend";
 import './HomePage.css'
 
 function MapSelectorPane() {
@@ -76,6 +77,10 @@ function MapSelectorPane() {
         >
             <SeatsList seats={seats} editmode={false}/>
         </Pane>
+
+          <Pane border={'default'} borderRadius={5} marginTop={10} padding={10}>
+              <Legend/>
+          </Pane>
           {/*<Heading padding={10} size={700}>The library has {seats.length} seats in total.</Heading>*/}
           {/*<Heading padding={10} size={700}>The library has {countSeats('Available')} available seats, {countSeats('Reserved')} reserved seats, {countSeats('Occupied')} occupied seats, {countSeats('Hogged')} hogged seats, {countSeats('Unavailable')} unavailable seats.</Heading>*/}
 
