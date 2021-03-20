@@ -16,10 +16,13 @@ import { Pane,
 import { Link } from "react-router-dom"
 
 import {useAuth} from '../context/AuthContext'
+import {auth} from "../firebase"
 
 function AccountMgmtPage() {
 
   const { currentUser } = useAuth()
+
+  console.log(currentUser.displayName);
 
   return (
     <div>
@@ -31,7 +34,7 @@ function AccountMgmtPage() {
         <Pane flex={1} display="flex" marginLeft={30} padding={16}>
           <Pane padding={16}>
             <Pane flex={1} display="flex">
-              <Heading size={800} >{currentUser.name}</Heading> {/* Currently not stored yet */}
+              <Heading size={800} >{currentUser.displayName}</Heading> {/* Currently not stored yet */}
             </Pane>
             <Pane>
               <Heading size={800} >{currentUser.email}</Heading>
