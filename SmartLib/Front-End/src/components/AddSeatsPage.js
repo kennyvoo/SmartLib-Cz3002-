@@ -10,7 +10,7 @@ import {
     AddIcon,
     ResetIcon,
     SearchIcon,
-    Checkbox
+    Checkbox, SelectField
 } from "evergreen-ui";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
@@ -31,6 +31,7 @@ function AddSeatsPage(){
     const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
+    const [status, setStatus]=useState({value: ''});
     const defaultSeat = {
         id: generateUID(),
         level: selected.level.toString(),
@@ -108,6 +109,7 @@ function AddSeatsPage(){
     {
         setTempSeats(seats);
         setNewSeat(defaultSeat);
+        setStatus({value: 'Available'});
     }
 
     function cameraSelect(level)
@@ -183,27 +185,27 @@ function AddSeatsPage(){
                             <Pane className={'inputPane'}>
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="cameraId" label="cameraId :" placeholder="eg. L2C1"
+                                    id="cameraId" label="cameraId :" placeholder="eg. LWN_L2_C2"
                                     value={newSeat.cameraId} onChange={handleChange}
                                 />
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="x1Img" label="x1 :" placeholder="0-1280"
+                                    id="x1Img" label="x1 :" placeholder="0-1920"
                                     value={newSeat.x1Img} onChange={handleChange}
                                 />
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="y1Img" label="y1 :" placeholder="0-720"
+                                    id="y1Img" label="y1 :" placeholder="0-1080"
                                     value={newSeat.y1Img} onChange={handleChange}
                                 />
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="x2Img" label="x2 :" placeholder="0-1280"
+                                    id="x2Img" label="x2 :" placeholder="0-1920"
                                     value={newSeat.x2Img} onChange={handleChange}
                                 />
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="y2Img" label="y2 :" placeholder="0-720"
+                                    id="y2Img" label="y2 :" placeholder="0-1080"
                                     value={newSeat.y2Img} onChange={handleChange}
                                 />
                             </Pane>
@@ -251,11 +253,24 @@ function AddSeatsPage(){
                                     id="yLoc" label="yLoc :" placeholder="0-800"
                                     value={newSeat.yLoc} onChange={handleChange}
                                 />
-                                <TextInputField
-                                    className={'inputFieldBox'}
-                                    id="status" label="Status :" placeholder="eg. Available"
-                                    value={newSeat.status} onChange={handleChange} disabled
-                                />
+                                {/*<TextInputField*/}
+                                {/*    className={'inputFieldBox'}*/}
+                                {/*    id="status" label="Status :" placeholder="eg. Available"*/}
+                                {/*    value={newSeat.status} onChange={handleChange}*/}
+                                {/*/>*/}
+                                <SelectField
+                                    id={'status'}
+                                    className={'inputSelField'}
+                                    label="Status:"
+                                    onChange={handleChange}
+                                    value={status.value}
+                                    onChange={e => {setStatus({ value: e.target.value }); handleChange(e);}}
+                                >
+                                    <option value="Available" selected>Available</option>
+                                    <option value="Occupied">Occupied</option>
+                                    <option value="Reserved">Reserved</option>
+                                    <option value="Hogged">Hogged</option>
+                                </SelectField>
                                 {/*<TextInputField*/}
                                 {/*    className={'inputFieldBox'}*/}
                                 {/*    id="unavailable" label="Unavailable :" placeholder="0-800"*/}

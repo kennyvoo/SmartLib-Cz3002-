@@ -65,7 +65,7 @@
 .infoText1{
     text-align: center;
 }
-.inputFieldBox{
+.inputFieldBox,.inputSelField{
     width: 15vw;
     min-width: 100px;
     max-width: 150px;

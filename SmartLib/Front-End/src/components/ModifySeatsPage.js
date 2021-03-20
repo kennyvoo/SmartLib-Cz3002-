@@ -1,5 +1,21 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Pane, Text, Button, Heading, SegmentedControl, TextInput, TextInputField, AddIcon, ResetIcon, SearchIcon, Checkbox, TrashIcon, EditIcon} from "evergreen-ui";
+import {
+    Pane,
+    Text,
+    Button,
+    SelectField,
+    Heading,
+    SegmentedControl,
+    TextInput,
+    TextInputField,
+    AddIcon,
+    ResetIcon,
+    SearchIcon,
+    Checkbox,
+    TrashIcon,
+    EditIcon,
+    Combobox
+} from "evergreen-ui";
 import { Link } from "react-router-dom";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
@@ -20,7 +36,8 @@ function ModifySeatsPage(){
     const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
-    const [checked, setChecked] = useState()
+    const [checked, setChecked] = useState();
+    const [status, setStatus]=useState({value: ''});
     const defaultSeat = {
         id: '',
         level: '',
@@ -103,7 +120,7 @@ function ModifySeatsPage(){
     {
         setTempSeats(seats);
         //setSelSeat(defaultSeat);
-        reset();
+        refresh();
     }
 
     function cameraSelect(level)
@@ -130,14 +147,15 @@ function ModifySeatsPage(){
         // const seat = seats.find((seat)=>seat.id==selected.seat);
         // if(seat!=null) setSelSeat(seat);
         // else setSelSeat(defaultSeat);
-        reset();
+        refresh();
         },[selected])
 
-    function reset(){
+    function refresh(){
         const seat = seats.find((seat)=>seat.id==selected.seat);
         if(seat!=null) {
             setSelSeat(seat);
             setChecked(seat.unavailable);
+            setStatus({value: seat.status});
         }
         else setSelSeat(defaultSeat);
     }
@@ -189,27 +207,27 @@ function ModifySeatsPage(){
                         <Pane className={'inputPane'}>
                             <TextInputField
                                 className={'inputFieldBox'}
-                                id="cameraId" label="cameraId :" placeholder="eg. L2C1"
+                                id="cameraId" label="cameraId :" placeholder="eg. LWN_L2_C1"
                                 value={selSeat.cameraId} onChange={handleChange}
                             />
                             <TextInputField
                                 className={'inputFieldBox'}
-                                id="x1Img" label="x1 :" placeholder="0-1280"
+                                id="x1Img" label="x1 :" placeholder="0-1920"
                                 value={selSeat.x1Img} onChange={handleChange}
                             />
                             <TextInputField
                                 className={'inputFieldBox'}
-                                id="y1Img" label="y1 :" placeholder="0-720"
+                                id="y1Img" label="y1 :" placeholder="0-1080"
                                 value={selSeat.y1Img} onChange={handleChange}
                             />
                             <TextInputField
                                 className={'inputFieldBox'}
-                                id="x2Img" label="x2 :" placeholder="0-1280"
+                                id="x2Img" label="x2 :" placeholder="0-1920"
                                 value={selSeat.x2Img} onChange={handleChange}
                             />
                             <TextInputField
                                 className={'inputFieldBox'}
-                                id="y2Img" label="y2 :" placeholder="0-720"
+                                id="y2Img" label="y2 :" placeholder="0-1080"
                                 value={selSeat.y2Img} onChange={handleChange}
                             />
                         </Pane>
@@ -232,7 +250,7 @@ function ModifySeatsPage(){
                         <Pane className={'inputPane'}>
                             <TextInputField
                                 className={'inputFieldBox'}
-                                id="id" label="id :" placeholder="unique id"
+                                id="id" label="id :" placeholder="UID"
                                 value={selSeat.id} onChange={handleChange} disabled
                             />
                             <TextInputField
@@ -257,11 +275,24 @@ function ModifySeatsPage(){
                                 id="yLoc" label="yLoc :" placeholder="0-800"
                                 value={selSeat.yLoc} onChange={handleChange}
                             />
-                            <TextInputField
-                                className={'inputFieldBox'}
-                                id="status" label="Status :" placeholder="eg. Available"
-                                value={selSeat.status} onChange={handleChange}
-                            />
+                            {/*<TextInputField*/}
+                            {/*    className={'inputFieldBox'}*/}
+                            {/*    id="status" label="Status :" placeholder="eg. Available"*/}
+                            {/*    value={selSeat.status} onChange={handleChange}*/}
+                            {/*/>*/}
+                            <SelectField
+                                id={'status'}
+                                className={'inputSelField'}
+                                label="Status:"
+                                onChange={handleChange}
+                                value={status.value}
+                                onChange={e => {setStatus({ value: e.target.value }); handleChange(e);}}
+                            >
+                                <option value="Available" selected>Available</option>
+                                <option value="Occupied">Occupied</option>
+                                <option value="Reserved">Reserved</option>
+                                <option value="Hogged">Hogged</option>
+                            </SelectField>
                             {/*<TextInputField*/}
                             {/*    className={'inputFieldBox'}*/}
                             {/*    id="unavailable" label="Unavailable :" placeholder="0-800"*/}
