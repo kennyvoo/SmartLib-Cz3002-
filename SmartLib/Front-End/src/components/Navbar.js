@@ -1,28 +1,16 @@
 import React, { useState } from "react";
 import {
   Pane,
-  Text,
   Button,
   Heading,
-  ListIcon,
-  IconButton,
-  SideSheet,
-  Paragraph,
   Avatar,
-  WarningSignIcon,
   Popover,
   Menu,
   Position,
-  toaster,
   PeopleIcon,
-  CircleArrowRightIcon,
   EditIcon,
-  TrashIcon,
-  SmallCrossIcon,
   UndoIcon,
   TimeIcon,
-  AsteriskIcon,
-  Alert,
   CaretDownIcon, AddIcon,
 } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
