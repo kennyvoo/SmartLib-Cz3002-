@@ -63,7 +63,7 @@ export default function Stats(props){
                   rootProps={{ 'data-testid': '1' }}
               />
           </Pane>
-          <h3>Total: {levelSeats.length}</h3>
+          <h3>Total Seats: {levelSeats.length}</h3>
           <h3>Available: {stats.avail}</h3>
           <h3>Reserved: {stats.reserved}</h3>
           <h3>Occupied: {stats.occupied}</h3>

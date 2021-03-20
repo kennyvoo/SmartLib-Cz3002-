@@ -38,3 +38,22 @@
     text-align: center;
     font-size: large;
 }
+.headingPane{
+    height: auto;
+    width: auto;
+    background: none;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+.segmentedControl{
+    width: 100%;
+    max-width: 1000px;
+    height: 30px;
+    margin: 10px;
+}
+.segmentedControlPane{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+}

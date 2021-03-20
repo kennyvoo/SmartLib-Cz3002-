@@ -1,20 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
-import { Link } from "react-router-dom";
 import MapSelectorPane from "./MapSelectorPane";
-import firebase from '../services/firebase';
 import './HomePage.css'
 import Stats from "./Stats";
 import Component from "@reactions/component";
 import {SeatContext} from "../contexts/SeatContext";
-import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
 
 function HomePage() {
   const [seats, setSeats] = useContext(SeatContext);
   const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
-  const [selected, setSelected] = useContext(SelectedSeatContext);
   const [statsSel, setStatsSel]=useState({val: 0});
 
   useEffect(()=> {
@@ -32,14 +28,7 @@ function HomePage() {
     <div>
       <Pane className={'bgPane'}>
         <div>
-          <Pane
-            height="auto"
-            width="95vw"
-            background="none"
-            display="flex"
-            justifyContent="center"
-            padding={15}
-          >
+          <Pane className={'headingPane'}>
             <Heading size={800} marginBottom={10}>
               Welcome to Lee Wee Nam Library
             </Heading>
@@ -78,15 +67,6 @@ function HomePage() {
               <MapSelectorPane />
             </Pane>
           </Pane>
-
-
-
-          {/*<Pane>*/}
-          {/*  <Link to="/SeatInformation" style={{ textDecoration: "none" }}>*/}
-          {/*    <Button marginRight={16} appearance="primary" intent="success">Test</Button>*/}
-          {/*  </Link>*/}
-          {/*  <Button marginRight={16} appearance="primary" intent="warning">Booked</Button>*/}
-          {/*</Pane>*/}
         </div>
       </Pane>
 
