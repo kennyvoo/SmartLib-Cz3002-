@@ -7,14 +7,14 @@ import { SeatProvider } from './contexts/SeatContext'
 import { SelectedSeatProvider } from './contexts/SelectSeatContext';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <SelectedSeatProvider>
       <SeatProvider>
           <App />
       </SeatProvider>
     </SelectedSeatProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  // </React.StrictMode>
+  ,document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
