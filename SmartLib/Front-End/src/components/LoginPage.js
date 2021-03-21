@@ -29,7 +29,7 @@ function LoginPage() {
       }
       console.log("Sign in");
     } catch {
-      setError('Failed to sign in')
+      setError('Your Email / Password is incorrect')
     }
     setLoading(false) //Aft sign up
   }
@@ -66,6 +66,7 @@ function LoginPage() {
             id="Password Information"
             required
             label="Password"
+            placeholder="Password"
             secureTextEntry={true}
             inputHeight={45}
             inputWidth={450}
