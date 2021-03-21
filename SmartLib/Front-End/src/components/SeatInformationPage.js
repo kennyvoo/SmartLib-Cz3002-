@@ -1,14 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Pane, Text, Alert, Button, Heading, Paragraph, TextInputField, FormField, Avatar, BackButton, CrossIcon, InfoSignIcon, EditIcon, WarningSignIcon, Dialog } from "evergreen-ui";
+import { Pane, Text, Alert, Button, Heading, Strong, Avatar, BackButton, InfoSignIcon, WarningSignIcon } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
-import Component from "@reactions/component";
-import background from "./Img/Stress.png";
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
 import crudFirebase from '../services/crudFirebase'
-import { useCollection } from "react-firebase-hooks/firestore";
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext'
-import app from '../firebase'
+import { v1 as uuidv1 } from 'uuid';
 
 function SeatInformationPage() {
 
@@ -17,21 +14,26 @@ function SeatInformationPage() {
   const history = useHistory()
   const [error, setError] = useState('')
 
-  var today = new Date();
-  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date + ' ' + time;
-
   function handleBook() {
 
-    crudFirebase.update('Seats', (selected.seat).toString(), { status: 'Reserved' });
+    // Check if user has an existing booking first
     const test = crudFirebase.checkbooking(currentUser.uid, 'Booking_Current')
-    //app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_Current').get()
     test.then((doc) => {
       if (!doc.exists) {
-        console.log("Document data:", doc.data());
-        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: "", seatName: (selected.seat).toString(), timeStamp: dateTime });
+        var today = new Date();
+        var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+        var time = today.getHours() + ":" + today.getMinutes();
+        var dateTime = date + ' ' + time;
+
+        let id = uuidv1();
+        let temp1 = selected.seat;
+        let temp2 = selected.level;
+
+        crudFirebase.update('Seats', (selected.seat).toString(), { status: 'Reserved' });
+        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatName: temp1, level: temp2, timeStamp: dateTime});
+        setSelected({seat:temp1, level: temp2, timestamp: dateTime, bookingID: id})
         console.log("New")
+        console.log(currentUser.email)
         setError('')
         axios({
           method: "POST",
@@ -39,8 +41,9 @@ function SeatInformationPage() {
           data: {
             name: "test",
             subject: "test",
+            //email: currentUser.email,
             //email: "taiwilson5@gmail.com",
-    
+
             // Generate Booking ID and time of booking + 15 mins to the email
             //IP config app on android, just change the camera capture url on 2 components, only on lvl 4
           }
@@ -50,20 +53,9 @@ function SeatInformationPage() {
         history.push("/BookingSuccessful")
       } else {
         console.log("Booking alr exist")
-        return setError('You already have a booking. Please check in My Bookings page.')
+        return setError('You already have an existing booking.')
       }
     })
-    //console.log('Document data:', ta);
-
-    // try {
-    //   crudFirebase.booking(currentUser.uid, 'Booking_Current', { seatName: (selected.seat).toString() });
-    //   console.log("update")
-    // } catch {
-
-    // }
-
-    
-    
   }
 
   return (
@@ -77,6 +69,7 @@ function SeatInformationPage() {
 
       {(error != '') ? (<Pane display="flex" justifyContent="center">
         <Alert
+          appearance="card"  
           intent="danger"
           title={error}
         />
@@ -90,28 +83,35 @@ function SeatInformationPage() {
         <Pane flex={1} display="flex" marginLeft={30} padding={16}>
           <Pane padding={16}>
             <Pane flex={1} display="flex">
-
               <Pane>
                 <InfoSignIcon color="info" marginRight={16} size={30} />
               </Pane>
               <Heading size={800} >Seat {selected.seat}</Heading>
             </Pane>
-            <Pane>
+            <Pane marginTop={16}>
               <Heading size={800} >Description</Heading>
             </Pane>
             <Pane marginTop={16}>
-              <Text size={600}>- Some description about the chair location(Powered/Aircon etc)<br></br> - This box should be dynamic depending on the id of the seat.
-              </Text>
+              <Strong size={600} >Location:</Strong>
+              <Text size={600} marginLeft={8} >Lee Wee Nam Library</Text>
+            </Pane>
+            <Pane>
+              <Strong size={600} >Level:</Strong>
+              <Text size={600} marginLeft={8} >{selected.level}</Text>
+            </Pane>
+            <Pane>
+              <Strong size={600} >Aircon:</Strong>
+              <Text size={600} marginLeft={8} >Yes</Text>
             </Pane>
 
             {/* Booking Button*/}
-            <Pane display="flex" marginTop={100}>
+            <Pane display="flex" marginTop={80}>
               <Pane flex={1} alignItems="center" display="flex">
                 <WarningSignIcon color="warning" size={30} marginRight={16} />
-                <Heading size={600} color={"red"}>Please be at your seat by 15 mins<br></br>
-                or your booking will be terminated</Heading>
+                <Heading size={600} color={"red"}>Please be at your seat in 15 mins<br></br>
+                or your booking will be terminated.</Heading>
               </Pane>
-              <Button appearance="primary" height={48} onClick={handleBook}>Book</Button>
+              <Button appearance="primary" height={48} marginLeft={16} onClick={handleBook}>Book</Button>
             </Pane>
 
           </Pane>
