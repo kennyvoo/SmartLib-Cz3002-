@@ -1,30 +1,23 @@
 import React, { useContext, useState } from "react";
-import { Pane, Text, Alert, Button, Heading, Paragraph, TextInputField, FormField, Strong, Avatar, BackButton, CrossIcon, InfoSignIcon, EditIcon, WarningSignIcon, Dialog } from "evergreen-ui";
+import { Pane, Text, Alert, Button, Heading, Strong, Avatar, BackButton, InfoSignIcon, WarningSignIcon } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
-import Component from "@reactions/component";
-import background from "./Img/Stress.png";
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
-import { LocalVarContext } from '../contexts/LocalVarContext';
 import crudFirebase from '../services/crudFirebase'
-import { useCollection } from "react-firebase-hooks/firestore";
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext'
-import app from '../firebase'
 import { v1 as uuidv1 } from 'uuid';
 
 function SeatInformationPage() {
 
   const [selected, setSelected] = useContext(SelectedSeatContext);
-  const [localVar, setLocalVar] = useContext(LocalVarContext);
   const { currentUser } = useAuth()
   const history = useHistory()
   const [error, setError] = useState('')
 
   function handleBook() {
 
-
+    // Check if user has an existing booking first
     const test = crudFirebase.checkbooking(currentUser.uid, 'Booking_Current')
-    //app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_Current').get()
     test.then((doc) => {
       if (!doc.exists) {
         var today = new Date();
@@ -36,12 +29,11 @@ function SeatInformationPage() {
         let temp1 = selected.seat;
         let temp2 = selected.level;
 
-        console.log("Document data:", doc.data());
         crudFirebase.update('Seats', (selected.seat).toString(), { status: 'Reserved' });
-        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatName: (selected.seat).toString(), timeStamp: dateTime });
+        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatName: temp1, level: temp2, timeStamp: dateTime});
         setSelected({seat:temp1, level: temp2, timestamp: dateTime, bookingID: id})
-        setLocalVar({seat:temp1, level: temp2, timestamp: dateTime, bookingID: id})
         console.log("New")
+        console.log(currentUser.email)
         setError('')
         axios({
           method: "POST",
@@ -49,6 +41,7 @@ function SeatInformationPage() {
           data: {
             name: "test",
             subject: "test",
+            //email: currentUser.email,
             //email: "taiwilson5@gmail.com",
 
             // Generate Booking ID and time of booking + 15 mins to the email
@@ -63,17 +56,6 @@ function SeatInformationPage() {
         return setError('You already have an existing booking.')
       }
     })
-    //console.log('Document data:', ta);
-
-    // try {
-    //   crudFirebase.booking(currentUser.uid, 'Booking_Current', { seatName: (selected.seat).toString() });
-    //   console.log("update")
-    // } catch {
-
-    // }
-
-
-
   }
 
   return (

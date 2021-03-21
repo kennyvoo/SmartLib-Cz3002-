@@ -5,15 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { SeatProvider } from './contexts/SeatContext'
 import { SelectedSeatProvider } from './contexts/SelectSeatContext';
-import { LocalVarProvider } from './contexts/LocalVarContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <SelectedSeatProvider>
       <SeatProvider>
-        <LocalVarProvider>
           <App />
-        </LocalVarProvider>
       </SeatProvider>
     </SelectedSeatProvider>
   </React.StrictMode>,

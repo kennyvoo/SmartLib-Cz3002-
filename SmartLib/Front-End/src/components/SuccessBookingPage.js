@@ -1,15 +1,11 @@
 import React,{ useContext} from "react";
-import { Pane, Text, Button, Heading, Strong, Table, Menu, Popover, MoreIcon, IconButton, Position } from "evergreen-ui";
-import currentBooking from './JsonTestFiles/currentBooking.json'
-import bookingHistory from './JsonTestFiles/bookingHistory.json'
+import { Pane, Text, Heading, Strong } from "evergreen-ui";
 import background from "./Img/success.png";
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
-import { LocalVarContext } from '../contexts/LocalVarContext';
 
 function SuccessBookingPage() {
 
     const [selected, setSelected] = useContext(SelectedSeatContext);
-    const [localVar, setLocalVar] = useContext(LocalVarContext);
 
     return (
       <div>
