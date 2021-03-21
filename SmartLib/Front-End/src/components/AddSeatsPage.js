@@ -10,23 +10,20 @@ import {
     AddIcon,
     ResetIcon,
     SearchIcon,
-    Checkbox
+    Checkbox, SelectField
 } from "evergreen-ui";
-import { Link } from "react-router-dom";
 import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
 import L4C1 from "./Img/L4C1.jpg";
 import L5C1 from "./Img/L5C1.jpg";
-import ImagePlane from "./seatmap/ImagePlane";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import {SeatContext} from "../contexts/SeatContext";
-import DrawRect from "./DrawRect";
-import CamSeatsList from "./seatmap/CamSeatsList";
 import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
+import DrawAnnotations from "./seatmap/CamKonva";
 
 function AddSeatsPage(){
 
@@ -34,8 +31,8 @@ function AddSeatsPage(){
     const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [tempSeats, setTempSeats]=useState(seats);
+    const [status, setStatus]=useState({value: ''});
     const defaultSeat = {
-        // id: seats[seats.length-1].id+1,
         id: generateUID(),
         level: selected.level.toString(),
         seatName: '',
@@ -61,6 +58,16 @@ function AddSeatsPage(){
             setTempSeats(events);
         }
     },[dataFS]);
+
+    useEffect(()=>{
+        setNewSeat(prevState => ({
+            ...prevState,
+            x1Img: selected.drawX1,
+            y1Img: selected.drawY1,
+            x2Img: selected.drawX2,
+            y2Img: selected.drawY2,
+        }))
+    },[selected])
 
     const handleChange = (e) => {
         const { id, value } = e.target
@@ -102,6 +109,7 @@ function AddSeatsPage(){
     {
         setTempSeats(seats);
         setNewSeat(defaultSeat);
+        setStatus({value: 'Available'});
     }
 
     function cameraSelect(level)
@@ -111,10 +119,14 @@ function AddSeatsPage(){
                 return L2C1;
             case 3:
                 return L3C1;
+                //return 'https://webcam.ntu.edu.sg/upload/slider/lwn-inside.jpg';
+                //return 'https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg';
             case 4:
-                return L4C1;
+                //return L4C1;
+                return 'http://10.27.35.143:8080/video';
             case 5:
-                return L5C1;
+                //return L5C1;
+                return 'http://10.27.168.181:8080/video';
         }
     }
 
@@ -158,14 +170,11 @@ function AddSeatsPage(){
                 </Pane>
                 <Pane className={'masterPane'} border={'none'}>
                         <Pane className={'cameraControlPane'} border={'default'}>
+                            <p className={'infoText1'}> Hint: Click and drag to draw bounding box</p>
                             <Pane className={'cameraPane'} backgroundImage={`url(${cameraSelect(selected.level)})`}>
-                                <CamSeatsList seats={tempSeats} editmode={true}/>
+                                {/*<CamSeatsList seats={tempSeats} editmode={true}/>*/}
+                                <DrawAnnotations/>
                             </Pane>
-
-                            {/*<Pane>*/}
-                            {/*    <DrawRect/>*/}
-                            {/*</Pane>*/}
-
                             <Pane className={'infoPane'} paddingBottom={20}>
                                 <Text className={'infoText'}>cameraId: {newSeat.cameraId}</Text>
                                 <Text className={'infoText'}>x1Img: {newSeat.x1Img}</Text>
@@ -176,27 +185,27 @@ function AddSeatsPage(){
                             <Pane className={'inputPane'}>
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="cameraId" label="cameraId :" placeholder="eg. L2C1"
+                                    id="cameraId" label="cameraId :" placeholder="eg. LWN_L2_C2"
                                     value={newSeat.cameraId} onChange={handleChange}
                                 />
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="x1Img" label="x1 :" placeholder="0-1280"
+                                    id="x1Img" label="x1 :" placeholder="0-1920"
                                     value={newSeat.x1Img} onChange={handleChange}
                                 />
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="y1Img" label="y1 :" placeholder="0-720"
+                                    id="y1Img" label="y1 :" placeholder="0-1080"
                                     value={newSeat.y1Img} onChange={handleChange}
                                 />
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="x2Img" label="x2 :" placeholder="0-1280"
+                                    id="x2Img" label="x2 :" placeholder="0-1920"
                                     value={newSeat.x2Img} onChange={handleChange}
                                 />
                                 <TextInputField
                                     className={'inputFieldBox'}
-                                    id="y2Img" label="y2 :" placeholder="0-720"
+                                    id="y2Img" label="y2 :" placeholder="0-1080"
                                     value={newSeat.y2Img} onChange={handleChange}
                                 />
                             </Pane>
@@ -244,11 +253,24 @@ function AddSeatsPage(){
                                     id="yLoc" label="yLoc :" placeholder="0-800"
                                     value={newSeat.yLoc} onChange={handleChange}
                                 />
-                                <TextInputField
-                                    className={'inputFieldBox'}
-                                    id="status" label="Status :" placeholder="eg. Available"
-                                    value={newSeat.status} onChange={handleChange} disabled
-                                />
+                                {/*<TextInputField*/}
+                                {/*    className={'inputFieldBox'}*/}
+                                {/*    id="status" label="Status :" placeholder="eg. Available"*/}
+                                {/*    value={newSeat.status} onChange={handleChange}*/}
+                                {/*/>*/}
+                                <SelectField
+                                    id={'status'}
+                                    className={'inputSelField'}
+                                    label="Status:"
+                                    onChange={handleChange}
+                                    value={status.value}
+                                    onChange={e => {setStatus({ value: e.target.value }); handleChange(e);}}
+                                >
+                                    <option value="Available" selected>Available</option>
+                                    <option value="Occupied">Occupied</option>
+                                    <option value="Reserved">Reserved</option>
+                                    <option value="Hogged">Hogged</option>
+                                </SelectField>
                                 {/*<TextInputField*/}
                                 {/*    className={'inputFieldBox'}*/}
                                 {/*    id="unavailable" label="Unavailable :" placeholder="0-800"*/}

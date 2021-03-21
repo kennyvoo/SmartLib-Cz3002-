@@ -62,7 +62,10 @@
     max-width: 150px;
     padding: 10px;
 }
-.inputFieldBox{
+.infoText1{
+    text-align: center;
+}
+.inputFieldBox,.inputSelField{
     width: 15vw;
     min-width: 100px;
     max-width: 150px;
@@ -119,8 +122,9 @@
     margin: 10px;
 }
 .alertsPane{
-    max-width: 800px;
-    min-width: 20%;
+    width: 20%;
+    max-width: 400px;
+    min-width: 100px;
     min-height: 300px;
     border-radius: 5px;
     padding: 10px;
@@ -157,4 +161,15 @@
     max-width: 1000px;
     height: 30px;
     margin: 10px;
+}
+@media only screen and (max-width: 600px) {
+    .statsPane{
+        width: 100%;
+    }
+    .alertsPane{
+        width: 100%;
+    }
+    .homepageMapComboPane{
+        width: 100%;
+    }
 }

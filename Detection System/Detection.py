@@ -20,22 +20,21 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 ### Camera Parameter ###
-# CAMERA_ID= ["LWN_L4_C1","LWN_L5_C1"]
-# CAMERA_IP=['http://10.27.35.143:8080/video','http://10.27.168.181:8080/video']
-CAMERA_ID= ["LWN_L3_C1"]
-CAMERA_IP=['https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg']
-FIRESTORE_COLLECTION='Seats'
-lib="LWN"
-level="L4"
-font = cv2.FONT_HERSHEY_PLAIN
-multiplayer=False
+CAMERA_ID= ["LWN_L4_C1","LWN_L5_C1"]
+CAMERA_IP=['http://10.27.35.143:8080/video','http://10.27.168.181:8080/video']
+# CAMERA_ID= ["LWN_L3_C1"]
+# CAMERA_IP=['https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg']
 
-### CHECK CAMERA
+FIRESTORE_COLLECTION='Seats'
+font = cv2.FONT_HERSHEY_PLAIN
+multicamera=False  #initialize as False
+
+### CHECK if the number of camera_id is the same as the number of camera_IP
 if(len(CAMERA_ID)!=len(CAMERA_IP)):
      print("error")
      exit()
 if(len(CAMERA_ID)>1):
-     multiplayer=True
+     multicamera=True
 
 ### Load Yolo ###
 
@@ -48,6 +47,8 @@ output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 
+
+#Keep track of the timestamp of item detected
 seatItemDetectedTime={}
 
 ### Inference every 5s if replace while True
@@ -60,29 +61,28 @@ while True:
      seatImageToDetect=[]
      seatImageToDetectSize=[]
      SeatsArray=[]
-     SeatsOnLevel=0
+
+     #Loop through each camera and append the cropped images into SeatArray[]
      for i in range(len(CAMERA_IP)):
           
           cap = cv2.VideoCapture(CAMERA_IP[i])
           _, frame = cap.read()
- 
 
           seatTemp=[]
-          ### Retrieve all thet Seats related to this camera from the database###
+          # Retrieve all thet Seats related to this camera from the database
           SeatsList= db.collection(FIRESTORE_COLLECTION).where(u"cameraId",u"==",CAMERA_ID[i]).stream()
           for seat in SeatsList:
                SeatsArray.append(seat.to_dict()) 
                seatTemp.append(seat.to_dict())
-          #SeatsArray.ap[ seat.to_dict() for seat in SeatsList ]
 
 
-               ##Crop out seats images from the full picture
+          ##Crop out seats images from the full picture
           for i in seatTemp:
 
                im1=frame[int(i["y1Img"]):int(i["y2Img"]),int(i["x1Img"]):int(i["x2Img"])]
                im = imutils.resize(im1, width=416)
 
-               #append the frame and the size of the fram for drawing bounding box in the postprocessing part
+               #append the frame and the size of the frame for drawing bounding box in the postprocessing part
                seatImageToDetect.append(im) 
                seatImageToDetectSize.append([int(i["x2Img"])-int(i["x1Img"]),int(i["y2Img"])-int(i["y1Img"])])
 
@@ -90,7 +90,7 @@ while True:
                cv2.rectangle(frame, (int(i["x1Img"]), int(i["y1Img"])), (int(i["x2Img"]), int(i["y2Img"])), (255,0,0), 2)
                cv2.putText(frame,i["seatName"], (int(i["x1Img"]),int(i["y1Img"]) + 30), font, 3, (255,0,0), 3)
           
-          if(multiplayer):
+          if(multicamera):
                cap.release()
 
 
@@ -99,7 +99,6 @@ while True:
      net.setInput(blob)
      outs = net.forward(output_layers)
 
-     # print(len(seatImageToDetect))
      #post-processing the output of the network
      for i in range(len(seatImageToDetect)):
           humanDetected=False
@@ -139,9 +138,7 @@ while True:
                          elif (classes[class_id]=="bottle" and not humanDetected and SeatsArray[i]["status"]!="Detected" and SeatsArray[i]["status"]!="Hogged"):
                               SeatsArray[i]["status"]="Detected"
                               db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Detected'})
-                              # db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'timeStamp':round(time.time(),0)})
-                              # SeatsArray[i]["timeStamp"]=round(time.time(),0)
-                              seatItemDetectedTime[SeatsArray[i]["id"]]=round(time.time(),0)
+                              seatItemDetectedTime[SeatsArray[i]["id"]]=round(time.time(),0)  
                               itemDetected=True
                               print("Object Detected")
                          
@@ -170,6 +167,9 @@ while True:
                SeatsArray[i]["status"]="Available"
                db.collection(FIRESTORE_COLLECTION).document(SeatsArray[i]["id"]).update({u'status':'Available'})
                print(SeatsArray[i]["id"]+" Updated to Available")
+
+     if(multicamera): # if multicamera, we wont show the result 
+          continue
 
      # perform nms to eliminate the overlap boxes.
      indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.7, 0.3)
