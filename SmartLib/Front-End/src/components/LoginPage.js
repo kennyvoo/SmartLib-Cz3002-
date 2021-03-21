@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField, TextInput, Alert } from "evergreen-ui";
+import { Pane, Text, Button, Heading, TextInputField, Alert } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
 import background from "./Img/lib2.png";
 
@@ -71,7 +71,6 @@ function LoginPage() {
             inputHeight={45}
             inputWidth={450}
             type="password"
-            //onChange={e => setDetails({ ...details, password: e.target.value })} value={details.password}
             ref={passwordRef}
           />
           {/* This is the container/pane for the login section */}
@@ -81,9 +80,6 @@ function LoginPage() {
             </Pane>
             <Pane paddingBottom={20}>
               <Button appearance="primary" intent="success" height={48} type="submit" disabled = {loading}>Login</Button>
-              {/*<Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text
-                <Button appearance="primary" intent="success" height={48} type = "submit">Login</Button>
-            </Link>*/}
             </Pane>
           </Pane>
           <Link to="/CreateAccount" style={{ textDecoration: "none" }} > {/* textDecoration has to set to none or else the button will have a line below the Login text */}

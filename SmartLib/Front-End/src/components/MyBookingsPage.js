@@ -1,57 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Pane, Text, Button, Heading, Table, Menu, Popover, MoreIcon, IconButton, Position, Dialog } from "evergreen-ui";
-//import currentBooking from './JsonTestFiles/currentBooking.json'
-//import bookingHistory from './JsonTestFiles/bookingHistory.json'
+import { Pane, Text, Heading, Table, Menu, Popover, MoreIcon, IconButton, Position, Dialog } from "evergreen-ui";
 import background from "./Img/MyBookings.jpg";
 import Component from "@reactions/component";
 import crudFirebase from '../services/crudFirebase'
 import { useAuth } from '../context/AuthContext'
-import { LocalVarContext } from '../contexts/LocalVarContext';
 import app from '../firebase'
 
 export default function MyBookingsPage() {
 
   const { currentUser } = useAuth()
-  const [localVar, setLocalVar] = useContext(LocalVarContext);
   const [currentBooking, setCurrentBooking] = useState()
-  const [seatData, setSeatData] = useState()
   const [bookingHistory, setBookingHistory] = useState([])
 
   // test.then((doc) => {
   //   const a = doc.data()
-  //   let title = a["seatName"] as? String ?? ""
-  //    setBooking({"seatName": a.seatName})
-  //    console.log("Document test:", a.seatName);
-  //    console.log("Document data:", doc.data());
-
-  //   })
-  //   console.log("Document data:", booking);
 
   const fetchBookings = async () => {
-    // const response=db.collection('Blogs');
     try {
       const Reference = app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings')
       const DocData = await Reference.doc('Booking_Current').get()
       setCurrentBooking(DocData.data())
 
-      const Reference1 = app.firestore().collection('Seats')
-      const DocData1 = await Reference1.doc(currentBooking.seatName).get()
-      setSeatData(DocData1.data())
-
-
-
-      console.log(seatData);
     } catch {
-      //setCurrentBooking([{seatName:"", timestamp:"", bookingID:""}])
       console.log(currentBooking);
-      console.log("right");
+      console.log("empty");
     }
-
-
-
-    // const data=await response.get();
-
-
 
     const Reference2 = app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_History').collection('History')
     const DocData2 = await Reference2.get()
@@ -59,39 +32,35 @@ export default function MyBookingsPage() {
       setBookingHistory(bookingHistory => [...bookingHistory, item.data()])
     })
   }
-  console.log("test" + seatData);
+
   useEffect(() => {
     fetchBookings();
   }, [])
 
-
-
   async function handleDelete() {
     await crudFirebase.removebooking(currentUser.uid)
     crudFirebase.update('Seats', (currentBooking.seatName).toString(), { status: 'Available' });
-    console.log("Test");
-    setLocalVar()
     setCurrentBooking()
   }
 
   function checkBooking() {
-    //if (currentBooking.bookingID != null) {
     try {
       console.log("works");
+
       return (
 
         <div>
           <Table.Row>
-            <Table.TextCell>{localVar.bookingID}</Table.TextCell>
-            <Table.TextCell>{localVar.timestamp}</Table.TextCell>
+            <Table.TextCell>{currentBooking.bookingID}</Table.TextCell>
+            <Table.TextCell>{currentBooking.timeStamp}</Table.TextCell>
             <Table.TextCell>
               Lee Wee Nam Library
             </Table.TextCell>
             <Table.TextCell>
-              {localVar.level}
+              {currentBooking.level}
             </Table.TextCell>
             <Table.TextCell>
-              {localVar.seat}
+              {currentBooking.seatName}
             </Table.TextCell>
             <Table.Cell width={48} flex="none">
               <Popover
@@ -105,13 +74,11 @@ export default function MyBookingsPage() {
         </div>
       )
     } catch {
-      console.log("what");
+      console.log("Empty Current Booking");
       return
     }
 
   }
-
-
 
   /* Options Menu For Current Booking Table */
   const renderRowMenu = () => {
@@ -147,10 +114,8 @@ export default function MyBookingsPage() {
     )
   }
 
-  console.log("Document data:", currentBooking);
-  console.log("Document data:", bookingHistory);
-  console.log("Seat data:", seatData);
-  console.log("Bobo:", localVar);
+  console.log("Current:", currentBooking);
+  console.log("History:", bookingHistory);
 
   return (
     <div>
