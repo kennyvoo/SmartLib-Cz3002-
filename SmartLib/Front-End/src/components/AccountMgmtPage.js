@@ -3,20 +3,11 @@ import { Pane,
   Text,
   Button, 
   Heading, 
-  Paragraph, 
-  TextInputField, 
-  FormField, 
-  Avatar, 
-  BackButton, 
-  CrossIcon, 
-  InfoSignIcon, 
-  EditIcon, 
-  WarningSignIcon 
+  Avatar,
+  Strong
 } from "evergreen-ui";
 import { Link } from "react-router-dom"
-
 import {useAuth} from '../context/AuthContext'
-import {auth} from "../firebase"
 
 function AccountMgmtPage() {
 
@@ -36,12 +27,9 @@ function AccountMgmtPage() {
             <Pane flex={1} display="flex">
               <Heading size={800} >{currentUser.displayName}</Heading> {/* Currently not stored yet */}
             </Pane>
-            <Pane>
-              <Heading size={800} >{currentUser.email}</Heading>
-            </Pane>
             <Pane marginTop={16}>
-              <Text size={600}>- Favourite Seat: 545
-              </Text>
+              <Strong size={600} >Email: </Strong>
+                <Text size={600}>{currentUser.email}</Text>
             </Pane>
 
             {/* Booking Button*/}

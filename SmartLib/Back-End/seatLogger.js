@@ -31,7 +31,7 @@ function pharseData(seats){
 }
 
 async function uploadData(Seats){
-    const timeStamp = new Date().toISOString().replace('T', ' ').substr(0, 19)
+    const timeStamp = new Date().toLocaleString().replace('T', ' ').substr(0, 19)
     await db.collection('seatLog').doc(timeStamp).set(
         {Seats}
     )
