@@ -68,16 +68,13 @@ function checkSeatStatus(status){
 function pharseLog(data){
     //Available , Occupied, Reserved, Hogged, Unavailable
 
-    var level1 = [0,0,0,0,0]
     var level2 = [0,0,0,0,0]
     var level3 = [0,0,0,0,0]
     var level4 = [0,0,0,0,0]
     var level5 = [0,0,0,0,0]
 
     for (const x of data.Seats){
-        if(x.level == '1')
-            level1 = math.add(level1,checkSeatStatus(x.status))
-        else if(x.level == '2')
+        if(x.level == '2')
             level2 =math.add(level2,checkSeatStatus(x.status))
         else if(x.level == '3')
             level3 = math.add(level3,checkSeatStatus(x.status))
@@ -86,9 +83,9 @@ function pharseLog(data){
         else if (x.level == '5')
             level5 =math.add(level5,checkSeatStatus(x.status))
     }
-    var total = math.add(level1,level2,level3,level4,level5)
+    var total = math.add(level2,level3,level4,level5)
 
-    return [total,level1,level2,level3,level4,level5]
+    return [total,level2,level3,level4,level5]
 }
 
 function pharseStatus(data){
@@ -102,7 +99,6 @@ function pharseStatus(data){
 }
 
 async function pharsedata(res){
-    let lvl1Log = []
     let lvl2Log = []
     let lvl3Log = []
     let lvl4Log = []
@@ -112,7 +108,7 @@ async function pharsedata(res){
     var data = await db.collection('seatLog').get();
     if (data.docs.length > 0) {
         for (const x of data.docs) {
-            var [t,lvl1,lvl2,lvl3,lvl4,lvl5] = pharseLog(x.data())
+            var [t,lvl2,lvl3,lvl4,lvl5] = pharseLog(x.data())
             // add to seatLog
             seatLog.push({
                 timestamp : x.id,
@@ -120,10 +116,6 @@ async function pharsedata(res){
             });
             
             //add to levelLog
-            lvl1Log.push({
-                timestamp : x.id,
-                value : pharseStatus(lvl1)
-            });
             lvl2Log.push({
                 timestamp : x.id,
                 value : pharseStatus(lvl2)
@@ -146,7 +138,6 @@ async function pharsedata(res){
     res.json({
         seatLog: seatLog,
         levelLog :{
-            level1 : lvl1Log,
             level2 : lvl2Log,
             level3 : lvl3Log,
             level4 : lvl4Log,
