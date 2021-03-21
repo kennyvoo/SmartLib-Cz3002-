@@ -1,39 +1,67 @@
 import React,{ useContext} from "react";
-import { Pane, Text, Button, Heading, Table, Menu, Popover, MoreIcon, IconButton, Position } from "evergreen-ui";
+import { Pane, Text, Button, Heading, Strong, Table, Menu, Popover, MoreIcon, IconButton, Position } from "evergreen-ui";
 import currentBooking from './JsonTestFiles/currentBooking.json'
 import bookingHistory from './JsonTestFiles/bookingHistory.json'
-import background from "./Img/MyBookings.jpg";
+import background from "./Img/success.png";
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
+import { LocalVarContext } from '../contexts/LocalVarContext';
 
 function SuccessBookingPage() {
 
     const [selected, setSelected] = useContext(SelectedSeatContext);
+    const [localVar, setLocalVar] = useContext(LocalVarContext);
 
     return (
       <div>
 
         {/* Current Booking Table */}
-        <Pane backgroundColor="beige" justifyContent="center" padding={16}>
-          <Heading fontSize={50} padding={8}>Your Booking</Heading>
-          <Heading size={400} padding={8} ><br></br>Booking Confirmation will be sent to your email</Heading>
-          <Pane flex={1} display="flex" padding={16}>
-              <Pane>
-                <Heading size={600} >Seat Number:</Heading>
-              </Pane>
-              <Heading size={600} marginLeft={10}>{selected.seat}</Heading>
-          </Pane>
-          <Pane flex={1} display="flex" padding={16}>
-              <Pane>
-                <Heading size={600} >Date-Time:</Heading>
-              </Pane>
-              <Heading size={600} marginLeft={10}>date</Heading>
-          </Pane>
-          <Pane flex={1} display="flex" padding={16}>
-              <Pane>
-                <Heading size={600} >Booking-ID:</Heading>
-              </Pane>
-              <Heading size={600} marginLeft={10}>serial</Heading>
-          </Pane>
+        <Pane backgroundImage={`url(${background})`} 
+            height="auto"
+            width="auto"
+            display="flex" 
+            alignItems="center" 
+            justifyContent="center" 
+            padding={80} 
+            flexDirection="column">
+        <Heading fontSize={100} color={'white'}>Congrats !</Heading>
+        <Text size={600} color={'white'}><br></br><br></br><br></br>Your seat has been successfully booked !</Text>
+        <Text size={400} color={'white'}><br></br>The booking confirmation has been sent</Text>
+        <Text size={400} color={'white'}>to your email.</Text>
+        <Text size={400} color={'white'}>You may also check your bookings in 'My Bookings' page </Text>
+      </Pane>
+      <Pane
+            height="auto"
+            width="auto"
+            background="none"
+            display="flex"
+            flexDirection="column" 
+            alignItems="center"
+            justifyContent="center"
+            padding={16}
+          >
+            <Pane backgroundColor={""}>
+          <Heading size={900} padding={20}>Your Booking</Heading>
+            <Pane marginTop={16}>
+              <Strong size={600} >Location:</Strong>
+              <Text size={600} marginLeft={8} >Lee Wee Nam Library</Text>
+            </Pane>
+            <Pane marginTop={16}>
+              <Strong size={600} >Seat Number:</Strong>
+              <Text size={600} marginLeft={8} >{selected.seat}</Text>
+            </Pane>
+            <Pane marginTop={16}>
+              <Strong size={600} >Level:</Strong>
+              <Text size={600} marginLeft={8} >{selected.level}</Text>
+            </Pane>
+            <Pane marginTop={16}>
+              <Strong size={600} >Date-Time:</Strong>
+              <Text size={600} marginLeft={8} >{selected.timestamp}</Text>
+            </Pane>
+            <Pane marginTop={16}>
+              <Strong size={600} >Booking ID:</Strong>
+              <Text size={600} marginLeft={8} >{selected.bookingID}</Text>
+            </Pane>
+            </Pane>
         </Pane>
       </div>
     );

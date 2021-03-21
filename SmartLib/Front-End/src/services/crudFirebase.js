@@ -35,6 +35,11 @@ const checkbooking = async(uid, loc) => {
   return await db.doc(loc).get();
 };
 
+const removebooking = (uid) => {
+  const db = app.firestore().collection('User_Booking').doc(uid).collection('Bookings');
+  return db.doc('Booking_Current').delete();
+};
+
 const remove = (q,id) => {
   const db = app.firestore().collection(q);
   return db.doc(id).delete();
@@ -48,7 +53,8 @@ const crudFirebase = {
   set,
   bookingSetup,
   booking,
-  checkbooking
+  checkbooking,
+  removebooking
 };
 
 export default crudFirebase;

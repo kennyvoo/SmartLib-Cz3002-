@@ -73,7 +73,7 @@ function CreateAccountPage() {
             id="email"
             required
             label="School Email"
-            placeholder="username@e.ntu.edu.sg"
+            placeholder="username@ntu.edu.sg"
             inputHeight={45}
             inputWidth={450}
             type="email"
@@ -83,6 +83,7 @@ function CreateAccountPage() {
             id="password"
             required
             label="Password"
+            placeholder="Password(Minimum of 6-Characters)"
             secureTextEntry={true}
             inputHeight={45}
             inputWidth={450}
@@ -93,6 +94,7 @@ function CreateAccountPage() {
             id="confirmPassword"
             required
             label="Confirm Password"
+            placeholder="Confirm Password(Minimum of 6-Characters)"
             inputHeight={45}
             inputWidth={450}
             type="password"
