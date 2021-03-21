@@ -9,9 +9,9 @@ import { SelectedSeatProvider } from './contexts/SelectSeatContext';
 ReactDOM.render(
   // <React.StrictMode>
     <SelectedSeatProvider>
-    <SeatProvider>
-      <App />
-    </SeatProvider>
+      <SeatProvider>
+          <App />
+      </SeatProvider>
     </SelectedSeatProvider>
   // </React.StrictMode>
   ,document.getElementById('root')
