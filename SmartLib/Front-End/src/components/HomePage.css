@@ -63,6 +63,12 @@
     font-size: large;
     margin: 10px;
 }
+.mapPane{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-origin: content-box;
+}
 h1{
     margin-bottom: 10px;
     text-align: center;

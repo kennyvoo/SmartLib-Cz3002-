@@ -55,6 +55,10 @@
     padding: 10px;
     display: flex;
     justify-content: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-origin: content-box;
 }
 .infoText{
     width: 20vw;

@@ -7,6 +7,10 @@ import { useHistory } from "react-router-dom";
 import SeatsList from "./seatmap/SeatsList";
 import Legend from "./seatmap/Legend";
 import './HomePage.css'
+import L2Map from './Img/L2Map.svg'
+import img from './Img/L2C1.jpg'
+import L2C1 from "./Img/L2C1.jpg";
+import L3C1 from "./Img/L3C1.jpg";
 
 function MapSelectorPane() {
   
@@ -41,6 +45,23 @@ function MapSelectorPane() {
     history.push('/SeatInformation');
   }
 
+    function mapSelect(level)
+    {
+        switch (level) {
+            case 2:
+                return L2Map;
+            case 3:
+                return L3C1;
+            case 4:
+                //return L4C1;
+                return 'http://10.27.137.242:8080/video';
+            case 5:
+                //return L5C1;
+                //return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
+                return 'http://10.27.35.143:8080/video';
+        }
+    }
+
     return (
       <div>
         {/* Segmented Control*/}
@@ -67,6 +88,7 @@ function MapSelectorPane() {
             </Component>
         </Pane>
         <Pane
+            className={'mapPane'}
           height="auto"
           width="auto"
           marginTop={10}
@@ -74,6 +96,7 @@ function MapSelectorPane() {
           justifyContent="center"
           alignItems="center"
           display="flex"
+          backgroundImage={`url(${mapSelect(selected.level)})`}
         >
             <SeatsList seats={seats} editmode={false}/>
         </Pane>
