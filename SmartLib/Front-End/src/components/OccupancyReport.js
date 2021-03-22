@@ -3,11 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Chart from "react-google-charts";
 import './OccupancyReportPage.css'
 import Colors from "./Colors";
-import {
-    Pane,
-    Button,
-    DownloadIcon
-} from "evergreen-ui";
+import {Pane} from "evergreen-ui";
 
 
 function OccupancyReport() {
@@ -35,19 +31,19 @@ function OccupancyReport() {
     }, []);
 
     function parseData(res) {
-        //let data = [['Time', 'Available', 'Occupied', 'Hogged', 'Reserved', 'Unavailable']]
+        //let data = [['Time', 'Available', 'Occupied', 'Reserved', 'Hogged', 'Unavailable']]
         let data = [
             [
                 { type: 'datetime', label: 'Timestamp' },
                 'Available',
                 'Occupied',
-                'Hogged',
                 'Reserved',
+                'Hogged',
                 'Unavailable'
             ]
         ]
         res.map((seat) => {
-            data.push([new Date(seat.timestamp), seat.value.Available, seat.value.Occupied, seat.value.Hogged, seat.value.Reserved, seat.value.Unavailable])
+            data.push([new Date(seat.timestamp), seat.value.Available, seat.value.Occupied, seat.value.Reserved, seat.value.Hogged, seat.value.Unavailable])
         })
         return data
     }
@@ -101,17 +97,18 @@ function LineChart(props){
                 chart: {
                     title: props.title,
                 },
-                vAxis: {viewWindow: {min:0, max:100}},
+                vAxis: {title:'Occupancy(%)', viewWindow: {min:0, max:100}},
                 width: "100%",
                 height: 400,
-                series: {
-                    // Gives each series an axis name that matches the Y-axis below.
-                    0: { axis: 'Occupancy' },
-                },
+                colors: [Colors.colorAvailable, Colors.colorOccupied, Colors.colorReserved, Colors.colorHogged, Colors.colorUnavailable],
+                // series: {
+                //     // Gives each series an axis name that matches the Y-axis below.
+                //     0: { axis: 'Occupancy' },
+                // },
                 axes: {
                     // Adds labels to each axis; they don't have to match the axis names.
                     y: {
-                        Occupancy: { label: 'Occupancy (%)' },
+                        0: { label: 'Occupancy (%)' },
                     },
                 },
             }}
