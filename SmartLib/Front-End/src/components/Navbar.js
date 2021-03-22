@@ -11,7 +11,9 @@ import {
   EditIcon,
   UndoIcon,
   TimeIcon,
-  CaretDownIcon, AddIcon,
+  CaretDownIcon,
+  AddIcon,
+  TimelineLineChartIcon
 } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
 import { IoLibraryOutline } from "react-icons/io5";
@@ -63,7 +65,7 @@ export default function Navbar() {
                       <Menu.Item icon={AddIcon}>Add New Seat</Menu.Item>
                     </Link>
                   <Link to="/OccupancyReport" style={{ textDecoration: "none" }}>
-                    <Menu.Item icon={AddIcon}>Occupancy Report</Menu.Item>
+                    <Menu.Item icon={TimelineLineChartIcon}>Occupancy Report</Menu.Item>
                   </Link>
                 </Menu.Group>
                 <Menu.Divider />
