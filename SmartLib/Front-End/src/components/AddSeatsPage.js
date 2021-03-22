@@ -16,6 +16,10 @@ import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
 import L4C1 from "./Img/L4C1.jpg";
 import L5C1 from "./Img/L5C1.jpg";
+import L2Map from "./Img/L2Map.svg";
+import L3Map from './Img/L3Map.svg';
+import L4Map from './Img/L4Map.svg';
+import L5Map from './Img/L5Map.svg';
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import {SeatContext} from "../contexts/SeatContext";
@@ -119,14 +123,25 @@ function AddSeatsPage(){
                 return L2C1;
             case 3:
                 return L3C1;
-                //return 'https://webcam.ntu.edu.sg/upload/slider/lwn-inside.jpg';
-                //return 'https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg';
             case 4:
                 //return L4C1;
                 return 'http://10.27.137.242:8080/video';
             case 5:
                 //return L5C1;
                 return 'http://10.27.35.143:8080/video';
+        }
+    }
+    function mapSelect(level)
+    {
+        switch (level) {
+            case 2:
+                return L2Map;
+            case 3:
+                return L3Map;
+            case 4:
+                return L4Map;
+            case 5:
+                return L5Map;
         }
     }
 
@@ -145,10 +160,10 @@ function AddSeatsPage(){
                     <Component
                         initialState={{
                             options: [
-                                { label: "Level 2", value: 2 },
-                                { label: "Level 3", value: 3 },
-                                { label: "Level 4", value: 4 },
-                                { label: "Level 5", value: 5 },
+                                { label: "Level 2", value: '2' },
+                                { label: "Level 3", value: '3' },
+                                { label: "Level 4", value: '4' },
+                                { label: "Level 5", value: '5' },
                             ],
                             value: selected.level,
                         }}
@@ -211,7 +226,7 @@ function AddSeatsPage(){
                             </Pane>
                         </Pane>
                         <Pane className={'seatMapControlPane'} border={'default'}>
-                            <Pane className={'seatMapPane'} border={'none'}>
+                            <Pane className={'seatMapPane'} border={'none'} backgroundImage={`url(${mapSelect(selected.level)})`}>
                                 <SeatsList seats={tempSeats} editmode={true}/>
                             </Pane>
                             <Pane className={'infoPane'}>
