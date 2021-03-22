@@ -1,10 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import ReactDOM from "react-dom";
 import { Stage, Layer, Rect, Text, Group } from "react-konva";
-import '../MouseDown.css'
 import {SelectedSeatContext} from "../../contexts/SelectSeatContext";
 import {SeatContext} from "../../contexts/SeatContext";
-import CamSeat from "./CamSeat";
 
 const boxStroke = "#0000FF";
 const boxStrokeSelected = "#FF0000";

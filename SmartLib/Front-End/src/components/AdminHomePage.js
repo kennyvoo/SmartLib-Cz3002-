@@ -16,6 +16,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import Legend from "./seatmap/Legend";
 import cameraSelect from "./CamSelect";
 import mapSelect from "./MapSelect";
+import Loading from "./Loading";
 
 function AdminHomePage(){
 
@@ -89,7 +90,7 @@ function AdminHomePage(){
 
         </Pane>
             :
-            <h1>Loading</h1>
+            <Loading/>
 
     );
 }
