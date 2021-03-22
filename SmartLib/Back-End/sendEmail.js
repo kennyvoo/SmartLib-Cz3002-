@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport({
 
 //name, email, subject
 router.post('/', (req, res, next) => {
-    ejs.renderFile(__dirname + "/emailTemplate/test.ejs", { name: req.body.name }, function (err, data) {
+    ejs.renderFile(__dirname + "/emailTemplate/test.ejs", { name: req.body.name, seat: req.body.seat }, function (err, data) {
   
       if(err){
         console.log(err);
@@ -25,7 +25,7 @@ router.post('/', (req, res, next) => {
         var mailOption = {
           from: 'NoReply.SmartLib@gmail.com',
           to: req.body.email,
-          subject: req.body.email.subject,
+          subject: "Confirmation - Seat Reservation",
           html: data
         };
       }

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Pane, Text, Alert, Button, Heading, Strong, Avatar, BackButton, InfoSignIcon, WarningSignIcon } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
+import { SeatContext } from '../contexts/SeatContext'
 import crudFirebase from '../services/crudFirebase'
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext'
@@ -10,6 +11,7 @@ import { v1 as uuidv1 } from 'uuid';
 function SeatInformationPage() {
 
   const [selected, setSelected] = useContext(SelectedSeatContext);
+  const [seats, setSeats] = useContext(SeatContext);
   const { currentUser } = useAuth()
   const history = useHistory()
   const [error, setError] = useState('')
@@ -39,13 +41,28 @@ function SeatInformationPage() {
           method: "POST",
           url: "http://localhost:4000/api/sendEmail",
           data: {
-            name: "test",
-            subject: "test",
-            //email: currentUser.email,
-            //email: "taiwilson5@gmail.com",
+            name: "Wilson",
+            // subject: "test",
+            email: currentUser.email,
+            // email: "taiwilson5@gmail.com",
+            // seat: (seats.find((theSeat) => theSeat.id == selected.seat.toString())).seatName
+            seat: "Seat " + selected.seat
 
             // Generate Booking ID and time of booking + 15 mins to the email
             //IP config app on android, just change the camera capture url on 2 components, only on lvl 4
+          }
+        }).then((response) => {
+          console.log(response.data.msg)
+          console.log("debug",seats)
+          console.log(selected)
+        })
+        // Start reservation checker
+        axios({
+          method: "POST",
+          url: "http://localhost:4000/api/reservationChecker",
+          data: {
+            seatID: (selected.seat).toString(),
+            uid: currentUser.uid
           }
         }).then((response) => {
           console.log(response.data.msg)
