@@ -1,21 +1,8 @@
 import React, {useContext, useState, useEffect} from "react";
 import {
     Pane,
-    Text,
-    Button,
-    Heading,
     SegmentedControl,
-    TextInput,
-    TextInputField,
-    AddIcon,
-    ResetIcon,
-    SearchIcon,
-    EditIcon, DeleteIcon
 } from "evergreen-ui";
-import { Link } from "react-router-dom";
-import L2C1 from "./Img/L2C1.jpg";
-import L3C1 from "./Img/L3C1.jpg";
-import L4C1 from "./Img/L4C1.jpg";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import {SeatContext} from "../contexts/SeatContext";
@@ -27,10 +14,8 @@ import AlertList from "./AlertList";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
 import Legend from "./seatmap/Legend";
-import L2Map from "./Img/L2Map.svg";
-import L3Map from "./Img/L3Map.svg";
-import L4Map from "./Img/L4Map.svg";
-import L5Map from "./Img/L5Map.svg";
+import cameraSelect from "./CamSelect";
+import mapSelect from "./MapSelect";
 
 function AdminHomePage(){
 
@@ -47,37 +32,6 @@ function AdminHomePage(){
             setSeats(events);
         }
     },[dataFS]);
-
-
-    function cameraSelect(level)
-    {
-        switch (level) {
-            case 2:
-                return L2C1;
-            case 3:
-                return L3C1;
-            case 4:
-                //return L4C1;
-                return 'http://10.27.137.242:8080/video';
-            case 5:
-                //return L5C1;
-                //return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
-                return 'http://10.27.35.143:8080/video';
-        }
-    }
-    function mapSelect(level)
-    {
-        switch (level) {
-            case 2:
-                return L2Map;
-            case 3:
-                return L3Map;
-            case 4:
-                return L4Map;
-            case 5:
-                return L5Map;
-        }
-    }
 
     return(
         !loading&&seats?

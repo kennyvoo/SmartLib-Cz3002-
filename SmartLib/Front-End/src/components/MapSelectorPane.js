@@ -7,11 +7,7 @@ import { useHistory } from "react-router-dom";
 import SeatsList from "./seatmap/SeatsList";
 import Legend from "./seatmap/Legend";
 import './HomePage.css'
-import L3C1 from "./Img/L3C1.jpg";
-import L2Map from "./Img/L2Map.svg";
-import L3Map from './Img/L3Map.svg';
-import L4Map from './Img/L4Map.svg';
-import L5Map from './Img/L5Map.svg';
+import mapSelect from "./MapSelect";
 
 function MapSelectorPane() {
   
@@ -45,20 +41,6 @@ function MapSelectorPane() {
     setSeats()
     history.push('/SeatInformation');
   }
-
-    function mapSelect(level)
-    {
-        switch (level) {
-            case 2:
-                return L2Map;
-            case 3:
-                return L3Map;
-            case 4:
-                return L4Map;
-            case 5:
-                return L5Map;
-        }
-    }
 
     return (
       <div>
