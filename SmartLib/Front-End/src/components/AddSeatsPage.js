@@ -22,6 +22,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import DrawAnnotations from "./seatmap/CamKonva";
 import cameraSelect from "./CamSelect";
 import mapSelect from "./MapSelect";
+import Loading from "./Loading";
 
 function AddSeatsPage(){
 
@@ -277,7 +278,7 @@ function AddSeatsPage(){
             </div>
 
         </Pane>:
-            <h1>Loading</h1>
+            <Loading/>
 
     );
 }

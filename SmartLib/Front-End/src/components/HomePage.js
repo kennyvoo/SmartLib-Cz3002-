@@ -6,6 +6,7 @@ import Stats from "./Stats";
 import {SeatContext} from "../contexts/SeatContext";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
+import Loading from "./Loading";
 
 function HomePage() {
   const [seats, setSeats] = useContext(SeatContext);
@@ -44,7 +45,7 @@ function HomePage() {
       </Pane>
 
     </div>:
-          <h1>Loading</h1>
+          <Loading/>
   );
 }
 

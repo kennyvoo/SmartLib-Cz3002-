@@ -22,6 +22,7 @@ import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
 import mapSelect from "./MapSelect";
 import cameraSelect from "./CamSelect";
+import Loading from "./Loading";
 
 
 function ModifySeatsPage(){
@@ -298,7 +299,7 @@ function ModifySeatsPage(){
                 </Pane>
             </div>
         </Pane>:
-            <h1>Loading</h1>
+            <Loading/>
 
     );
 }
