@@ -27,6 +27,10 @@ import AlertList from "./AlertList";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
 import Legend from "./seatmap/Legend";
+import L2Map from "./Img/L2Map.svg";
+import L3Map from "./Img/L3Map.svg";
+import L4Map from "./Img/L4Map.svg";
+import L5Map from "./Img/L5Map.svg";
 
 function AdminHomePage(){
 
@@ -61,6 +65,19 @@ function AdminHomePage(){
                 return 'http://10.27.35.143:8080/video';
         }
     }
+    function mapSelect(level)
+    {
+        switch (level) {
+            case 2:
+                return L2Map;
+            case 3:
+                return L3Map;
+            case 4:
+                return L4Map;
+            case 5:
+                return L5Map;
+        }
+    }
 
     return(
         !loading&&seats?
@@ -78,10 +95,10 @@ function AdminHomePage(){
                             <Component
                                 initialState={{
                                     options: [
-                                        { label: "Level 2", value: 2 },
-                                        { label: "Level 3", value: 3 },
-                                        { label: "Level 4", value: 4 },
-                                        { label: "Level 5", value: 5 },
+                                        { label: "Level 2", value: '2' },
+                                        { label: "Level 3", value: '3' },
+                                        { label: "Level 4", value: '4' },
+                                        { label: "Level 5", value: '5' },
                                     ],
                                     value: selected.level,
                                 }}
@@ -102,7 +119,7 @@ function AdminHomePage(){
                         >
                             <CamSeatsList seats={seats} editmode={false}/>
                         </Pane>
-                        <Pane className={'seatMapPane'} border={'none'}>
+                        <Pane className={'seatMapPane'} border={'none'} backgroundImage={`url(${mapSelect(selected.level)})`}>
                             <SeatsList seats={seats} editmode={false}/>
                         </Pane>
                         <Pane border={'default'} borderRadius={5} marginTop={10} padding={10}>

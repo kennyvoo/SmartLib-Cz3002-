@@ -7,10 +7,11 @@ import { useHistory } from "react-router-dom";
 import SeatsList from "./seatmap/SeatsList";
 import Legend from "./seatmap/Legend";
 import './HomePage.css'
-import L2Map from './Img/L2Map.svg'
-import img from './Img/L2C1.jpg'
-import L2C1 from "./Img/L2C1.jpg";
 import L3C1 from "./Img/L3C1.jpg";
+import L2Map from "./Img/L2Map.svg";
+import L3Map from './Img/L3Map.svg';
+import L4Map from './Img/L4Map.svg';
+import L5Map from './Img/L5Map.svg';
 
 function MapSelectorPane() {
   
@@ -51,14 +52,11 @@ function MapSelectorPane() {
             case 2:
                 return L2Map;
             case 3:
-                return L3C1;
+                return L3Map;
             case 4:
-                //return L4C1;
-                return 'http://10.27.137.242:8080/video';
+                return L4Map;
             case 5:
-                //return L5C1;
-                //return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
-                return 'http://10.27.35.143:8080/video';
+                return L5Map;
         }
     }
 
@@ -69,10 +67,10 @@ function MapSelectorPane() {
             <Component
               initialState={{
                 options: [
-                  { label: "Level 2", value: 2 },
-                  { label: "Level 3", value: 3 },
-                  { label: "Level 4", value: 4 },
-                  { label: "Level 5", value: 5 },
+                  { label: "Level 2", value: '2' },
+                  { label: "Level 3", value: '3' },
+                  { label: "Level 4", value: '4' },
+                  { label: "Level 5", value: '5' },
                 ],
                 value: selected.level,
               }}
