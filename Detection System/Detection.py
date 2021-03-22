@@ -21,7 +21,7 @@ db = firestore.client()
 
 ### Camera Parameter ###
 CAMERA_ID= ["LWN_L4_C1","LWN_L5_C1"]
-CAMERA_IP=['http://10.27.35.143:8080/video','http://10.27.168.181:8080/video']
+CAMERA_IP=['http://10.27.137.242:8080/video','http://10.27.35.143:8080/video']
 # CAMERA_ID= ["LWN_L3_C1"]
 # CAMERA_IP=['https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg']
 
