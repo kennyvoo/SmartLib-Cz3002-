@@ -18,6 +18,7 @@ import { AuthProvider } from "./context/AuthContext"
 import PrivateRoute from "./PrivateRoute"
 import PrivateRoute2 from "./PrivateRoute2"
 import SuccessBookingPage from "./components/SuccessBookingPage";
+import OccupancyReportPage from "./components/OccupancyReportPage";
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
             <PrivateRoute2 path="/Admin" component={AdminHomePage} />
             <PrivateRoute2 path="/ModifySeats" component={ModifySeatsPage} />
             <PrivateRoute2 path="/AddSeats" component={AddSeatsPage} />
+            <PrivateRoute2 path="/OccupancyReport" component={OccupancyReportPage} />
           </Switch>
           <Footer />
         </AuthProvider>

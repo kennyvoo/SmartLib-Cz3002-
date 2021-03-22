@@ -29,6 +29,7 @@ import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
+import L2Map from "./Img/L2Map.svg";
 
 function ModifySeatsPage(){
 
@@ -132,9 +133,25 @@ function ModifySeatsPage(){
                 return L3C1;
             case 4:
                 //return L4C1;
+                return 'http://10.27.137.242:8080/video';
+            case 5:
+                //return L5C1;
+                return 'http://10.27.35.143:8080/video';
+        }
+    }
+    function mapSelect(level)
+    {
+        switch (level) {
+            case 2:
+                return L2Map;
+            case 3:
+                return L3C1;
+            case 4:
+                //return L4C1;
                 return 'http://10.27.35.143:8080/video';
             case 5:
                 //return L5C1;
+                //return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
                 return 'http://10.27.168.181:8080/video';
         }
     }
@@ -233,7 +250,7 @@ function ModifySeatsPage(){
                         </Pane>
                     </Pane>
                     <Pane className={'seatMapControlPane'} border={'default'}>
-                        <Pane className={'seatMapPane'} border={'none'}>
+                        <Pane className={'seatMapPane'} border={'none'} backgroundImage={`url(${mapSelect(selected.level)})`}>
                             <SeatsList seats={tempSeats} editmode={true}/>
                         </Pane>
                         <Pane className={'infoPane'}>

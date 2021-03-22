@@ -62,6 +62,9 @@ export default function Navbar() {
                     <Link to="/AddSeats" style={{ textDecoration: "none" }}>
                       <Menu.Item icon={AddIcon}>Add New Seat</Menu.Item>
                     </Link>
+                  <Link to="/OccupancyReport" style={{ textDecoration: "none" }}>
+                    <Menu.Item icon={AddIcon}>Occupancy Report</Menu.Item>
+                  </Link>
                 </Menu.Group>
                 <Menu.Divider />
                 <Menu.Group>
@@ -87,7 +90,7 @@ export default function Navbar() {
             position={Position.BOTTOM_LEFT}
             content={
               <Menu>
-                <Menu.Group>
+                <Menu.Group >
                     <Link to="/MyBookings" style={{ textDecoration: "none" }}>
                       <Menu.Item icon={TimeIcon}>My Bookings</Menu.Item>
                     </Link>

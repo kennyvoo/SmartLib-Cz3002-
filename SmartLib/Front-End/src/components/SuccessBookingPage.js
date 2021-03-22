@@ -43,7 +43,7 @@ function SuccessBookingPage() {
             </Pane>
             <Pane marginTop={16}>
               <Strong size={600} >Seat Number:</Strong>
-              <Text size={600} marginLeft={8} >{selected.seat}</Text>
+              <Text size={600} marginLeft={8} >{selected.seatname}</Text>
             </Pane>
             <Pane marginTop={16}>
               <Strong size={600} >Level:</Strong>
