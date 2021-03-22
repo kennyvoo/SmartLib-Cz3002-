@@ -89,12 +89,14 @@ function pharseLog(data){
 }
 
 function pharseStatus(data){
+    var total = math.sum(data)
+    if(data==0) total=1
     return {
-        Available : data[0],
-        Occupied : data[1],
-        Reserved : data[2],
-        Hogged : data[3],
-        Unavailable : data[4]
+        Available : data[0]/total*100,
+        Occupied : data[1]/total*100,
+        Reserved : data[2]/total*100,
+        Hogged : data[3]/total*100,
+        Unavailable : data[4]/total*100
     }
 }
 
