@@ -5,7 +5,7 @@ const firebase = require('./firebase')
 const db = firebase.firestore()
 
 //Check if it is still reserved
-async function isReserved(seatID){
+async function isReserved(seatID, uid){
     let seats=[]
     //check database seat {id} status
     var data = await db.collection('Seats').where('id',"==",seatID).get();
@@ -22,14 +22,15 @@ async function isReserved(seatID){
                 status : "Available"
             }
         )
+        await db.collection('User_Booking').doc(uid).collection('Bookings').doc('Booking_Current').delete();
     }
 }
 
 router.post('/', (req, res, next) => {
     console.log("setting up timmer")
     setTimeout(function(){
-        return isReserved(req.body.seatID);
-    },1000)    
+        return isReserved(req.body.seatID, req.body.uid);
+    },30000)
 
     res.json({
         msg: 'checking'

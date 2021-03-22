@@ -24,7 +24,7 @@ app.use("/api/reportData", require("./Back-End/reportData.js"));
 
 // setup cron job
 cron.schedule("* * * * *", () => {
-    console.log("running corn job")
+    console.log("running cron job")
     //jobs()
 })
 

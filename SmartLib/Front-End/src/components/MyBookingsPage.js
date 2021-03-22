@@ -4,16 +4,50 @@ import background from "./Img/MyBookings.jpg";
 import Component from "@reactions/component";
 import crudFirebase from '../services/crudFirebase'
 import { useAuth } from '../context/AuthContext'
+import { SeatContext } from "../contexts/SeatContext";
 import app from '../firebase'
 
 export default function MyBookingsPage() {
 
   const { currentUser } = useAuth()
+  const [seats, setSeats] = useContext(SeatContext);
   const [currentBooking, setCurrentBooking] = useState()
+  const [emptyBit, setEmptyBit] = useState(false)
   const [bookingHistory, setBookingHistory] = useState([])
 
-  // test.then((doc) => {
-  //   const a = doc.data()
+  function observeChange() {
+    try {
+      app.firestore().collection('Seats').doc(currentBooking.seatID).onSnapshot((doc) => {
+        let a = doc.data()
+        if (a.status == "Occupied") {
+          const data = {
+            bookingID: currentBooking.bookingID,
+            level: currentBooking.level,
+            seatID: currentBooking.seatID,
+            seatName: currentBooking.seatName,
+            timeStamp: currentBooking.timeStamp
+          }
+          handleChange()
+          crudFirebase.bookingHistorySetup(currentUser.uid, data)
+          setCurrentBooking()
+        } else if(a.status == "Available") {
+            handleChange()
+          } else {
+          console.log("Updated data: ", a);
+        }
+      });
+    } catch {
+      console.log("Fail to detect occupied");
+    }
+  }
+
+  const fetchBookingHistory = async () => {
+    const Reference2 = app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_History').collection('History')
+    const DocData2 = await Reference2.get()
+    DocData2.docs.forEach(item => {
+      setBookingHistory(bookingHistory => [...bookingHistory, item.data()])
+    })
+  }
 
   const fetchBookings = async () => {
     try {
@@ -25,21 +59,28 @@ export default function MyBookingsPage() {
       console.log(currentBooking);
       console.log("empty");
     }
-
-    const Reference2 = app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_History').collection('History')
-    const DocData2 = await Reference2.get()
-    DocData2.docs.forEach(item => {
-      setBookingHistory(bookingHistory => [...bookingHistory, item.data()])
-    })
   }
 
   useEffect(() => {
     fetchBookings();
   }, [])
 
+  useEffect(() => {
+    fetchBookingHistory();
+  }, [])
+
+  useEffect(() => {
+    observeChange();
+  }, [currentBooking])
+
   async function handleDelete() {
     await crudFirebase.removebooking(currentUser.uid)
-    crudFirebase.update('Seats', (currentBooking.seatName).toString(), { status: 'Available' });
+    crudFirebase.update('Seats', (currentBooking.seatID).toString(), { status: 'Available' });
+    setCurrentBooking()
+  }
+
+  async function handleChange() {
+    await crudFirebase.removebooking(currentUser.uid)
     setCurrentBooking()
   }
 
@@ -116,6 +157,8 @@ export default function MyBookingsPage() {
 
   console.log("Current:", currentBooking);
   console.log("History:", bookingHistory);
+  console.log("Seats:", seats);
+  console.log("emptyBit:", emptyBit);
 
   return (
     <div>
@@ -163,6 +206,12 @@ export default function MyBookingsPage() {
               Date & Time
             </Table.TextHeaderCell>
             <Table.TextHeaderCell>
+              Location
+            </Table.TextHeaderCell>
+            <Table.TextHeaderCell>
+              Level
+            </Table.TextHeaderCell>
+            <Table.TextHeaderCell>
               Seat ID
             </Table.TextHeaderCell>
           </Table.Head>
@@ -171,9 +220,9 @@ export default function MyBookingsPage() {
               <Table.Row key={bookingHistory.id} isSelectable onSelect={() => alert("Seat #" + bookingHistory.seatName)}>
                 <Table.TextCell>{bookingHistory.bookingID}</Table.TextCell>
                 <Table.TextCell>{bookingHistory.timeStamp}</Table.TextCell>
-                <Table.TextCell>
-                  {bookingHistory.seatName}
-                </Table.TextCell>
+                <Table.TextCell>Lee Wee Nam</Table.TextCell>
+                <Table.TextCell>{bookingHistory.level}</Table.TextCell>
+                <Table.TextCell>{bookingHistory.seatName}</Table.TextCell>
               </Table.Row>
             ))}
           </Table.VirtualBody>

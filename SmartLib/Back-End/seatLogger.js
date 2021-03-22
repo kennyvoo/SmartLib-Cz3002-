@@ -31,7 +31,8 @@ function pharseData(seats){
 }
 
 async function uploadData(Seats){
-    const timeStamp = new Date().toLocaleString().replace('T', ' ').substr(0, 19)
+    const timeStamp = new Date().toISOString();
+    //console.log("seats",Seats)
     await db.collection('seatLog').doc(timeStamp).set(
         {Seats}
     )
@@ -41,7 +42,7 @@ async function uploadData(Seats){
 module.exports = async function(){
     //Get data from fire base
     var seats = await getData();
-    
+
     //pharse data
     var pharseSeats = pharseData(seats);
 

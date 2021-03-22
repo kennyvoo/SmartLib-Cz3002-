@@ -123,10 +123,10 @@ function AddSeatsPage(){
                 //return 'https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg';
             case 4:
                 //return L4C1;
-                return 'http://10.27.35.143:8080/video';
+                return 'http://10.27.137.242:8080/video';
             case 5:
                 //return L5C1;
-                return 'http://10.27.168.181:8080/video';
+                return 'http://10.27.35.143:8080/video';
         }
     }
 

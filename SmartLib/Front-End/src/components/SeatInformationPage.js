@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Pane, Text, Alert, Button, Heading, Strong, Avatar, BackButton, InfoSignIcon, WarningSignIcon } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
 import { SelectedSeatContext } from '../contexts/SelectSeatContext';
+import { SeatContext } from '../contexts/SeatContext'
 import crudFirebase from '../services/crudFirebase'
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext'
@@ -10,9 +11,15 @@ import { v1 as uuidv1 } from 'uuid';
 function SeatInformationPage() {
 
   const [selected, setSelected] = useContext(SelectedSeatContext);
+  const [seats, setSeats] = useContext(SeatContext);
   const { currentUser } = useAuth()
   const history = useHistory()
   const [error, setError] = useState('')
+
+  function splitNames() {
+    let n = (selected.seatname).split("_S");
+    return n[n.length - 1];
+  }
 
   function handleBook() {
 
@@ -28,10 +35,11 @@ function SeatInformationPage() {
         let id = uuidv1();
         let temp1 = selected.seat;
         let temp2 = selected.level;
+        let tempName = splitNames()
 
         crudFirebase.update('Seats', (selected.seat).toString(), { status: 'Reserved' });
-        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatName: temp1, level: temp2, timeStamp: dateTime});
-        setSelected({seat:temp1, level: temp2, timestamp: dateTime, bookingID: id})
+        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatID: temp1, seatName: tempName, level: temp2, timeStamp: dateTime});
+        setSelected({seat:temp1, seatname: tempName, level: temp2, timestamp: dateTime, bookingID: id})
         console.log("New")
         console.log(currentUser.email)
         setError('')
@@ -39,13 +47,28 @@ function SeatInformationPage() {
           method: "POST",
           url: "http://localhost:4000/api/sendEmail",
           data: {
-            name: "test",
-            subject: "test",
-            //email: currentUser.email,
-            //email: "taiwilson5@gmail.com",
+            name: currentUser.displayName,
+            // subject: "test",
+            email: currentUser.email,
+            // email: "taiwilson5@gmail.com",
+            // seat: (seats.find((theSeat) => theSeat.id == selected.seat.toString())).seatName
+            seat: "Seat " + tempName
 
             // Generate Booking ID and time of booking + 15 mins to the email
             //IP config app on android, just change the camera capture url on 2 components, only on lvl 4
+          }
+        }).then((response) => {
+          console.log(response.data.msg)
+          console.log("debug",seats)
+          console.log(selected)
+        })
+        // Start reservation checker
+        axios({
+          method: "POST",
+          url: "http://localhost:4000/api/reservationChecker",
+          data: {
+            seatID: (selected.seat).toString(),
+            uid: currentUser.uid
           }
         }).then((response) => {
           console.log(response.data.msg)
@@ -86,7 +109,7 @@ function SeatInformationPage() {
               <Pane>
                 <InfoSignIcon color="info" marginRight={16} size={30} />
               </Pane>
-              <Heading size={800} >Seat {selected.seat}</Heading>
+              <Heading size={800} >Seat {splitNames()}</Heading>
             </Pane>
             <Pane marginTop={16}>
               <Heading size={800} >Description</Heading>
