@@ -35,11 +35,11 @@ function SeatInformationPage() {
         let id = uuidv1();
         let temp1 = selected.seat;
         let temp2 = selected.level;
-        let a = splitNames()
+        let tempName = splitNames()
 
         crudFirebase.update('Seats', (selected.seat).toString(), { status: 'Reserved' });
-        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatID: temp1, seatName: a, level: temp2, timeStamp: dateTime});
-        setSelected({seat:temp1, seatname: a, level: temp2, timestamp: dateTime, bookingID: id})
+        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatID: temp1, seatName: tempName, level: temp2, timeStamp: dateTime});
+        setSelected({seat:temp1, seatname: tempName, level: temp2, timestamp: dateTime, bookingID: id})
         console.log("New")
         console.log(currentUser.email)
         setError('')
@@ -47,12 +47,12 @@ function SeatInformationPage() {
           method: "POST",
           url: "http://localhost:4000/api/sendEmail",
           data: {
-            name: "Wilson",
+            name: currentUser.displayName,
             // subject: "test",
             email: currentUser.email,
             // email: "taiwilson5@gmail.com",
             // seat: (seats.find((theSeat) => theSeat.id == selected.seat.toString())).seatName
-            seat: "Seat " + selected.seat
+            seat: "Seat " + tempName
 
             // Generate Booking ID and time of booking + 15 mins to the email
             //IP config app on android, just change the camera capture url on 2 components, only on lvl 4
