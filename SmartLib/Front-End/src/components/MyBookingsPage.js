@@ -42,11 +42,19 @@ export default function MyBookingsPage() {
   }
 
   const fetchBookingHistory = async () => {
-    const Reference2 = app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_History').collection('History')
-    const DocData2 = await Reference2.get()
-    DocData2.docs.forEach(item => {
-      setBookingHistory(bookingHistory => [...bookingHistory, item.data()])
-    })
+    //const Reference2 = app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_History').collection('History')
+    // const DocData2 = await Reference2.get()
+    // DocData2.docs.forEach(item => {
+    //   setBookingHistory(bookingHistory => [...bookingHistory, item.data()])
+    // })
+    app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_History').collection('History').onSnapshot(querySnapshot => {
+      querySnapshot.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          setBookingHistory(bookingHistory => [...bookingHistory, change.doc.data()])
+          console.log('New city: ', change.doc.data());
+        }
+      });
+    });
   }
 
   const fetchBookings = async () => {
@@ -215,7 +223,7 @@ export default function MyBookingsPage() {
               Seat ID
             </Table.TextHeaderCell>
           </Table.Head>
-          <Table.VirtualBody height={140}>
+          <Table.VirtualBody height={240}>
             {bookingHistory && bookingHistory.map(bookingHistory => (
               <Table.Row key={bookingHistory.id} isSelectable onSelect={() => alert("Seat #" + bookingHistory.seatName)}>
                 <Table.TextCell>{bookingHistory.bookingID}</Table.TextCell>
