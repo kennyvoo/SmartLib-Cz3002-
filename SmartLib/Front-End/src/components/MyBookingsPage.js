@@ -30,7 +30,9 @@ export default function MyBookingsPage() {
           handleChange()
           crudFirebase.bookingHistorySetup(currentUser.uid, data)
           setCurrentBooking()
-        } else {
+        } else if(a.status == "Available") {
+            handleChange()
+          } else {
           console.log("Updated data: ", a);
         }
       });
