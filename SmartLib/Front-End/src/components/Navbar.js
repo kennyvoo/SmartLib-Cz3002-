@@ -87,7 +87,7 @@ export default function Navbar() {
             position={Position.BOTTOM_LEFT}
             content={
               <Menu>
-                <Menu.Group>
+                <Menu.Group >
                     <Link to="/MyBookings" style={{ textDecoration: "none" }}>
                       <Menu.Item icon={TimeIcon}>My Bookings</Menu.Item>
                     </Link>

@@ -25,6 +25,11 @@ const bookingSetup = (uid, loc, value) => {
   return db.doc(loc).set(value);
 };
 
+const bookingHistorySetup = async(uid, value) => {
+  const db = app.firestore().collection('User_Booking').doc(uid).collection('Bookings').doc('Booking_History').collection('History');
+  return await db.add(value);
+};
+
 const booking = (uid, loc, value) => {
   const db = app.firestore().collection('User_Booking').doc(uid).collection('Bookings');
   return db.doc(loc).update(value);
@@ -54,7 +59,8 @@ const crudFirebase = {
   bookingSetup,
   booking,
   checkbooking,
-  removebooking
+  removebooking,
+  bookingHistorySetup
 };
 
 export default crudFirebase;

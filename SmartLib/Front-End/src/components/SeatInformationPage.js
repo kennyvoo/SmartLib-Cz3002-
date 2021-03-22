@@ -14,6 +14,11 @@ function SeatInformationPage() {
   const history = useHistory()
   const [error, setError] = useState('')
 
+  function splitNames() {
+    let n = (selected.seatname).split("_S");
+    return n[n.length - 1];
+  }
+
   function handleBook() {
 
     // Check if user has an existing booking first
@@ -28,10 +33,11 @@ function SeatInformationPage() {
         let id = uuidv1();
         let temp1 = selected.seat;
         let temp2 = selected.level;
+        let a = splitNames()
 
         crudFirebase.update('Seats', (selected.seat).toString(), { status: 'Reserved' });
-        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatName: temp1, level: temp2, timeStamp: dateTime});
-        setSelected({seat:temp1, level: temp2, timestamp: dateTime, bookingID: id})
+        crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatID: temp1, seatName: a, level: temp2, timeStamp: dateTime});
+        setSelected({seat:temp1, seatname: a, level: temp2, timestamp: dateTime, bookingID: id})
         console.log("New")
         console.log(currentUser.email)
         setError('')
@@ -86,7 +92,7 @@ function SeatInformationPage() {
               <Pane>
                 <InfoSignIcon color="info" marginRight={16} size={30} />
               </Pane>
-              <Heading size={800} >Seat {selected.seat}</Heading>
+              <Heading size={800} >Seat {splitNames()}</Heading>
             </Pane>
             <Pane marginTop={16}>
               <Heading size={800} >Description</Heading>

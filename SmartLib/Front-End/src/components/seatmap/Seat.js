@@ -36,7 +36,7 @@ function Seat(props) {
   function clickSeat()
   {
       console.log("Clicked " + props.seat.seatName);
-      setSelected({seat: props.seat.id, level: selected.level});
+      setSelected({seat: props.seat.id, level: selected.level, seatname: props.seat.seatName});
   }
 
   return (
