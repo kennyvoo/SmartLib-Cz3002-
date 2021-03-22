@@ -3,6 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Chart from "react-google-charts";
 import './OccupancyReportPage.css'
 import Colors from "./Colors";
+import {
+    Pane,
+    Button,
+    DownloadIcon
+} from "evergreen-ui";
 
 
 function OccupancyReport() {
@@ -49,11 +54,21 @@ function OccupancyReport() {
 
     return (
         <div >
+            <Pane className={'chartPane'} border={'default'}>
             <LineChart data={seatLog} title={'Total'}/>
+            </Pane>
+            <Pane className={'chartPane'} border={'default'}>
             <LineChart data={lvl2} title={'Level 2'}/>
+            </Pane>
+            <Pane className={'chartPane'} border={'default'}>
             <LineChart data={lvl3} title={'Level 3'}/>
+            </Pane>
+            <Pane className={'chartPane'} border={'default'}>
             <LineChart data={lvl4} title={'Level 4'}/>
+            </Pane>
+            <Pane className={'chartPane'} border={'default'}>
             <LineChart data={lvl5} title={'Level 5'}/>
+            </Pane>
             {/*<ChartElement data={lvl2} title={'Level 2'}/>*/}
         </div>
     )
