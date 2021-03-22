@@ -10,7 +10,7 @@ import {
     SearchIcon,
     Checkbox,
     TrashIcon,
-    EditIcon,
+    EditIcon, toaster,
 } from "evergreen-ui";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
@@ -79,14 +79,16 @@ function ModifySeatsPage(){
     {
         //setSeats(prev=>[...prev, selSeat])
         crudFirebase.update('Seats',selSeat.id,selSeat);
-        alert("Successfully Modified");
+        //alert("Successfully Modified");
+        toaster.success('Seat has been successfully modified');
     }
 
     function deleteSeat()
     {
         // seats.find((seat)=>seat.id==selected.seat)
         crudFirebase.remove('Seats',selSeat.id);
-        alert("Successfully Deleted");
+        //alert("Successfully Deleted");
+        toaster.warning('Seat has been permanently deleted');
     }
 
     function previewSeat()

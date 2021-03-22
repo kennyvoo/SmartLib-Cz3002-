@@ -10,7 +10,9 @@ import {
     AddIcon,
     ResetIcon,
     SearchIcon,
-    Checkbox, SelectField
+    Checkbox,
+    SelectField,
+    toaster
 } from "evergreen-ui";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
@@ -93,8 +95,9 @@ function AddSeatsPage(){
         //setSeats(prev=>[...prev, newSeat])
         console.log("NEWSEATID",newSeat.id)
         crudFirebase.create('Seats',newSeat.id.toString(),newSeat);
-        alert("Successfully Added");
+        //alert("Successfully Added");
         setNewSeat(defaultSeat);
+        toaster.success('Seat has been successfully added');
     }
 
     function previewSeat()
