@@ -3,7 +3,6 @@ import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
 import MapSelectorPane from "./MapSelectorPane";
 import './HomePage.css'
 import Stats from "./Stats";
-import Component from "@reactions/component";
 import {SeatContext} from "../contexts/SeatContext";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";

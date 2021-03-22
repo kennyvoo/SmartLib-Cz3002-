@@ -12,14 +12,6 @@ import {
     SearchIcon,
     Checkbox, SelectField
 } from "evergreen-ui";
-import L2C1 from "./Img/L2C1.jpg";
-import L3C1 from "./Img/L3C1.jpg";
-import L4C1 from "./Img/L4C1.jpg";
-import L5C1 from "./Img/L5C1.jpg";
-import L2Map from "./Img/L2Map.svg";
-import L3Map from './Img/L3Map.svg';
-import L4Map from './Img/L4Map.svg';
-import L5Map from './Img/L5Map.svg';
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import {SeatContext} from "../contexts/SeatContext";
@@ -28,6 +20,8 @@ import './AdminPageStyles.css'
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
 import DrawAnnotations from "./seatmap/CamKonva";
+import cameraSelect from "./CamSelect";
+import mapSelect from "./MapSelect";
 
 function AddSeatsPage(){
 
@@ -114,35 +108,6 @@ function AddSeatsPage(){
         setTempSeats(seats);
         setNewSeat(defaultSeat);
         setStatus({value: 'Available'});
-    }
-
-    function cameraSelect(level)
-    {
-        switch (level) {
-            case 2:
-                return L2C1;
-            case 3:
-                return L3C1;
-            case 4:
-                //return L4C1;
-                return 'http://10.27.137.242:8080/video';
-            case 5:
-                //return L5C1;
-                return 'http://10.27.35.143:8080/video';
-        }
-    }
-    function mapSelect(level)
-    {
-        switch (level) {
-            case 2:
-                return L2Map;
-            case 3:
-                return L3Map;
-            case 4:
-                return L4Map;
-            case 5:
-                return L5Map;
-        }
     }
 
     useEffect(() => {console.log('tempSeats',tempSeats)}, [tempSeats]);
