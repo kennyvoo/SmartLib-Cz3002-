@@ -4,23 +4,14 @@ import {
     Text,
     Button,
     SelectField,
-    Heading,
     SegmentedControl,
-    TextInput,
     TextInputField,
-    AddIcon,
     ResetIcon,
     SearchIcon,
     Checkbox,
     TrashIcon,
-    EditIcon,
-    Combobox
+    EditIcon, toaster,
 } from "evergreen-ui";
-import { Link } from "react-router-dom";
-import L2C1 from "./Img/L2C1.jpg";
-import L3C1 from "./Img/L3C1.jpg";
-import L4C1 from "./Img/L4C1.jpg";
-import L5C1 from "./Img/L5C1.jpg";
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../contexts/SelectSeatContext";
 import {SeatContext} from "../contexts/SeatContext";
@@ -29,14 +20,17 @@ import SeatsList from "./seatmap/SeatsList";
 import './AdminPageStyles.css'
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import L2Map from "./Img/L2Map.svg";
+import mapSelect from "./MapSelect";
+import cameraSelect from "./CamSelect";
+import Loading from "./Loading";
+
 
 function ModifySeatsPage(){
 
     const [seats, setSeats] = useContext(SeatContext);
     const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
-    const [tempSeats, setTempSeats]=useState(seats);
+    const [tempSeats, setTempSeats]=useState([{...seats}]);
     const [checked, setChecked] = useState();
     const [status, setStatus]=useState({value: ''});
     const defaultSeat = {
@@ -70,7 +64,7 @@ function ModifySeatsPage(){
         const { id, value } = e.target
         setSelSeat(prevState => ({
             ...prevState,
-            [id]: value
+            [id]: value.toString()
         }))
     }
 
@@ -85,14 +79,16 @@ function ModifySeatsPage(){
     {
         //setSeats(prev=>[...prev, selSeat])
         crudFirebase.update('Seats',selSeat.id,selSeat);
-        alert("Successfully Modified");
+        //alert("Successfully Modified");
+        toaster.success('Seat has been successfully modified');
     }
 
     function deleteSeat()
     {
         // seats.find((seat)=>seat.id==selected.seat)
         crudFirebase.remove('Seats',selSeat.id);
-        alert("Successfully Deleted");
+        //alert("Successfully Deleted");
+        toaster.warning('Seat has been permanently deleted');
     }
 
     function previewSeat()
@@ -120,40 +116,8 @@ function ModifySeatsPage(){
     function resetSeat()
     {
         setTempSeats(seats);
-        //setSelSeat(defaultSeat);
+        setSelSeat(defaultSeat);
         refresh();
-    }
-
-    function cameraSelect(level)
-    {
-        switch (level) {
-            case 2:
-                return L2C1;
-            case 3:
-                return L3C1;
-            case 4:
-                //return L4C1;
-                return 'http://10.27.137.242:8080/video';
-            case 5:
-                //return L5C1;
-                return 'http://10.27.35.143:8080/video';
-        }
-    }
-    function mapSelect(level)
-    {
-        switch (level) {
-            case 2:
-                return L2Map;
-            case 3:
-                return L3C1;
-            case 4:
-                //return L4C1;
-                return 'http://10.27.35.143:8080/video';
-            case 5:
-                //return L5C1;
-                //return 'https://www.homengardeningtips.com/wp-content/uploads/library-seating.jpg';
-                return 'http://10.27.168.181:8080/video';
-        }
     }
 
     useEffect(() => {console.log('tempSeats:'); console.log(tempSeats)}, [tempSeats]);
@@ -168,8 +132,9 @@ function ModifySeatsPage(){
         },[selected])
 
     function refresh(){
-        const seat = seats.find((seat)=>seat.id==selected.seat);
+        const seat = seats.find((seat)=>seat.id==selected.seat.toString());
         if(seat!=null) {
+            console.log('Found', seat)
             setSelSeat(seat);
             setChecked(seat.unavailable);
             setStatus({value: seat.status});
@@ -186,10 +151,10 @@ function ModifySeatsPage(){
                     <Component
                         initialState={{
                             options: [
-                                { label: "Level 2", value: 2 },
-                                { label: "Level 3", value: 3 },
-                                { label: "Level 4", value: 4 },
-                                { label: "Level 5", value: 5 },
+                                { label: "Level 2", value: '2' },
+                                { label: "Level 3", value: '3' },
+                                { label: "Level 4", value: '4' },
+                                { label: "Level 5", value: '5' },
                             ],
                             value: selected.level,
                         }}
@@ -336,7 +301,7 @@ function ModifySeatsPage(){
                 </Pane>
             </div>
         </Pane>:
-            <h1>Loading</h1>
+            <Loading/>
 
     );
 }
