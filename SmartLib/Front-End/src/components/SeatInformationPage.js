@@ -21,6 +21,10 @@ function SeatInformationPage() {
     return n[n.length - 1];
   }
 
+  // function splitDates() {
+  //   return (selected.seatname).split(" ");
+  // }
+
   function handleBook() {
 
     // Check if user has an existing booking first
@@ -36,6 +40,7 @@ function SeatInformationPage() {
         let temp1 = selected.seat;
         let temp2 = selected.level;
         let tempName = splitNames()
+        //let dates = splitDates()
 
         crudFirebase.update('Seats', (selected.seat).toString(), { status: 'Reserved' });
         crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatID: temp1, seatName: tempName, level: temp2, timeStamp: dateTime});
@@ -52,7 +57,9 @@ function SeatInformationPage() {
             email: currentUser.email,
             // email: "taiwilson5@gmail.com",
             // seat: (seats.find((theSeat) => theSeat.id == selected.seat.toString())).seatName
-            seat: "Seat " + tempName
+            seat: "Seat " + selected.seatname,
+            // date: dates[0],
+            // time: dates[1]
 
             // Generate Booking ID and time of booking + 15 mins to the email
             //IP config app on android, just change the camera capture url on 2 components, only on lvl 4

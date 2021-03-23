@@ -3,10 +3,10 @@ import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
 import MapSelectorPane from "./MapSelectorPane";
 import './HomePage.css'
 import Stats from "./Stats";
-import Component from "@reactions/component";
 import {SeatContext} from "../contexts/SeatContext";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
+import Loading from "./Loading";
 
 function HomePage() {
   const [seats, setSeats] = useContext(SeatContext);
@@ -45,7 +45,7 @@ function HomePage() {
       </Pane>
 
     </div>:
-          <h1>Loading</h1>
+          <Loading/>
   );
 }
 
