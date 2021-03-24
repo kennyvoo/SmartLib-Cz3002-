@@ -15,6 +15,6 @@ export default function cameraSelect(level)
             return 'http://10.27.137.242:8080/video';
         case '5':
             //return L5C1;
-            return 'http://10.27.35.143:8080/video';
+            return 'http://10.27.220.116:8080/video';
     }
 }

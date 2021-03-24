@@ -19,7 +19,7 @@ export default function MyBookingsPage() {
     try {
       app.firestore().collection('Seats').doc(currentBooking.seatID).onSnapshot((doc) => {
         let a = doc.data()
-        if (a.status == "Occupied") {
+        if (a.status == "Available") {
           const data = {
             bookingID: currentBooking.bookingID,
             level: currentBooking.level,
@@ -30,8 +30,8 @@ export default function MyBookingsPage() {
           handleChange()
           crudFirebase.bookingHistorySetup(currentUser.uid, data)
           setCurrentBooking()
-        } else if(a.status == "Available") {
-            handleChange()
+        // } else if(a.status == "Available") {
+        //     handleChange()
           } else {
           console.log("Updated data: ", a);
         }
@@ -83,7 +83,7 @@ export default function MyBookingsPage() {
 
   async function handleDelete() {
     await crudFirebase.removebooking(currentUser.uid)
-    crudFirebase.update('Seats', (currentBooking.seatID).toString(), { status: 'Available' });
+    //crudFirebase.update('Seats', (currentBooking.seatID).toString(), { status: 'Available' });
     setCurrentBooking()
   }
 
