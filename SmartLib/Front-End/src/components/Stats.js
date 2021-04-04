@@ -21,7 +21,7 @@ export default function Stats(props){
             else
             {
                 if (seats[i].status == 'Available') stats.avail++;
-                else if (seats[i].status == 'Occupied') stats.occupied++;
+                else if (seats[i].status == 'Occupied' || seats[i].status == 'Detected') stats.occupied++;
                 else if (seats[i].status == 'Reserved') stats.reserved++;
                 else if (seats[i].status == 'Hogged') stats.hogged++;
             }

@@ -19,16 +19,12 @@ function CamSeat(props) {
         }
 
         switch (status) {
-            case "Available":
-                return Colors.colorAvailable;
-            case "Reserved":
-                return Colors.colorReserved;
-            case "Occupied":
-                return Colors.colorOccupied;
-            case "Hogged":
-                return Colors.colorHogged;
-            default:
-                return Colors.colorError;
+            case "Available": return Colors.colorAvailable;
+            case "Reserved": return Colors.colorReserved;
+            case "Occupied": return Colors.colorOccupied;
+            case "Detected": return Colors.colorOccupied;
+            case "Hogged": return Colors.colorHogged;
+            default: return Colors.colorError;
         }
     }
 
