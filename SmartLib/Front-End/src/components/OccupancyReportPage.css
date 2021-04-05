@@ -8,17 +8,27 @@
     width: 85%;
     height: auto;
     margin: auto;
-    padding: 50px;
+    padding: 0px;
   }
 .reportChart{
     width: 100%;
     height: 300px;
 }
 .downloadButton{
-
+    margin: 10px;
 }
 .buttonPane{
     display: flex;
+}
+.heading{
+    font-size: 30px;
+    height: auto;
+    text-align: center;
+}
+.chartPane{
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
 }
 @media only screen and (max-width: 600px) {
     .reportPane{
