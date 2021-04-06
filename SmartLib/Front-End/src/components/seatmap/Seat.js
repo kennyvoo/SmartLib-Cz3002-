@@ -27,6 +27,7 @@ function Seat(props) {
             case "Available": return Colors.colorAvailable;
             case "Reserved": return Colors.colorReserved;
             case "Occupied": return Colors.colorOccupied;
+            case "Detected": return Colors.colorOccupied;
             case "Hogged": return Colors.colorHogged;
             //case "Hogged": return Colors.colorHogged;
             default: return Colors.colorError;
