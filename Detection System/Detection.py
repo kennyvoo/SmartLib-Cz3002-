@@ -20,10 +20,10 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 ### Camera Parameter ###
-CAMERA_ID= ["LWN_L4_C1","LWN_L5_C1"]
-CAMERA_IP=['http://10.27.137.242:8080/video','http://10.27.35.143:8080/video']
-# CAMERA_ID= ["LWN_L3_C1"]
-# CAMERA_IP=['https://webcam.ntu.edu.sg/upload/slider/fastfood.jpg']
+# CAMERA_ID= ["LWN_L4_C1","LWN_L5_C1"]
+# CAMERA_IP=['http://10.27.137.242:8080/video','http://10.27.220.116:8080/video']
+CAMERA_ID= ["LWN_L5_C1"]
+CAMERA_IP=['http://10.27.75.153:8080/video']
 
 FIRESTORE_COLLECTION='Seats'
 font = cv2.FONT_HERSHEY_PLAIN
