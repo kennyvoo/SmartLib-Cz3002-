@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Chart from "react-google-charts";
 import './OccupancyReportPage.css'
-import Colors from "./Colors";
+import Colors from "../Colors";
 import {Pane} from "evergreen-ui";
 
 

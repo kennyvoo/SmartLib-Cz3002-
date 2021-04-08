@@ -1,3 +1,10 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: SuccessBookingPage.js                                                                                     //
+//  Function: Diplay the booking confirmation page to the user. It will also display the seat information based on      //
+//            what user selected in the homepage. The seat information is passed with the use of React context.         //
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React,{ useContext} from "react";
 import { Pane, Text, Heading, Strong } from "evergreen-ui";
 import background from "./../Img/success.png";

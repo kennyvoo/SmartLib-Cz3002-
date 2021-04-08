@@ -13,12 +13,12 @@ import {
     EditIcon, toaster,
 } from "evergreen-ui";
 import Component from "@reactions/component";
-import {SelectedSeatContext} from "../contexts/SelectSeatContext";
-import {SeatContext} from "../contexts/SeatContext";
-import CamSeatsList from "./seatmap/CamSeatsList";
-import SeatsList from "./seatmap/SeatsList";
+import {SelectedSeatContext} from "../../contexts/SelectSeatContext";
+import {SeatContext} from "../../contexts/SeatContext";
+import CamSeatsList from "../seatmap/CamSeatsList";
+import SeatsList from "../seatmap/SeatsList";
 import './AdminPageStyles.css'
-import crudFirebase from '../services/crudFirebase'
+import crudFirebase from '../../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
 import mapSelect from "./MapSelect";
 import cameraSelect from "./CamSelect";

@@ -1,7 +1,7 @@
-import L2Map from "./Img/L2Map.svg";
-import L3Map from "./Img/L3Map.svg";
-import L4Map from "./Img/L4Map.svg";
-import L5Map from "./Img/L5Map.svg";
+import L2Map from "../Img/L2Map.svg";
+import L3Map from "../Img/L3Map.svg";
+import L4Map from "../Img/L4Map.svg";
+import L5Map from "../Img/L5Map.svg";
 
 export default function mapSelect(level)
 {

@@ -1,12 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: SeatInformationPage.js                                                                                    //
-//  Function: Diplay account creation form which includes the standard attributes which are required for account        //
-//            creation; user's name, school email, password and confirm password field. It will then process the        //
-//            information entered by the user and will generate the necessary feedback to the user if the account       //
-//            was successful or not. If the email entered is already tied to an existing account, password is below     //
-//            6 characters or the user tries to create an admin account, an error message will pop up.                  //
-//            If it passes the conditions, the user account will be registered and user will be redirected to his/her   //
-//            account.                                                                                                  //
+//  Function: Diplay seat information based on what user selected in the homepage. The seat information is passed       //
+//            with the use of React context. This allows the user to view the seat information in detail and make       //
+//            an informed decision on whether to book the seat or not. The user can click on the back button to go      //
+//            back to the homepage or click on the book button to proceed with his/her booking of library seat.         //
 //                                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,14 +30,8 @@ function SeatInformationPage() {
     return n[n.length - 1];
   }
 
-  // function splitDates() {
-  //   return (selected.seatname).split(" ");
-  // }
-
   function handleBook() {
-
-    // Check if user has an existing booking first
-    const test = crudFirebase.checkbooking(currentUser.uid, 'Booking_Current')
+    const test = crudFirebase.checkbooking(currentUser.uid, 'Booking_Current') 
     test.then((doc) => {
       if (!doc.exists) {
         var today = new Date();
@@ -52,36 +43,25 @@ function SeatInformationPage() {
         let temp1 = selected.seat;
         let temp2 = selected.level;
         let tempName = splitNames()
-        //let dates = splitDates()
 
         crudFirebase.update('Seats', (selected.seat).toString(), { status: 'Reserved' });
         crudFirebase.bookingSetup(currentUser.uid, 'Booking_Current', { bookingID: id, seatID: temp1, seatName: tempName, level: temp2, timeStamp: dateTime});
         setSelected({seat:temp1, seatname: tempName, level: temp2, timestamp: dateTime, bookingID: id})
-        console.log("New")
-        console.log(currentUser.email)
         setError('')
         axios({
           method: "POST",
           url: "http://localhost:4000/api/sendEmail",
           data: {
             name: currentUser.displayName,
-            // subject: "test",
             email: currentUser.email,
-            // email: "taiwilson5@gmail.com",
-            // seat: (seats.find((theSeat) => theSeat.id == selected.seat.toString())).seatName
             seat: "Seat " + selected.seatname,
-            // date: dates[0],
-            // time: dates[1]
-
-            // Generate Booking ID and time of booking + 15 mins to the email
-            //IP config app on android, just change the camera capture url on 2 components, only on lvl 4
           }
         }).then((response) => {
           console.log(response.data.msg)
           console.log("debug",seats)
           console.log(selected)
         })
-        // Start reservation checker
+        /* Start reservation checker */
         axios({
           method: "POST",
           url: "http://localhost:4000/api/reservationChecker",
@@ -104,11 +84,10 @@ function SeatInformationPage() {
     <div>
       {/* Back Button */}
       <Pane paddingBottom={20}>
-        <Link to="/" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text */}
+        <Link to="/" style={{ textDecoration: "none" }}> 
           <BackButton marginLeft={16} marginTop={16} intent="success" height={48} />
         </Link>
       </Pane>
-
       {(error != '') ? (<Pane display="flex" justifyContent="center">
         <Alert
           appearance="card"  
@@ -116,10 +95,9 @@ function SeatInformationPage() {
           title={error}
         />
       </Pane>) : (<Pane></Pane>)}
-
       {/* Seat description including avatar*/}
-      <Pane display="flex" padding={16} borderRadius={3} marginTop={20}> {/* Parent class, defiines the row*/}
-        <Pane padding={16} alignItems="center" marginLeft={60} > {/* Children class, defiines the column*/}
+      <Pane display="flex" padding={16} borderRadius={3} marginTop={20}> 
+        <Pane padding={16} alignItems="center" marginLeft={60} > 
           <Avatar isSolid name="S 1" size={300} />
         </Pane>
         <Pane flex={1} display="flex" marginLeft={30} padding={16}>
@@ -145,8 +123,6 @@ function SeatInformationPage() {
               <Strong size={600} >Aircon:</Strong>
               <Text size={600} marginLeft={8} >Yes</Text>
             </Pane>
-
-            {/* Booking Button*/}
             <Pane display="flex" marginTop={80}>
               <Pane flex={1} alignItems="center" display="flex">
                 <WarningSignIcon color="warning" size={30} marginRight={16} />
@@ -154,8 +130,7 @@ function SeatInformationPage() {
                 or your booking will be terminated.</Heading>
               </Pane>
               <Button appearance="primary" height={48} marginLeft={16} onClick={handleBook}>Book</Button>
-            </Pane>
-
+            </Pane> 
           </Pane>
         </Pane>
       </Pane>
@@ -164,3 +139,4 @@ function SeatInformationPage() {
 }
 
 export default SeatInformationPage;
+
