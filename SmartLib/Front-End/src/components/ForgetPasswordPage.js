@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react"
 import { Pane, Text, Button, Heading, Paragraph, TextInputField, FormField, Alert } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
 import background from "./Img/Stress.png";
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 
 function ForgetPasswordPage() {
 

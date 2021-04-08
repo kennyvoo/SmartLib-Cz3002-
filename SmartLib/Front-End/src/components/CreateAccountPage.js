@@ -3,7 +3,7 @@ import { Pane, Text, Button, Heading, Paragraph, TextInput, TextInputField, Form
 import { Link, useHistory } from "react-router-dom";
 import background from "./Img/c1.png";
 
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 
 function CreateAccountPage() {
 
