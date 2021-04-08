@@ -25,7 +25,7 @@ import background from "./../Img/MyBookings.jpg";
 import Component from "@reactions/component";
 import crudFirebase from '../../services/crudFirebase'
 import { useAuth } from '../../contexts/AuthContext'
-import app from '../../firebase'
+import app from '../../services/firebase'
 
 export default function MyBookingsPage() {
 

@@ -15,13 +15,13 @@ import {
     toaster
 } from "evergreen-ui";
 import Component from "@reactions/component";
-import {SelectedSeatContext} from "../contexts/SelectSeatContext";
-import {SeatContext} from "../contexts/SeatContext";
-import SeatsList from "./seatmap/SeatsList";
+import {SelectedSeatContext} from "../../contexts/SelectSeatContext";
+import {SeatContext} from "../../contexts/SeatContext";
+import SeatsList from "../seatmap/SeatsList";
 import './AdminPageStyles.css'
-import crudFirebase from '../services/crudFirebase'
+import crudFirebase from '../../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import DrawAnnotations from "./seatmap/CamKonva";
+import DrawAnnotations from "../seatmap/CamKonva";
 import cameraSelect from "./CamSelect";
 import mapSelect from "./MapSelect";
 import Loading from "./Loading";

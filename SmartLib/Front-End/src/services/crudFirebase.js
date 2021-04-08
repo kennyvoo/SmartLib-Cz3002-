@@ -1,4 +1,10 @@
-import app from '../firebase'
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: crudFirebase.js                                                                                           //
+//  Function: Central location which contains renamed firebase functions for ease of programming and understanding.     //
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import app from './firebase'
 
 const getAll = (q) => {
   const db = app.firestore().collection(q);

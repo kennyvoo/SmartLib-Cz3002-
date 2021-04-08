@@ -6,7 +6,7 @@ import {
 } from "evergreen-ui";
 import './Stats.css';
 import Component from "@reactions/component";
-import Colors from "./Colors";
+import Colors from "../Colors";
 
 export default function Stats(props){
 

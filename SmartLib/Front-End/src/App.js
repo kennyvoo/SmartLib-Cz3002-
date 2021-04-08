@@ -10,14 +10,14 @@ import Footer from "./components/Footer";
 import CreateAccountPage from "./components/AccountRelated/CreateAccountPage"
 import ForgetPasswordPage from "./components/AccountRelated/ForgetPasswordPage"
 import SeatInformationPage from "./components/SeatBookingRelated/SeatInformationPage"
-import ModifySeatsPage from "./components/ModifySeatsPage";
-import AdminHomePage from "./components/AdminHomePage";
-import AddSeatsPage from "./components/AddSeatsPage";
+import ModifySeatsPage from "./components/AdminRelated/ModifySeatsPage";
+import AdminHomePage from "./components/AdminRelated/AdminHomePage";
+import AddSeatsPage from "./components/AdminRelated/AddSeatsPage";
 import { AuthProvider } from "./contexts/AuthContext"
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute"
 import PrivateRoute2 from "./components/PrivateRoute/PrivateRoute2"
 import SuccessBookingPage from "./components/SeatBookingRelated/SuccessBookingPage";
-import OccupancyReportPage from "./components/OccupancyReportPage";
+import OccupancyReportPage from "./components/AdminRelated/OccupancyReportPage";
 
 function App() {
 

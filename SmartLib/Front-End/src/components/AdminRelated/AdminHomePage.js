@@ -4,16 +4,16 @@ import {
     SegmentedControl,
 } from "evergreen-ui";
 import Component from "@reactions/component";
-import {SelectedSeatContext} from "../contexts/SelectSeatContext";
-import {SeatContext} from "../contexts/SeatContext";
-import CamSeatsList from "./seatmap/CamSeatsList";
-import SeatsList from "./seatmap/SeatsList";
+import {SelectedSeatContext} from "../../contexts/SelectSeatContext";
+import {SeatContext} from "../../contexts/SeatContext";
+import CamSeatsList from "../seatmap/CamSeatsList";
+import SeatsList from "../seatmap/SeatsList";
 import './AdminPageStyles.css'
 import Stats from "./Stats";
 import AlertList from "./AlertList";
-import crudFirebase from '../services/crudFirebase'
+import crudFirebase from '../../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import Legend from "./seatmap/Legend";
+import Legend from "../seatmap/Legend";
 import cameraSelect from "./CamSelect";
 import mapSelect from "./MapSelect";
 import Loading from "./Loading";
