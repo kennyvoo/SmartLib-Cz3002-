@@ -1,9 +1,20 @@
-import React, { useState, useRef } from "react";
-import { Pane, Text, Button, Heading, Paragraph, TextInput, TextInputField, FormField, Alert} from "evergreen-ui";
-import { Link, useHistory } from "react-router-dom";
-import background from "./Img/c1.png";
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: CreateAccountPage.js                                                                                      //
+//  Function: Diplay account creation form which includes the standard attributes which are required for account        //
+//            creation; user's name, school email, password and confirm password field. It will then process the        //
+//            information entered by the user and will generate the necessary feedback to the user if the account       //
+//            was successful or not. If the email entered is already tied to an existing account, password is below     //
+//            6 characters or the user tries to create an admin account, an error message will pop up.                  //
+//            If it passes the conditions, the user account will be registered and user will be redirected to his/her   //
+//            account.                                                                                                  //
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { useAuth } from '../contexts/AuthContext'
+import React, { useState, useRef } from "react";
+import { Pane, Text, Button, Heading, TextInputField, Alert} from "evergreen-ui";
+import { Link, useHistory } from "react-router-dom";
+import background from "./../Img/c1.png";
+import { useAuth } from '../../contexts/AuthContext'
 
 function CreateAccountPage() {
 
@@ -17,21 +28,19 @@ function CreateAccountPage() {
   const history = useHistory()
 
   async function handleSubmit(e) {
-    e.preventDefault()  //Prevent from refreshing
+    e.preventDefault()  
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       console.log("Details do not match");
-      return setError('Passwords do not match') // We want to immediately get out of the Fn without going to the signup Fn
+      return setError('Passwords do not match') 
     }
-
     if ((emailRef.current.value).includes("admin")) {
       console.log("Details do not match");
-      return setError('You are not authorized to create an admin account.') // We want to immediately get out of the Fn without going to the signup Fn
+      return setError('You are not authorized to create an admin account.')
     }
-
     try {
       setError('')
-      setLoading(true) //Prevent them from creating multiple acc at the same time when keep clicking submit button
+      setLoading(true) 
       await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
       console.log(nameRef.current.value);
       history.push("/")
@@ -39,7 +48,7 @@ function CreateAccountPage() {
     } catch {
       setError('Failed to create an account')
     }
-    setLoading(false) //Aft sign up 
+    setLoading(false)  
   }
 
   return (
@@ -52,14 +61,12 @@ function CreateAccountPage() {
         <form onSubmit={handleSubmit}>
           <Heading size={800} >Create New Account</Heading>
           <Text><br></br></Text>
-          
           {(error != '') ? (<Pane>
             <Alert
               intent="danger"
               title={error}
             />
           </Pane>) : (<Pane></Pane>)}
-
           <TextInputField
             id="name"
             required
@@ -100,16 +107,12 @@ function CreateAccountPage() {
             type="password"
             ref={passwordConfirmRef}
           />
-          {/* This is the container/pane for the login section */}
           <Pane display="flex" borderRadius={3}>
             <Pane flex={1} alignItems="center" display="flex">
               <Link to="/ForgetPassword">Forget Password?</Link>
             </Pane>
             <Pane paddingBottom={20}>
               <Button appearance="primary" height={48} type="submit" disabled={loading}>Create Account</Button>
-              {/* <Link to="/Login" style={{ textDecoration: "none" }}> {/* textDecoration has to set to none or else the button will have a line below the Login text
-                
-              </Link> */}
             </Pane>
           </Pane>
         </form>
@@ -119,3 +122,13 @@ function CreateAccountPage() {
 }
 
 export default CreateAccountPage;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Notes:                                                                                                          //
+//             - Line 31: Prevent from refreshing                                                                       //
+//        - Line 35 & 39: Return statement is used as we want to immediately get out of the function without going      //
+//                        to the signup function                                                                        //
+//             - Line 43: Prevent them from creating multiple acc at the same time when keep clicking submit button     //
+//             - Line 51: We set the setLoading state to false after sign up                                            //
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

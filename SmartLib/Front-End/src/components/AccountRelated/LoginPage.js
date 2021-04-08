@@ -1,11 +1,23 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: LoginPage.js                                                                                              //
+//  Function: A page for both librarian and library users to login to their accounts. This will give them privilege     //
+//            access to their respective functions; library users added privilege is to book a seat in the library      //
+//            while the admin/librarian can do much more such as adding/removing seats and modifying the seat status    //
+//            of individual seats. Note that normal library users DO NOT HAVE ACCESS to admin/librarian even if they    //
+//            modify their URL.                                                                                         // 
+//            Note that the default admin account is:                                                                   //
+//            email: admin@admin.com                                                                                    //
+//            password: 123456                                                                                          //
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, { useState, useRef } from "react";
 import { Pane, Text, Button, Heading, TextInputField, Alert } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
-import background from "./Img/lib2.png";
+import background from "./../Img/lib2.png";
 
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 
-//Pass in props/object into the LoginPage function
 function LoginPage() {
 
   const emailRef = useRef()
@@ -16,11 +28,11 @@ function LoginPage() {
   const history = useHistory()
 
   async function handleSubmit(e) {
-    e.preventDefault()  //Prevent from refreshing
+    e.preventDefault()  
 
     try {
       setError('')
-      setLoading(true) //Prevent them from creating multiple acc at the same time when keep clicking submit button
+      setLoading(true) 
       await login(emailRef.current.value, passwordRef.current.value)
       if ((emailRef.current.value).includes("admin")) {
         history.push("/Admin")
@@ -31,7 +43,7 @@ function LoginPage() {
     } catch {
       setError('Your Email / Password is incorrect')
     }
-    setLoading(false) //Aft sign up
+    setLoading(false) 
   }
 
   return (
@@ -42,7 +54,6 @@ function LoginPage() {
         <Text size={600} color={'white'}><br></br><br></br><br></br>Where student meet seats</Text>
       </Pane>
       <Pane height={1000} backgroundColor="beige" display="flex" justifyContent="center" padding={20}>
-        {/* Can't use Formfield from Evergreen ui as it somehow don't support onSubmit function */}
         <form onSubmit={handleSubmit}>
           <Heading size={800} >Login Page</Heading>
           <Text><br></br></Text>
@@ -73,7 +84,6 @@ function LoginPage() {
             type="password"
             ref={passwordRef}
           />
-          {/* This is the container/pane for the login section */}
           <Pane display="flex" borderRadius={3}>
             <Pane flex={1} alignItems="center" display="flex">
               <Link to="/ForgetPassword">Forget Password?</Link>
@@ -82,7 +92,7 @@ function LoginPage() {
               <Button appearance="primary" intent="success" height={48} type="submit" disabled = {loading}>Login</Button>
             </Pane>
           </Pane>
-          <Link to="/CreateAccount" style={{ textDecoration: "none" }} > {/* textDecoration has to set to none or else the button will have a line below the Login text */}
+          <Link to="/CreateAccount" style={{ textDecoration: "none" }} >
             <Button appearance="primary" height={48} width={450} textAlign="center" >Sign Up</Button>
           </Link>
         </form>
@@ -92,3 +102,12 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Notes:                                                                                                          //
+//             - Line 28: Prevent from refreshing                                                                       //
+//             - Line 32: Prevent them from sending multiple login request if they keep clicking login button           //
+//             - Line 43: We set the setLoading state to false after login up                                           //
+//             - Line 54: Can't use Formfield from Evergreen ui as it somehow don't support onSubmit function           //
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

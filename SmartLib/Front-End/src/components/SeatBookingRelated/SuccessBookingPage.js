@@ -1,7 +1,7 @@
 import React,{ useContext} from "react";
 import { Pane, Text, Heading, Strong } from "evergreen-ui";
-import background from "./Img/success.png";
-import { SelectedSeatContext } from '../contexts/SelectSeatContext';
+import background from "./../Img/success.png";
+import { SelectedSeatContext } from '../../contexts/SelectSeatContext';
 
 function SuccessBookingPage() {
 
