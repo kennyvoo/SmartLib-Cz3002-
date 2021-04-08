@@ -5,7 +5,7 @@ import { SelectedSeatContext } from '../contexts/SelectSeatContext';
 import { SeatContext } from '../contexts/SeatContext'
 import crudFirebase from '../services/crudFirebase'
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { v1 as uuidv1 } from 'uuid';
 
 function SeatInformationPage() {
