@@ -2,22 +2,21 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Alert } from "evergreen-ui";
 import Navbar from "./components/Navbar";
-import AccountMgmtPage from "./components/AccountMgmtPage";
-import LoginPage from "./components/LoginPage";
-import MyBookingsPage from "./components/MyBookingsPage";
+import AccountMgmtPage from "./components/AccountRelated/AccountMgmtPage";
+import LoginPage from "./components/AccountRelated/LoginPage";
+import MyBookingsPage from "./components/AccountRelated/MyBookingsPage";
 import HomePage from "./components/HomePage";
 import Footer from "./components/Footer";
-import CreateAccountPage from "./components/CreateAccountPage"
-import ForgetPasswordPage from "./components/ForgetPasswordPage"
-import SeatInformationPage from "./components/SeatInformationPage"
+import CreateAccountPage from "./components/AccountRelated/CreateAccountPage"
+import ForgetPasswordPage from "./components/AccountRelated/ForgetPasswordPage"
+import SeatInformationPage from "./components/SeatBookingRelated/SeatInformationPage"
 import ModifySeatsPage from "./components/ModifySeatsPage";
 import AdminHomePage from "./components/AdminHomePage";
 import AddSeatsPage from "./components/AddSeatsPage";
-import AdminPage from "./components/AdminPage"
 import { AuthProvider } from "./contexts/AuthContext"
-import PrivateRoute from "./PrivateRoute"
-import PrivateRoute2 from "./PrivateRoute2"
-import SuccessBookingPage from "./components/SuccessBookingPage";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute"
+import PrivateRoute2 from "./components/PrivateRoute/PrivateRoute2"
+import SuccessBookingPage from "./components/SeatBookingRelated/SuccessBookingPage";
 import OccupancyReportPage from "./components/OccupancyReportPage";
 
 function App() {

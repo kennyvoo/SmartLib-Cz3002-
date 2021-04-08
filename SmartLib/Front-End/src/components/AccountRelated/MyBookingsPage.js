@@ -1,25 +1,43 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: MyBookingsPage.js                                                                                         //
+//  Function: Displays library user current bookings and booking history. This component will fetch both information    //
+//            from firestore cloud database by using the observer pattern; only updating the component if a change is   //
+//            detected from the database. This is done thru Firestore snapshot function and React useEffect() method.   //
+//            Currently, if the seat in the user's current booking data field is detected to have its occupancy status  //
+//            change from reserved to available, it will consider that the user has reached the seat and will           //
+//            automatically migrate this seat data from the current booking database to the user's booking history      //
+//            database. The rendering will also get updated accordingly.                                                //
+//                                                                                                                      //
+//            However, on the real implementation, we would design it in a way that if that once the user books the     //
+//            seat, the seat occupancy status will change from available to reserved status, so that no one else        //
+//            will occupy that seat. Then, if the user were to occupy the seat within 15 mins, the seat status will     //
+//            change from reserved to occupied, then the seat information migrates from the user's current booking      //
+//            to booking history. If the user fails to do so, the system will automatically remove the seat from        //
+//            the user's current booking database and set the seat occupancy status to available, indicating that       //
+//            the user fails to secure the seat and will have to book the seat again.                                   //
+//                                                                                                                      //                                                                                          
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, { useState, useEffect, useContext } from "react";
 import { Pane, Text, Heading, Table, Menu, Popover, MoreIcon, IconButton, Position, Dialog } from "evergreen-ui";
-import background from "./Img/MyBookings.jpg";
+import background from "./../Img/MyBookings.jpg";
 import Component from "@reactions/component";
-import crudFirebase from '../services/crudFirebase'
-import { useAuth } from '../contexts/AuthContext'
-import { SeatContext } from "../contexts/SeatContext";
-import app from '../firebase'
+import crudFirebase from '../../services/crudFirebase'
+import { useAuth } from '../../contexts/AuthContext'
+import app from '../../firebase'
 
 export default function MyBookingsPage() {
 
   const { currentUser } = useAuth()
-  const [seats, setSeats] = useContext(SeatContext);
   const [currentBooking, setCurrentBooking] = useState()
-  const [emptyBit, setEmptyBit] = useState(false)
   const [bookingHistory, setBookingHistory] = useState([])
 
   function observeChange() {
     try {
       app.firestore().collection('Seats').doc(currentBooking.seatID).onSnapshot((doc) => {
-        let a = doc.data()
-        if (a.status == "Available") {
+        let seat = doc.data()
+        if (seat.status == "Available") {
           const data = {
             bookingID: currentBooking.bookingID,
             level: currentBooking.level,
@@ -30,23 +48,16 @@ export default function MyBookingsPage() {
           handleChange()
           crudFirebase.bookingHistorySetup(currentUser.uid, data)
           setCurrentBooking()
-        // } else if(a.status == "Available") {
-        //     handleChange()
           } else {
-          console.log("Updated data: ", a);
+          console.log("Updated data: ", seat);
         }
       });
     } catch {
-      console.log("Fail to detect occupied");
+      console.log("Fail to detect available");
     }
   }
 
   const fetchBookingHistory = async () => {
-    //const Reference2 = app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_History').collection('History')
-    // const DocData2 = await Reference2.get()
-    // DocData2.docs.forEach(item => {
-    //   setBookingHistory(bookingHistory => [...bookingHistory, item.data()])
-    // })
     app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings').doc('Booking_History').collection('History').onSnapshot(querySnapshot => {
       querySnapshot.docChanges().forEach(change => {
         if (change.type === 'added') {
@@ -62,7 +73,6 @@ export default function MyBookingsPage() {
       const Reference = app.firestore().collection('User_Booking').doc(currentUser.uid).collection('Bookings')
       const DocData = await Reference.doc('Booking_Current').get()
       setCurrentBooking(DocData.data())
-
     } catch {
       console.log(currentBooking);
       console.log("empty");
@@ -81,23 +91,15 @@ export default function MyBookingsPage() {
     observeChange();
   }, [currentBooking])
 
-  async function handleDelete() {
-    await crudFirebase.removebooking(currentUser.uid)
-    //crudFirebase.update('Seats', (currentBooking.seatID).toString(), { status: 'Available' });
-    setCurrentBooking()
-  }
-
   async function handleChange() {
     await crudFirebase.removebooking(currentUser.uid)
     setCurrentBooking()
   }
 
+  /* To display the current booking datafield */
   function checkBooking() {
     try {
-      console.log("works");
-
       return (
-
         <div>
           <Table.Row>
             <Table.TextCell>{currentBooking.bookingID}</Table.TextCell>
@@ -126,7 +128,6 @@ export default function MyBookingsPage() {
       console.log("Empty Current Booking");
       return
     }
-
   }
 
   /* Options Menu For Current Booking Table */
@@ -148,7 +149,7 @@ export default function MyBookingsPage() {
                     intent="danger"
                     onCloseComplete={() => setState({ isShown: false })}
                     confirmLabel="Delete"
-                    onConfirm={handleDelete}
+                    onConfirm={handleChange}
                   >
                     Are you sure you want to delete your current booking?
           </Dialog>
@@ -156,17 +157,14 @@ export default function MyBookingsPage() {
                 </Pane>
               )}
             </Component>
-
           </Menu.Group>
         </Menu>
       </div>
     )
   }
-
+  /* DEBUG MESSAGE */
   console.log("Current:", currentBooking);
   console.log("History:", bookingHistory);
-  console.log("Seats:", seats);
-  console.log("emptyBit:", emptyBit);
 
   return (
     <div>
@@ -239,3 +237,13 @@ export default function MyBookingsPage() {
     </div>
   );
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Notes:                                                                                                          //
+//             - Line 37: The observe change function is to observe for any changes to the seat occupancy status        //
+//                        of the current user booking                                                                   //
+//            - Line 100: The user's current booking datafield is separated from the standard table section to          //
+//                        accomodate the options menu that is tied to the field to allow users to delete their          //
+//                        current booking.                                                                              //
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
