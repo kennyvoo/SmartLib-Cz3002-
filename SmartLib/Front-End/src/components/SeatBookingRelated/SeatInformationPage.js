@@ -1,11 +1,23 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: SeatInformationPage.js                                                                                    //
+//  Function: Diplay account creation form which includes the standard attributes which are required for account        //
+//            creation; user's name, school email, password and confirm password field. It will then process the        //
+//            information entered by the user and will generate the necessary feedback to the user if the account       //
+//            was successful or not. If the email entered is already tied to an existing account, password is below     //
+//            6 characters or the user tries to create an admin account, an error message will pop up.                  //
+//            If it passes the conditions, the user account will be registered and user will be redirected to his/her   //
+//            account.                                                                                                  //
+//                                                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, { useContext, useState } from "react";
 import { Pane, Text, Alert, Button, Heading, Strong, Avatar, BackButton, InfoSignIcon, WarningSignIcon } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
-import { SelectedSeatContext } from '../contexts/SelectSeatContext';
-import { SeatContext } from '../contexts/SeatContext'
-import crudFirebase from '../services/crudFirebase'
+import { SelectedSeatContext } from '../../contexts/SelectSeatContext';
+import { SeatContext } from '../../contexts/SeatContext'
+import crudFirebase from '../../services/crudFirebase'
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { v1 as uuidv1 } from 'uuid';
 
 function SeatInformationPage() {
