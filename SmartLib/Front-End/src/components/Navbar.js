@@ -17,7 +17,7 @@ import {
 } from "evergreen-ui";
 import { Link, useHistory } from "react-router-dom";
 import { IoLibraryOutline } from "react-icons/io5";
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from "../contexts/AuthContext"
 
 export default function Navbar() {
 

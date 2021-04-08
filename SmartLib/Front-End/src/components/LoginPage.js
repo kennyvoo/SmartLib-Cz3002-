@@ -3,7 +3,7 @@ import { Pane, Text, Button, Heading, TextInputField, Alert } from "evergreen-ui
 import { Link, useHistory } from "react-router-dom";
 import background from "./Img/lib2.png";
 
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 
 //Pass in props/object into the LoginPage function
 function LoginPage() {
