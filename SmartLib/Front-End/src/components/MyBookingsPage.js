@@ -3,7 +3,7 @@ import { Pane, Text, Heading, Table, Menu, Popover, MoreIcon, IconButton, Positi
 import background from "./Img/MyBookings.jpg";
 import Component from "@reactions/component";
 import crudFirebase from '../services/crudFirebase'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { SeatContext } from "../contexts/SeatContext";
 import app from '../firebase'
 

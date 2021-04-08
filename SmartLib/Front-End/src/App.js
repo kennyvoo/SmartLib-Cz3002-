@@ -14,7 +14,7 @@ import ModifySeatsPage from "./components/ModifySeatsPage";
 import AdminHomePage from "./components/AdminHomePage";
 import AddSeatsPage from "./components/AddSeatsPage";
 import AdminPage from "./components/AdminPage"
-import { AuthProvider } from "./context/AuthContext"
+import { AuthProvider } from "./contexts/AuthContext"
 import PrivateRoute from "./PrivateRoute"
 import PrivateRoute2 from "./PrivateRoute2"
 import SuccessBookingPage from "./components/SuccessBookingPage";
