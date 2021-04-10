@@ -14,9 +14,9 @@ import AlertList from "./AlertList";
 import crudFirebase from '../../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
 import Legend from "../seatmap/Legend";
-import cameraSelect from "./CamSelect";
-import mapSelect from "./MapSelect";
-import Loading from "./Loading";
+import cameraSelect from "../Configuration/CamSelect";
+import mapSelect from "../Configuration/MapSelect";
+import Loading from "../Loading";
 
 function AdminHomePage(){
 

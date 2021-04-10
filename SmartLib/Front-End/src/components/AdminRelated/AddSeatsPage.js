@@ -22,9 +22,9 @@ import './AdminPageStyles.css'
 import crudFirebase from '../../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
 import DrawAnnotations from "../seatmap/CamKonva";
-import cameraSelect from "./CamSelect";
-import mapSelect from "./MapSelect";
-import Loading from "./Loading";
+import cameraSelect from "../Configuration/CamSelect";
+import mapSelect from "../Configuration/MapSelect";
+import Loading from "../Loading";
 
 function AddSeatsPage(){
 

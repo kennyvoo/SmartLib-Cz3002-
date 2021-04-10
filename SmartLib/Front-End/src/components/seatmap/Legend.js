@@ -1,5 +1,5 @@
 import React from 'react'
-import Colors from "../Colors";
+import Colors from "../Configuration/Colors";
 
 function Legend(props){
 

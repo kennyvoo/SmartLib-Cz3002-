@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 // import { SeatContext } from '../../contexts/SeatContext';
 import { SelectedSeatContext } from "../../contexts/SelectSeatContext";
-import Colors from "../Colors";
+import Colors from "../Configuration/Colors";
 
 const boxRx = 10;
 const boxRy = 10;

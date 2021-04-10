@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Chart from "react-google-charts";
 import './OccupancyReportPage.css'
-import Colors from "../Colors";
+import Colors from "../Configuration/Colors";
 import {Pane} from "evergreen-ui";
 
 
@@ -68,22 +68,6 @@ function OccupancyReport() {
             {/*<ChartElement data={lvl2} title={'Level 2'}/>*/}
         </div>
     )
-}
-
-function ChartElement(props){
-    return(
-        <Chart
-            className={'reportChart'}
-            chartType="ColumnChart"
-            loader={<div>Loading Chart</div>}
-            data={props.data}
-            options={{
-                title: props.title,
-                chartArea: { width: '50%' },
-                legend: 'none'
-            }}
-        />
-    );
 }
 
 function LineChart(props){
