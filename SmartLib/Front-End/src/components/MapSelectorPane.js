@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Pane, Text, Button, Heading, SegmentedControl, Dialog, ErrorIcon, HandUpIcon } from "evergreen-ui";
 import Component from "@reactions/component";
-import { SeatContext } from '../../contexts/SeatContext';
-import { SelectedSeatContext } from '../../contexts/SelectSeatContext';
+import { SeatContext } from '../contexts/SeatContext';
+import { SelectedSeatContext } from '../contexts/SelectSeatContext';
 import { useHistory } from "react-router-dom";
-import SeatsList from "../seatmap/SeatsList";
-import Legend from "../seatmap/Legend";
-import '../HomePage.css'
-import mapSelect from "./MapSelect";
+import SeatsList from "./seatmap/SeatsList";
+import Legend from "./seatmap/Legend";
+import './HomePage.css'
+import mapSelect from "./Configuration/MapSelect";
 
 function MapSelectorPane() {
   

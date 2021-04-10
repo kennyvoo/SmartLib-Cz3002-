@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
-import MapSelectorPane from "./AdminRelated/MapSelectorPane";
+import MapSelectorPane from "./MapSelectorPane";
 import './HomePage.css'
 import Stats from "./AdminRelated/Stats";
 import {SeatContext} from "../contexts/SeatContext";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import Loading from "./AdminRelated/Loading";
+import Loading from "./Loading";
 
 function HomePage() {
   const [seats, setSeats] = useContext(SeatContext);

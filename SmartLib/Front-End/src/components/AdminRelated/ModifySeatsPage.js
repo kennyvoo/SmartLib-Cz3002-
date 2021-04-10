@@ -20,9 +20,9 @@ import SeatsList from "../seatmap/SeatsList";
 import './AdminPageStyles.css'
 import crudFirebase from '../../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import mapSelect from "./MapSelect";
-import cameraSelect from "./CamSelect";
-import Loading from "./Loading";
+import mapSelect from "../Configuration/MapSelect";
+import cameraSelect from "../Configuration/CamSelect";
+import Loading from "../Loading";
 
 
 function ModifySeatsPage(){
