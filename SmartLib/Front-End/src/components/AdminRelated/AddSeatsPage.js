@@ -1,11 +1,17 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: AddSeatsPage.js                                                                                           //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports component for Add Seat Page. The seat information and selection information is passed             //
+//            with the use of React context. This component includes other components such as SeatsList,                //
+//            DrawAnnotations.                                                                                          //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, {useContext, useEffect, useState} from "react";
 import {
     Pane,
     Text,
     Button,
-    Heading,
     SegmentedControl,
-    TextInput,
     TextInputField,
     AddIcon,
     ResetIcon,
@@ -17,17 +23,16 @@ import {
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../../contexts/SelectSeatContext";
 import {SeatContext} from "../../contexts/SeatContext";
-import SeatsList from "../seatmap/SeatsList";
+import SeatsList from "../common/seatmap/SeatsList";
 import './AdminPageStyles.css'
 import crudFirebase from '../../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import DrawAnnotations from "../seatmap/CamKonva";
+import DrawAnnotations from "../common/seatmap/CamKonva";
 import cameraSelect from "../Configuration/CamSelect";
 import mapSelect from "../Configuration/MapSelect";
-import Loading from "../Loading";
+import Loading from "../common/Loading";
 
 function AddSeatsPage(){
-
     const [seats, setSeats] = useContext(SeatContext);
     const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
@@ -49,6 +54,7 @@ function AddSeatsPage(){
     }
     const [newSeat, setNewSeat]=useState(defaultSeat)
 
+    // useEffect upon [dataFS] trigger
     useEffect(()=> {
         if(!loading&&dataFS) {
             //console.log(dataFS.docs);
@@ -60,6 +66,7 @@ function AddSeatsPage(){
         }
     },[dataFS]);
 
+    // useEffect upon [selected] trigger
     useEffect(()=>{
         setNewSeat(prevState => ({
             ...prevState,
@@ -70,6 +77,7 @@ function AddSeatsPage(){
         }))
     },[selected])
 
+    // Update relevant states after input trigger
     const handleChange = (e) => {
         const { id, value } = e.target
         setNewSeat(prevState => ({
@@ -78,6 +86,7 @@ function AddSeatsPage(){
         }))
     }
 
+    // Generates UID for newly created seat
     function generateUID(){
         let id=1;
         while(1)
@@ -90,16 +99,16 @@ function AddSeatsPage(){
         }
     }
 
+    // POST new seat to Firebase CRUD
     function addSeat()
     {
-        //setSeats(prev=>[...prev, newSeat])
         console.log("NEWSEATID",newSeat.id)
         crudFirebase.create('Seats',newSeat.id.toString(),newSeat);
-        //alert("Successfully Added");
         setNewSeat(defaultSeat);
         toaster.success('Seat has been successfully added');
     }
 
+    // Preview changes without updating database
     function previewSeat()
     {
         setTempSeats(seats);
@@ -107,6 +116,7 @@ function AddSeatsPage(){
         setSelected(prevState=>({...prevState,seat:newSeat.id}))
     }
 
+    // Reset preview / any input changes
     function resetSeat()
     {
         setTempSeats(seats);
@@ -114,9 +124,13 @@ function AddSeatsPage(){
         setStatus({value: 'Available'});
     }
 
+    // useEffect upon [tempSeats] trigger
     useEffect(() => {console.log('tempSeats',tempSeats)}, [tempSeats]);
-    // useEffect(() => {console.log('seats:'); console.log(seats); setNewSeat(prevState => ({...prevState,id:seats[seats.length-1].id+1}))}, [seats]);
+
+    // useEffect upon [seats] trigger
     useEffect(() => {console.log('seats',seats); setNewSeat(prevState => ({...prevState,id: generateUID()}))}, [seats]);
+
+    // useEffect upon [newSeat] trigger
     useEffect(() => {console.log('newSeat: ',newSeat)}, [newSeat]);
 
     return(
@@ -156,7 +170,6 @@ function AddSeatsPage(){
                         <Pane className={'cameraControlPane'} border={'default'}>
                             <p className={'infoText1'}> Hint: Click and drag to draw bounding box</p>
                             <Pane className={'cameraPane'} backgroundImage={`url(${cameraSelect(selected.level)})`}>
-                                {/*<CamSeatsList seats={tempSeats} editmode={true}/>*/}
                                 <DrawAnnotations/>
                             </Pane>
                             <Pane className={'infoPane'} paddingBottom={20}>
@@ -237,11 +250,6 @@ function AddSeatsPage(){
                                     id="yLoc" label="yLoc :" placeholder="0-800"
                                     value={newSeat.yLoc} onChange={handleChange}
                                 />
-                                {/*<TextInputField*/}
-                                {/*    className={'inputFieldBox'}*/}
-                                {/*    id="status" label="Status :" placeholder="eg. Available"*/}
-                                {/*    value={newSeat.status} onChange={handleChange}*/}
-                                {/*/>*/}
                                 <SelectField
                                     id={'status'}
                                     className={'inputSelField'}
@@ -255,11 +263,6 @@ function AddSeatsPage(){
                                     <option value="Reserved">Reserved</option>
                                     <option value="Hogged">Hogged</option>
                                 </SelectField>
-                                {/*<TextInputField*/}
-                                {/*    className={'inputFieldBox'}*/}
-                                {/*    id="unavailable" label="Unavailable :" placeholder="0-800"*/}
-                                {/*    value={newSeat.unavailable} onChange={handleChange} disabled*/}
-                                {/*/>*/}
                                 <Component initialState={{ checked: false }}>
                                     {({ state, setState }) => (
                                         <Checkbox

@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: PrivateRoute.js                                                                                           //
+//    Author: Irsyad                                                                                                    //
 //  Function: A component to aid the route function of react-router-dom to allow library users to access                //
 //            Account-Only pages if they have logged in to the system. If the user is not logged in, the user will not  //
 //            be able to access these pages such as the seatBooking page even if the user tries typing the directory    //

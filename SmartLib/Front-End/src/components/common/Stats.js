@@ -1,8 +1,13 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: Stats.js                                                                                                  //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports component for Stats Pane. The seat information is passed in via props.                            //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, {useState} from 'react'
 import Chart from 'react-google-charts'
 import {
-    Pane, SegmentedControl,
-    Table
+    Pane, SegmentedControl
 } from "evergreen-ui";
 import './Stats.css';
 import Component from "@reactions/component";
@@ -12,6 +17,9 @@ export default function Stats(props){
 
     const [statsSel, setStatsSel]=useState({val: 0});
 
+    // Function to convert list of seats to individual number of seats of each status.
+    // Takes in an array of object [seats]
+    // Returns an object [stats]
     function countStats(seats) {
         let stats = {total: 0, avail: 0,occupied: 0, reserved: 0, hogged: 0, unavail: 0,};
         let i;
@@ -30,8 +38,12 @@ export default function Stats(props){
         return (stats);
     }
 
+    // Function to filter seats based on selected level
+    // Takes all seats [props.seats] and selected level [statsSel.val] as input
+    // Returns filtered seats as [levelSeats]
     const levelSeats = (statsSel.val==0 ? props.seats : props.seats.filter(seat => seat.level === statsSel.val.toString()));
-    console.log(levelSeats);
+    //console.log(levelSeats);
+
     let stats = countStats(levelSeats);
 
     return(
@@ -88,13 +100,6 @@ export default function Stats(props){
                   rootProps={{ 'data-testid': '1' }}
               />
           </Pane>
-          {/*<h3>Total Seats: {levelSeats.length}</h3>*/}
-          {/*<h3>Available: {stats.avail}</h3>*/}
-          {/*<h3>Reserved: {stats.reserved}</h3>*/}
-          {/*<h3>Occupied: {stats.occupied}</h3>*/}
-          {/*<h3>Hogged: {stats.hogged}</h3>*/}
-          {/*<h3>Unavailable: {stats.unavail}</h3>*/}
-          {/*<h3>Added up check: {stats.avail+stats.reserved+stats.occupied+stats.hogged+stats.unavail}</h3>*/}
           <Pane className={'statsTablePane'} border={'default'}>
               <table>
                   <tbody>

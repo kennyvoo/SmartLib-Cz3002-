@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Pane,
   Button,
@@ -35,7 +35,6 @@ export default function Navbar() {
   return (
     <Pane display="flex" padding={0} background="grey" borderRadius={0}>
       <Pane flex={1} alignItems="center" display="flex" paddingLeft={7}>
-        {/* <IconButton icon={ListIcon} margin={10} appearance="default" /> */}
         <IoLibraryOutline size={30} color="white" />
         <Link to="/" style={{ textDecoration: "none" }}>
           <Heading marginRight={5} marginLeft={5} size={700} color="white">

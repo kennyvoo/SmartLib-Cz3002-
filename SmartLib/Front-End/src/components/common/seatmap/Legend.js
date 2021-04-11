@@ -1,7 +1,13 @@
-import React from 'react'
-import Colors from "../Configuration/Colors";
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: Legend.js                                                                                                 //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports rendered SVG element containing legend for seat map.                                              //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function Legend(props){
+import React from 'react'
+import Colors from "../../Configuration/Colors";
+
+function Legend(){
 
     return(
         <svg viewBox={'0 0 800 50'}>
@@ -14,6 +20,7 @@ function Legend(props){
     );
 }
 
+// Returns a single legend element for a status type passed in as props.
 function LegendElement(props){
     const boxHeight= 50;
     const boxWidth= 50;

@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: MapSelect.js                                                                                              //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports Configuration Component for Map Selection.                                                        //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import L2Map from "../Img/L2Map.svg";
 import L3Map from "../Img/L3Map.svg";
 import L4Map from "../Img/L4Map.svg";

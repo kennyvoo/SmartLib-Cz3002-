@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: CreateAccountPage.js                                                                                      //
+//    Author: Irsyad                                                                                                    //
 //  Function: Diplay account creation form which includes the standard attributes which are required for account        //
 //            creation; user's name, school email, password and confirm password field. It will then process the        //
 //            information entered by the user and will generate the necessary feedback to the user if the account       //

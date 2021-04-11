@@ -1,7 +1,12 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: Seat.js                                                                                                   //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports rendered SVG element of a single seat. Seat is passed in via props. To be used with SeatList.     //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, { useContext } from "react";
-// import { SeatContext } from '../../contexts/SeatContext';
-import { SelectedSeatContext } from "../../contexts/SelectSeatContext";
-import Colors from "../Configuration/Colors";
+import { SelectedSeatContext } from "../../../contexts/SelectSeatContext";
+import Colors from "../../Configuration/Colors";
 
 const boxRx = 10;
 const boxRy = 10;
@@ -13,10 +18,10 @@ const boxStrokeWidth = "2px";
 const boxStrokeWidthSelected = "5px";
 
 function Seat(props) {
-  
-    //const [seats, setSeats] = useContext(SeatContext);
+
     const [selected, setSelected] = useContext(SelectedSeatContext);
 
+    // Render color according to status
     function renderColor(status, unavailable) {
         if(unavailable==true)
         {
@@ -29,11 +34,11 @@ function Seat(props) {
             case "Occupied": return Colors.colorOccupied;
             case "Detected": return Colors.colorOccupied;
             case "Hogged": return Colors.colorHogged;
-            //case "Hogged": return Colors.colorHogged;
             default: return Colors.colorError;
     }
   }
 
+  // Set SelectedSeatContext to current seat upon click
   function clickSeat()
   {
       console.log("Clicked " + props.seat.seatName);

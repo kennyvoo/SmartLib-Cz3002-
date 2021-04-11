@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: ForgetPasswordPage.js                                                                                     //
+//    Author: Irsyad                                                                                                    //
 //  Function: A page for users to reset their password. If the user enters an email not tied to an existing account,    //
 //            an error message will be displayed. If the email is registered to an existing account, the reset          //
 //            password instructions will be send to that email. We used firestore authentication password reset api     //
