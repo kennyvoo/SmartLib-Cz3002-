@@ -1,19 +1,18 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: CamKonva.js                                                                                               //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports component for Click and Drag Bounding Box. Component uses react-konva library.                    //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, {useContext, useEffect, useState} from "react";
 import { Stage, Layer, Rect, Text, Group } from "react-konva";
-import {SelectedSeatContext} from "../../contexts/SelectSeatContext";
-import {SeatContext} from "../../contexts/SeatContext";
+import {SelectedSeatContext} from "../../../contexts/SelectSeatContext";
+import {SeatContext} from "../../../contexts/SeatContext";
+import Colors from "../../Configuration/Colors";
 
-const boxStroke = "#0000FF";
 const boxStrokeSelected = "#FF0000";
 const boxStrokeWidth = "6px";
 const boxStrokeWidthSelected = "9px";
-
-const colorAvailable = "#5cd89f";
-const colorReserved = "#4287f5";
-const colorOccupied = "#f4a261";
-const colorHogged = "#fc5353";
-const colorUnavailable = "#AAAAAA";
-const colorError = "#FF0000";
 
 function DrawAnnotations() {
     const [annotations, setAnnotations] = useState([]);
@@ -21,38 +20,33 @@ function DrawAnnotations() {
     const [selected, setSelected] = useContext(SelectedSeatContext);
     const [seats, setSeats] = useContext(SeatContext);
 
-    // let sel=selected.level;
-
     function renderColor(status, unavailable) {
         if(unavailable==true)
         {
-            return colorUnavailable;
+            return Colors.colorUnavailable;
         }
-
         switch (status) {
-            case "Available":
-                return colorAvailable;
-            case "Reserved":
-                return colorReserved;
-            case "Occupied":
-                return colorOccupied;
-            case "Hogged":
-                return colorHogged;
-            default:
-                return colorError;
+            case "Available": return Colors.colorAvailable;
+            case "Reserved": return Colors.colorReserved;
+            case "Occupied": return Colors.colorOccupied;
+            case "Detected": return Colors.colorOccupied;
+            case "Hogged": return Colors.colorHogged;
+            default: return Colors.colorError;
         }
     }
 
-    useEffect(()=>{
-        console.log('selected:',selected)
-        // sel=selected.level;
-    },[selected])
+    // useEffect upon [selected] trigger.
+    // useEffect(()=>{
+    //     console.log('selected:',selected)
+    //     // sel=selected.level;
+    // },[selected])
 
-    useEffect(()=>{
+    // useEffect upon [annotations] trigger.
+    // useEffect(()=>{
+    //     console.log('selected:',selected)
+    // },[annotations])
 
-        console.log('selected:',selected)
-    },[annotations])
-
+    // Set new annotation upon mouse down event
     const handleMouseDown = (event) => {
         if (newAnnotation.length === 0) {
             const { x, y } = event.target.getStage().getPointerPosition();
@@ -60,6 +54,7 @@ function DrawAnnotations() {
         }
     };
 
+    // Set add annotation to drawing list upon mouse up event
     const handleMouseUp = (event) => {
         if (newAnnotation.length === 1) {
             const sx = newAnnotation[0].x;
@@ -108,12 +103,6 @@ function DrawAnnotations() {
             ]);
         }
     };
-
-    // function clickSeat() {
-    //     console.log("Clicked " + seat.seatName);
-    //     //   alert("Clicked " + props.seat.seatName);
-    //     setSelected({ seat: seat.id, level:selected.level });
-    // }
 
     const annotationsToDraw = [...annotations, ...newAnnotation];
     const seatsToDraw=[...seats];

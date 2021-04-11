@@ -1,40 +1,26 @@
-import React, { useState, useContext } from "react";
-import { Pane, Text, Button, Heading, SegmentedControl, Dialog, ErrorIcon, HandUpIcon } from "evergreen-ui";
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: MapSelectorPane.js                                                                                        //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports component for Map Selector Pane. Contains components such as SeatsList to display seat map and    //
+//            elements to facilitate seat selection and booking process.                                                //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import React, { useContext } from "react";
+import { Pane, Button, SegmentedControl, Dialog, ErrorIcon, HandUpIcon } from "evergreen-ui";
 import Component from "@reactions/component";
-import { SeatContext } from '../contexts/SeatContext';
-import { SelectedSeatContext } from '../contexts/SelectSeatContext';
+import { SeatContext } from '../../contexts/SeatContext';
+import { SelectedSeatContext } from '../../contexts/SelectSeatContext';
 import { useHistory } from "react-router-dom";
 import SeatsList from "./seatmap/SeatsList";
 import Legend from "./seatmap/Legend";
-import './HomePage.css'
-import mapSelect from "./Configuration/MapSelect";
+import '../HomePage.css'
+import mapSelect from "../Configuration/MapSelect";
 
 function MapSelectorPane() {
   
   const [seats, setSeats] = useContext(SeatContext);
   const [selected, setSelected] = useContext(SelectedSeatContext);
   const history = useHistory();
-  
-  function occupancy(keyword) {
-    let avail = 0;
-    let total = seats.length;
-    let i;
-    for (i = 0; i < seats.length; i++){
-      if (seats[i].status === keyword) avail++;
-    }
-    return (avail/total*100);
-  }
-
-  function countSeats(keyword) {
-    let num = 0;
-    let i;
-    for (i = 0; i < seats.length; i++){
-        if(keyword==='Unavailable') if(seats[i].unavailable===true) num++;
-        else if (seats[i].status === keyword && seats[i].unavailable===false) num++;
-
-    }
-    return (num);
-  }
 
   function clickBook() {
     console.log("Booked");
@@ -84,8 +70,6 @@ function MapSelectorPane() {
           <Pane border={'default'} borderRadius={5} marginTop={10} padding={10}>
               <Legend/>
           </Pane>
-          {/*<Heading padding={10} size={700}>The library has {seats.length} seats in total.</Heading>*/}
-          {/*<Heading padding={10} size={700}>The library has {countSeats('Available')} available seats, {countSeats('Reserved')} reserved seats, {countSeats('Occupied')} occupied seats, {countSeats('Hogged')} hogged seats, {countSeats('Unavailable')} unavailable seats.</Heading>*/}
 
         {/* Book Button and Dialog */}
         <Component initialState={{ isShown: false }}>

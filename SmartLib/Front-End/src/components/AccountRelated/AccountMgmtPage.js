@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: AccountMgmtPage.js                                                                                        //
+//    Author: Irsyad                                                                                                    //
 //  Function: Properly display the user's account attributes; user's name and email information which is                //
 //            obtained from firebase authentication cloud database, linked from AuthContext.js file.                    //
 //            It also contains a link for the user to reset his/her account password if there is a need to              //

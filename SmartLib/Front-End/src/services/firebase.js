@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: firebase.js                                                                                               //
+//    Author: Wilson                                                                                                    //
 //  Function: Initialize the firebase app to allow different components to connect and use the api provided by          //
 //            firebase. The values initialized below is based on our groups firebase account.                           //
 //                                                                                                                      //

@@ -1,12 +1,21 @@
-import React, {useContext, useEffect, useState} from "react";
-import { Pane, Text, Button, Heading, SegmentedControl } from "evergreen-ui";
-import MapSelectorPane from "./MapSelectorPane";
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: AdminHomePage.js                                                                                          //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports component for HomePage. This is the default homepage of the system, as well as the homepage for   //
+//            non-admin users (students). The seat information and selection information is passed                      //
+//            with the use of React context. This component includes other components such as SeatsList, CamSeatsList   //
+//            Stats, AlertList.                                                                                         //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import React, {useContext, useEffect} from "react";
+import { Pane } from "evergreen-ui";
+import MapSelectorPane from "./common/MapSelectorPane";
 import './HomePage.css'
-import Stats from "./AdminRelated/Stats";
+import Stats from "./common/Stats";
 import {SeatContext} from "../contexts/SeatContext";
 import crudFirebase from '../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import Loading from "./Loading";
+import Loading from "./common/Loading";
 
 function HomePage() {
   const [seats, setSeats] = useContext(SeatContext);

@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: SeatInformationPage.js                                                                                    //
+//    Author: Irsyad                                                                                                    //
 //  Function: Diplay seat information based on what user selected in the homepage. The seat information is passed       //
 //            with the use of React context. This allows the user to view the seat information in detail and make       //
 //            an informed decision on whether to book the seat or not. The user can click on the back button to go      //
