@@ -1,4 +1,11 @@
-import React, { useContext } from "react";
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: GridLines.js                                                                                              //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports rendered group of SVG element containing horizontal and vertical gridlines.                       //
+//            Displayed when edit mode is true.                                                                         //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import React from "react";
 import './GridLines.css'
 
 function GridLines() {

@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: MyBookingsPage.js                                                                                         //
+//    Author: Irsyad                                                                                                    //
 //  Function: Displays library user current bookings and booking history. This component will fetch both information    //
 //            from firestore cloud database by using the observer pattern; only updating the component if a change is   //
 //            detected from the database. This is done thru Firestore snapshot function and React useEffect() method.   //

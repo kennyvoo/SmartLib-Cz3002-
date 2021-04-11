@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: SuccessBookingPage.js                                                                                     //
+//    Author: Irsyad                                                                                                    //
 //  Function: Diplay the booking confirmation page to the user. It will also display the seat information based on      //
 //            what user selected in the homepage. The seat information is passed with the use of React context.         //
 //                                                                                                                      //
