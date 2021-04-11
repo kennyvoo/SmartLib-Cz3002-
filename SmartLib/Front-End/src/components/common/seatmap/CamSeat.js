@@ -1,10 +1,15 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: CamSeat.js                                                                                                //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports rendered SVG element of a single seat. Seat is passed in via props. To be used with CamSeatList.  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, { useContext } from "react";
-import { SelectedSeatContext } from "../../contexts/SelectSeatContext";
-import Colors from "../Configuration/Colors";
+import { SelectedSeatContext } from "../../../contexts/SelectSeatContext";
+import Colors from "../../Configuration/Colors";
 
 const boxRx = 0;
 const boxRy = 0;
-const boxStroke = "#0000FF";
 const boxStrokeSelected = "#FF0000";
 const boxStrokeWidth = "6px";
 const boxStrokeWidthSelected = "9px";
@@ -12,6 +17,7 @@ const boxStrokeWidthSelected = "9px";
 function CamSeat(props) {
     const [selected, setSelected] = useContext(SelectedSeatContext);
 
+    // Render color according to status
     function renderColor(status, unavailable) {
         if(unavailable==true)
         {
@@ -28,6 +34,7 @@ function CamSeat(props) {
         }
     }
 
+    // Set SelectedSeatContext to current seat upon click
     function clickSeat() {
         console.log("Clicked " + props.seat.seatName);
         //   alert("Clicked " + props.seat.seatName);

@@ -1,3 +1,11 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: AdminHomePage.js                                                                                          //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports component for Admin HomePage. The seat information and selection information is passed            //
+//            with the use of React context. This component includes other components such as SeatsList, CamSeatsList   //
+//            Stats, AlertList.                                                                                         //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, {useContext, useState, useEffect} from "react";
 import {
     Pane,
@@ -6,17 +14,17 @@ import {
 import Component from "@reactions/component";
 import {SelectedSeatContext} from "../../contexts/SelectSeatContext";
 import {SeatContext} from "../../contexts/SeatContext";
-import CamSeatsList from "../seatmap/CamSeatsList";
-import SeatsList from "../seatmap/SeatsList";
+import CamSeatsList from "../common/seatmap/CamSeatsList";
+import SeatsList from "../common/seatmap/SeatsList";
 import './AdminPageStyles.css'
-import Stats from "./Stats";
+import Stats from "../common/Stats";
 import AlertList from "./AlertList";
 import crudFirebase from '../../services/crudFirebase'
 import { useCollection } from "react-firebase-hooks/firestore";
-import Legend from "../seatmap/Legend";
+import Legend from "../common/seatmap/Legend";
 import cameraSelect from "../Configuration/CamSelect";
 import mapSelect from "../Configuration/MapSelect";
-import Loading from "../Loading";
+import Loading from "../common/Loading";
 
 function AdminHomePage(){
 
@@ -24,6 +32,7 @@ function AdminHomePage(){
     const [dataFS, loading, error] = useCollection(crudFirebase.getAll('Seats'));
     const [selected, setSelected] = useContext(SelectedSeatContext);
 
+    // useEffect upon [dataFS] trigger
     useEffect(()=> {
         if(!loading&&dataFS) {
             //console.log(dataFS.docs);
@@ -69,7 +78,6 @@ function AdminHomePage(){
                             </Component>
                         </Pane>
                         <Pane className={'cameraPane'}
-                              // backgroundImage={`url("http://10.27.35.143:8080/video")`}
                               backgroundImage={`url(${cameraSelect(selected.level)})`}
                         >
                             <CamSeatsList seats={seats} editmode={false}/>

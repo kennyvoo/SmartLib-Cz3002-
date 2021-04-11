@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: CamSelect.js                                                                                              //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports Configuration Component for color palette for different seat status.                              //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export default
 {
     colorAvailable : "#5cd89f",

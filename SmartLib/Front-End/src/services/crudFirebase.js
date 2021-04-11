@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: crudFirebase.js                                                                                           //
+//    Author: Wilson                                                                                                    //
 //  Function: Central location which contains renamed firebase functions for ease of programming and understanding.     //
 //                                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

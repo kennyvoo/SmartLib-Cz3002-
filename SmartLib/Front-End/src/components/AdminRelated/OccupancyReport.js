@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: OccupancyReport.js                                                                                        //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports component a set of graphs depicting the overall and individual levels in the library.             //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Chart from "react-google-charts";
@@ -14,8 +20,8 @@ function OccupancyReport() {
     const [lvl4, setLvl4] = useState()
     const [lvl5, setLvl5] = useState()
 
+    // useEffect upon any triggers
     useEffect(() => {
-
         // Update the document title using the browser API
         axios({
             method: "GET",
@@ -65,11 +71,11 @@ function OccupancyReport() {
             <Pane className={'chartPane'} border={'default'}>
             <LineChart data={lvl5} title={'Level 5'}/>
             </Pane>
-            {/*<ChartElement data={lvl2} title={'Level 2'}/>*/}
         </div>
     )
 }
 
+// Exports component for a single graph. seatLog data is passed in as props.
 function LineChart(props){
     return(
         <Chart
@@ -85,12 +91,7 @@ function LineChart(props){
                 width: "100%",
                 height: 400,
                 colors: [Colors.colorAvailable, Colors.colorOccupied, Colors.colorReserved, Colors.colorHogged, Colors.colorUnavailable],
-                // series: {
-                //     // Gives each series an axis name that matches the Y-axis below.
-                //     0: { axis: 'Occupancy' },
-                // },
                 axes: {
-                    // Adds labels to each axis; they don't have to match the axis names.
                     y: {
                         0: { label: 'Occupancy (%)' },
                     },

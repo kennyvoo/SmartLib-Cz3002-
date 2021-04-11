@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: PrivateRoute2.js                                                                                          //
+//    Author: Irsyad                                                                                                    //
 //  Function: A component to aid the route function of react-router-dom to allow admin/librarian to access              //
 //            ADMIN-Only pages if they have logged in to the system. If the user is not logged in to an admin account,  //
 //            the user will not be able to access these pages such as the ModifySeatpage even if the user tries typing  //

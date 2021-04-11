@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //      Name: LoginPage.js                                                                                              //
+//    Author: Irsyad                                                                                                    //
 //  Function: A page for both librarian and library users to login to their accounts. This will give them privilege     //
 //            access to their respective functions; library users added privilege is to book a seat in the library      //
 //            while the admin/librarian can do much more such as adding/removing seats and modifying the seat status    //

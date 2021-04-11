@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Name: AlertList.js                                                                                              //
+//    Author: Hou Jing                                                                                                  //
+//  Function: Exports component for Admin Alert Pane. The seat data is passed in as props.                              //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React from 'react'
 import {Alert} from "evergreen-ui";
 
@@ -5,11 +11,6 @@ import {Alert} from "evergreen-ui";
 export default function AlertList(props){
     return(
       <div>
-          {/*<h2>Alerts</h2>*/}
-          {/*{props.seats.map((seat) => {*/}
-          {/*    return ((seat.status=='Hogged') ? <AlertComponents seat={seat} key={seat.id} /> : <div key={seat.id}></div>);*/}
-          {/*    //return (<Seat seat={seat} key={seat.id} />);*/}
-          {/*})}*/}
           {
               (props.seats.filter((seat) => (seat.status==='Hogged' && seat.unavailable===false))).map((seat) => {
                   return (<AlertComponents seat={seat} key={seat.id} />);
@@ -25,7 +26,6 @@ function AlertComponents(props){
         return("Seat "+ seatName +" is Hogged");
     }
     return(
-        // <li>{props.seat.seatName} is Hogged</li>
         <Alert
             intent="warning"
             // appearance={'card'}
