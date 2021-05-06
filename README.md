@@ -1,4 +1,4 @@
-## SmartLib : An intelligent library seat management system
+## [SmartLib](https://smartlib-66322.web.app/) : An intelligent library seat management system  
 
 SmartLib is an intelligent system aimed to improve the experience at the libraries across Nanyang Technological University. Its main purpose is to address the issue of locating empty seats/booths at the libraries as well as mitigating seat hogging. 
 
@@ -38,7 +38,8 @@ The main features are listed as:
 - [X] Frontend Development
 - [X] Backend Development
 - [X] Detection System Development
-- [ ] Deploying to server
+- [X] Deploying frontend to server
+- [ ] Deploying deep learning model to server
 
 &nbsp;
 
